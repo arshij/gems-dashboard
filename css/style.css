@@ -1,0 +1,25 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+body{
+}
+
+div{}
+
+.container{}
+
+header{}
+
+section{}
+
+footer{
+	border-top: solid thin #9B9B9B;
+	margin-top: 20px;
+}
+
+form{}
+
+.psn{
+	width: 500px;
+}
