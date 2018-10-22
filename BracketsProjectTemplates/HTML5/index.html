@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Untitled Document</title>
+      <link rel="stylesheet" href="/styles/main.css">
+     <script src="main.js">
+      </script>
+      <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+  </head>
+  
+
+<center>
+   <img src="https://image.ibb.co/fPVRqf/image001.png" alt="image001" border="0" >
+    
+      </center>
+
+<div class="process required">
+      <form action="/action_page.php">
+          <label>Process State Name: </label> <input type="text" name="Process State Name"  size="30" >
+      </form>
+</div>
+    
+<body>
+<center> <!-- center each page contents-->
+    <br>
+<button class="tablink"  id="defaultOpen">General</button>
+<button class="tablink" id="tab2">Job</button>
+<button class="tablink" id="tab3">JVM</button>
+   
+   
+<!-- why does the script only run here, not in the main.js file? and cannot add src -->
+<script > 
+      $(document).ready(function(){
+          
+         $('#defaultOpen').click(function(){
+              $('#Job').addClass('hide');
+              $('#General').addClass('hide');
+              $('#JVM').addClass('hide');
+             
+             
+             
+             
+             
+          
+                 $('#General').removeClass('hide');
+            
+            
+          
+               
+         });
+         
+        
+        $('#tab2').click(function(){
+            
+             $('#Job').addClass('hide');
+             $('#General').addClass('hide');
+             $('#JVM').addClass('hide');
+            
+            
+            
+         
+                 $('#Job').removeClass('hide');
+             
+            });
+          
+          
+           $('#tab3').click(function(){
+               
+              $('#Job').addClass('hide');
+              $('#General').addClass('hide');
+              $('#JVM').addClass('hide');
+               
+               
+               
+                 $('#JVM').removeClass('hide');
+            
+           
+         
+        });
+          
+        
+
+        });
+  
+         
+    </script>
+
+    
+<div id="General" class="tabcontent hide">
+     <h2>General forms</h2>
+    
+    </div>
+  
+<div id="Job" class="tabcontent hide">
+    <h2>Job forms</h2>
+    </div>
+ <div id="JVM" class="tabcontent hide">
+    <h2> JVM forms</h2>
+    </div>
+</center>
+</body>
+</html>
