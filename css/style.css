@@ -9,6 +9,16 @@ div{}
 
 .container{}
 
+.navbar-header {
+    float: left;
+    text-align: center;
+    width: 100%;
+}
+.navbar-brand {
+	float:none;
+	padding: 0px;
+}
+
 header{}
 
 section{}
@@ -18,8 +28,48 @@ footer{
 	margin-top: 20px;
 }
 
-form{}
+form{
+	margin-top: 15px;
+}
 
-.psn{
-	width: 500px;
+.sections{
+	margin-top: 5px;
+}
+
+label{
+	display: inline;
+	padding-right: 5px;
+}
+
+.form{
+	max-width: 500px;
+	display: inline;
+	margin-bottom: 10px;
+}
+
+.multi-select{
+	max-width: 500px;
+	height: 200px;
+	overflow-y: scroll;
+	padding: 0px;
+}
+
+.menu-select{
+	padding: 0px;
+}
+
+.menu-option{
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 3px;
+	list-style-type: none;
+	border-bottom: solid black thin;
+}
+
+.menu-option input{
+	margin-right: 5px;
+}
+
+.menu-option label{
+	width: 100px;
 }

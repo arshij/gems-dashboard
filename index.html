@@ -1,59 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap Agency Page Template</title>
-    <!-- Bootstrap -->
-    <link href="css/bootstrap-4.0.0.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet" type="text/css">
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Menu</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active"> <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a> </li>
-          <li class="nav-item"> <a class="nav-link" href="#">Link</a> </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Dropdown </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Action</a> <a class="dropdown-item" href="#">Another action</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Something else here</a> 
-            </div>
-          </li>
-          <li class="nav-item"> <a class="nav-link disabled" href="#">Disabled</a> </li>
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-      </div>
-    </nav>
-    <header>
-		<div class="container">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Real@Work Cisco</title>
+	<!-- Bootstrap -->
+	<link href="css/bootstrap-4.0.0.css" rel="stylesheet">
+	<link href="css/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active"> <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a> </li>
+				<li class="nav-item"> <a class="nav-link" href="#">Link</a> </li>
+			</ul>
+		</div>
+		<div class="navbar-header">
+			<a class="navbar-brand" href="#"><img src="images/Cisco_logo_blue_2016.png" alt="Cisco Systems" height="40" /></a>
+		</div>
+	</nav>
+	<header>
+		<div class="container col-lg-6 col-md-6 col-sm-8 col-xs-12">
 			<form name="dash">
 				<label>Process State Name<span class="text-danger">*</span></label>
-				<input id="psn" class="form-control psn" type="text" required autofocus/>
+				<input id="psn" class="form form-control" type="text" required autofocus/>
+				<div class="container-fluid sections">
+					<ul id="form-tabs" class="nav nav-tabs" role="tablist">
+						<li class="nav-item"> <a class="nav-link active" href="#home1" id="hometab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">General</a> </li>
+						<li class="nav-item"> <a class="nav-link" href="#paneTwo" role="tab" id="tab2" data-toggle="tab" aria-controls="hats">Job</a> </li>
+						<li class="nav-item"> <a id="tab3" class="nav-link" href="#panelThree" role="tab" data-toggle="tab" aria-controls="hats">JVM</a></li>
+					</ul>
+					<!-- Content Panel -->
+					<div id="form-sections" class="tab-content">
+						<div role="tabpanel" class="tab-pane fade show active" id="home1" aria-labelledby="hometab">
+							<label>Application Name <span class="text-danger">*</span></label>
+							<br />
+							<select name="appName" class="form form-control sr-only" multiple>
+								<option value="0">-- Please Select --</option>
+								<option value="consumed">Consumed</option>
+								<option value="exposed">Exposed</option>
+							</select>
+							<div id="appName" class="form-control multi-select">
+								<ul class="menu-select">
+									<li class="menu-option"><input type="checkbox" id="app1" /><label for="app1">App1</label></li>
+									<li class="menu-option"><input type="checkbox" id="app2" /><label for="app2">App 2</label></li>
+									<li class="menu-option">Lorem</li>
+									<li class="menu-option">Lorem</li>
+									<li class="menu-option">Lorem</li>
+									<li class="menu-option">Lorem</li>
+									<li class="menu-option">Lorem</li>
+									<li class="menu-option">Lorem</li>
+									<li class="menu-option">Lorem</li>
+									<li class="menu-option">Lorem</li>
+									<li class="menu-option">Lorem</li>
+									<!-- And so on for each option -->
+								</ul>
+							</div>
+							<br />
+							<label>Consumed/Exposed</label>
+							<br />
+							<select name="consExpo" class="form form-control form-dropdown">
+								<option value="0">-- Please Select --</option>
+								<option value="consumed">Consumed</option>
+								<option value="exposed">Exposed</option>
+							</select>
+							<br>
+							<label>Application URL</label>
+							<br />
+							<input type="text" class="form form-control" />
+						</div>
+						<div role="tabpanel" class="tab-pane fade" id="paneTwo" aria-labelledby="tab2">
+							<p>Content in <strong>Job Settings</strong></p>
+						</div>
+						<div role="tabpanel" class="tab-pane fade show" id="panelThree" aria-labelledby="tab3">
+							<p>Content in <strong>JVM Settings</strong></p>
+						</div>
+					</div>
+				</div>
+				<br />
+				<button id="submit" class="btn btn-info text-center">Submit</button>
 			</form>
 		</div>
-    </header>
-    <footer class="text-center">
-      <div class="container">
-        <div class="row">
-          <div class="col-12">
-            <p>Copyright © MyWebsite. All rights reserved.</p>
-          </div>
-        </div>
-      </div>
-    </footer>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
-    <script src="js/jquery-3.2.1.min.js"></script> 
-    <!-- Include all compiled plugins (below), or include individual files as needed --> 
-    <script src="js/popper.min.js"></script> 
-    <script src="js/bootstrap-4.0.0.js"></script>
-  </body>
+	</header>
+	<footer class="text-center">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<p>Copyright © Pan American World Airways</p>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="js/jquery-3.2.1.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="js/popper.min.js"></script>
+	<script src="js/bootstrap-4.0.0.js"></script>
+	<script src="js/app.js"></script>
+</body>
+
 </html>
