@@ -7,6 +7,10 @@
      <script src="main.js">
       </script>
       <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css"> 
+         
   </head>
   
 
@@ -23,6 +27,15 @@
     
 <body>
 <center> <!-- center each page contents-->
+    <br>
+  
+    <br>
+<!-- progress bar-->
+ <div class="w3-progress-container "style="width:500px">
+  <div id="myBar" class="w3-progressbar w3-green" style="width:1%"></div>
+</div>
+
+    
     <br>
 <button class="tablink"  id="defaultOpen">General</button>
 <button class="tablink" id="tab2">Job</button>
@@ -41,11 +54,11 @@
              
              
              
-             
+                 
           
                  $('#General').removeClass('hide');
-            
-            
+               
+                 $('#myBar').css('width','33.33%');
           
                
          });
@@ -61,7 +74,7 @@
             
          
                  $('#Job').removeClass('hide');
-             
+                 $('#myBar').css('width','67%');
             });
           
           
@@ -74,21 +87,37 @@
                
                
                  $('#JVM').removeClass('hide');
-            
-           
+                 $('#myBar').css('width','100%');
+                
          
         });
-          
-        
+       
 
         });
   
          
     </script>
 
+</center> 
+    
+    
+   
     
 <div id="General" class="tabcontent hide">
-     <h2>General forms</h2>
+   <div class="required process">
+    <label>Application Name:</label> <select multiple>
+       <option value="1">Cisco Production Fulfillment</option>
+       <option value="2">Cisco Shipping Execution</option>
+       <option value="3">Cisco Manufacturing Order Management</option>
+       <option value="4"> Cisco Production Fulfillment</option>
+       <option value="5">Cisco Warehouse Transactions</option>
+       <option value="6">Backlog Management Workbench</option>
+       <option value="7">Cisco Packout and Carton Management</option>
+       
+       </select>
+    
+    </div>
+    
     
     </div>
   
@@ -98,6 +127,12 @@
  <div id="JVM" class="tabcontent hide">
     <h2> JVM forms</h2>
     </div>
-</center>
+
+       
+
+ 
+ 
+    
+    
 </body>
 </html>
