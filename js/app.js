@@ -40,7 +40,7 @@ function validate(){
 		$(".required").each(function(){
 			$(this).removeClass("req-show");
 		});
-		$("#form").slideUp(500);
+		$("#dash").slideUp(500);
 		$("#success").slideDown(500);
 	}
 	var postConsExpo, postAppUrl, postService, postProcess, postJobName, postType, postRel, postHostEnv;
