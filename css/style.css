@@ -3,6 +3,7 @@
 
 
 body{
+	font-family: Arial, sans-serif;
 }
 
 div{}
@@ -99,7 +100,7 @@ select:hover{
 
 .multi-select{
 	max-width: 500px;
-	height: 200px;
+	max-height: 200px;
 	overflow-y: scroll;
 	padding: 0px;
 }
@@ -137,9 +138,11 @@ input:checked + .multi-label{
 }
 
 .btn-submit{
+	width: 200px;
 	background-color: auto;
 	border: solid thin #049FD9;
-	border-radius: 0px;
+	border-radius: 30px;
+	margin-left: 35%;
 }
 
 .btn-submit:active{

@@ -22,7 +22,7 @@
 			</ul>
 		</div>
 		<div class="navbar-header">
-			<a class="navbar-brand" href="#"><img src="images/Cisco_logo_blue_2016.png" alt="Cisco Systems" height="40" /></a>
+			<a class="navbar-brand" href="index.html"><img src="images/Cisco_logo_blue_2016.png" alt="Cisco Systems" height="40" /></a>
 		</div>
 	</nav>
 	<header>
@@ -44,15 +44,15 @@
 						<!--General Settings-->
 						<div role="tabpanel" class="tab-pane fade show active" id="home1" aria-labelledby="hometab">
 							<label>Application Name <span class="text-danger">*</span></label>
-							<div id="appname" class="form-control multi-select required">
-								<input name="app1" type="checkbox" id="app1" selected=""/><label class="multi-label" for="app1">App 1</label><br>
+							<div id="appName" class="form-control multi-select required">
+								<!--input name="app1" type="checkbox" id="app1" selected=""/><label class="multi-label" for="app1">App 1</label><br>
 								<input name="app2" type="checkbox" id="app2" selected=""/><label class="multi-label" for="app2">App 2</label><br>
 								<input name="app3" type="checkbox" id="app3" selected=""/><label class="multi-label" for="app3">App 3</label><br>
 								<input name="app4" type="checkbox" id="app4" selected=""/><label class="multi-label" for="app4">App 4</label><br>
 								<input name="app5" type="checkbox" id="app5" selected=""/><label class="multi-label" for="app5">App 5</label><br>
 								<input name="app6" type="checkbox" id="app6" selected=""/><label class="multi-label" for="app6">App 6</label><br>
 								<input name="app7" type="checkbox" id="app7" selected=""/><label class="multi-label" for="app7">App 7</label><br>
-								<input name="app8" type="checkbox" id="app8" selected=""/><label class="multi-label" for="app8">App 8</label><br>
+								<input name="app8" type="checkbox" id="app8" selected=""/><label class="multi-label" for="app8">App 8</label><br-->
 							</div>
 							<br />
 							<label>Consumed/Exposed</label>
@@ -95,7 +95,7 @@
 						<div role="tabpanel" class="tab-pane fade" id="paneTwo" aria-labelledby="tab2">
 							<label>Service Offering Name<span class="text-danger">*</span></label>
 							<br>
-							<select name="soname" id="soname" class="form-control form-dropdown required">
+							<select name="serviceOff" id="serviceOff" class="form-control form-dropdown required">
 								<option value="0" selected>-- Please Select --</option>
 								<option value="ser1">Service 1</option>
 								<option value="ser2">Service 2</option>
@@ -103,11 +103,11 @@
 							<br>
 							<label>Process Name<span class="text-danger">*</span></label>
 							<br>
-							<input type="text" name="pname" id="pname" class="form-control required" />
+							<input type="text" name="process" id="process" class="form-control required" />
 							<br>
 							<label>Job Name<span class="text-danger">*</span></label>
 							<br>
-							<select name="jname" id="jname" class="form-control form-dropdown required">
+							<select name="jobName" id="jobName" class="form-control form-dropdown required">
 								<option value="0" selected>-- Please Select --</option>
 								<option value="job1">Job 1</option>
 								<option value="job2">Job 2</option>
@@ -135,7 +135,7 @@
 							<br />
 							<label>Related To: <span class="text-danger">*</span></label>
 							<br />
-							<select name="relto" id="relto" class="form-control form-dropdown required">
+							<select name="relTo" id="relTo" class="form-control form-dropdown required">
 								<option value="0" selected>-- Please Select --</option>
 								<option value="rel1">Relation 1</option>
 								<option value="rel2">Relation 2</option>
@@ -144,7 +144,7 @@
 						<!--JVM Settings-->
 						<div role="tabpanel" class="tab-pane fade show" id="panelThree" aria-labelledby="tab3">
 							<label>JVM Name<span class="text-danger">*</span></label>
-							<div id="jvmname" class="form-control multi-select required">
+							<div id="jvmName" class="form-control multi-select required">
 								<input name="jvm1" type="checkbox" id="jvm1" selected=""/><label class="multi-label" for="jvm1">JVM 1</label><br>
 								<input name="jvm2" type="checkbox" id="jvm2" selected=""/><label class="multi-label" for="jvm2">JVM 2</label><br>
 								<input name="jvm3" type="checkbox" id="jvm3" selected=""/><label class="multi-label" for="jvm3">JVM 3</label><br>
@@ -156,15 +156,15 @@
 							</div>
 							<br />
 							<label>Host Name<span class="text-danger">*</span></label>
-							<div id="hostname" class="form-control multi-select required">
-								<input name="host1" type="checkbox" id="host1" selected=""/><label class="multi-label" for="host1">Host 1</label><br>
+							<div id="hostName" class="form-control multi-select required">
+								<!--input name="host1" type="checkbox" id="host1" selected=""/><label class="multi-label" for="host1">Host 1</label><br>
 								<input name="host2" type="checkbox" id="host2" selected=""/><label class="multi-label" for="host2">Host 2</label><br>
 								<input name="host3" type="checkbox" id="host3" selected=""/><label class="multi-label" for="host3">Host 3</label><br>
 								<input name="host4" type="checkbox" id="host4" selected=""/><label class="multi-label" for="host4">Host 4</label><br>
 								<input name="host5" type="checkbox" id="host5" selected=""/><label class="multi-label" for="host5">Host 5</label><br>
 								<input name="host6" type="checkbox" id="host6" selected=""/><label class="multi-label" for="host6">Host 6</label><br>
 								<input name="host7" type="checkbox" id="host7" selected=""/><label class="multi-label" for="host7">Host 7</label><br>
-								<input name="host8" type="checkbox" id="host8" selected=""/><label class="multi-label" for="host8">Host 8</label><br>
+								<input name="host8" type="checkbox" id="host8" selected=""/><label class="multi-label" for="host8">Host 8</label><br-->
 							</div>
 							<br />
 							<label>Host Environment<span class="text-danger">*</span></label>
@@ -193,9 +193,9 @@
 		</div>
 	</footer>
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<script src="js/jquery-3.2.1.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
-	<script src="js/popper.min.js"></script>
+	<!--script src="js/popper.min.js"></script-->
 	<script src="js/bootstrap-4.0.0.js"></script>
 	<script src="js/app.js"></script>
 </body>

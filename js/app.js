@@ -1,13 +1,33 @@
-// JavaScript Document
+// jQuery Document
 var bar = document.getElementById("status");
 var percent = 0;
-var elements = document.getElementsByClassName("required"); //Selects all required elements
+
+//Selects all required elements
+var elements = document.getElementsByClassName("required");
 var elementid = [];
 for(var i=0; i<elements.length; i++){
 	elementid[i] = elements[i].id;
 }
-//console.log(elementid);
 
+//Populates the multi-select dropdowns
+function populateMultiSelect(fieldName, length, target){
+	target = "#" +target;
+	for(var i=1; i<=length; i++){
+		$(target).append("<input name=\""+ fieldName+i +"\" type=\"checkbox\" id=\""+ fieldName+i +"\" selected=\"\"/><label class=\"multi-label\" for=\""+ fieldName+i +"\">"+ fieldName+i +"</label><br>");
+	}
+}
+populateMultiSelect("app", 3, "appName");
+populateMultiSelect("host", 6, "hostName");
+
+//Populates the dropdown menus
+function populateDropdown(fieldName, length, target){
+	target = "#" +target;
+	for(var i=1; i<length; i++){
+		$(target).append("<option value=\""+ fieldName +i +"\">" + fieldName +" " +i +"</option>");
+	}
+}
+
+//Moves the progress bar forward
 function progress(){
 	var barwidth = bar.style.width;
 	barwidth = barwidth.substr(0, barwidth.length -1);
@@ -17,6 +37,7 @@ function progress(){
 	}
 }
 
+//Moves the progress bar backward
 function regress(){
 	var barwidth = bar.style.width;
 	barwidth = barwidth.substr(0, barwidth.length -1);
@@ -26,6 +47,7 @@ function regress(){
 	}
 }
 
+//Validates form
 function validate(){
 	var idstyle;
 	if(elementid.length>0){
@@ -33,8 +55,8 @@ function validate(){
 		for(var i=0; i<elementid.length; i++){
 			idstyle = "#" +elementid[i];
 			$(idstyle).addClass("req-show");
-			return;
 		}
+		return;
 	}
 	else{
 		$(".required").each(function(){
@@ -46,18 +68,20 @@ function validate(){
 	var postConsExpo, postAppUrl, postService, postProcess, postJobName, postType, postRel, postHostEnv;
 	postConsExpo = $("#consExpo").val();
 	postAppUrl = $("#appUrl").val();
-	postService = $("#soname").val();
-	postProcess = $("#pname").val();
-	postJobName = $("#jname").val();
+	postService = $("#serviceOff").val();
+	postProcess = $("#process").val();
+	postJobName = $("#jobName").val();
 	postType = $("#type").val();
-	postRel = $("#relto").val();
+	postRel = $("#relTo").val();
 	postHostEnv = $("#hostEnv").val();
 	
-	console.log(appnames +", " +postConsExpo +", " +tracknames +", " +subnames +", " +postAppUrl +", " +postService +", " +postProcess +", " +postJobName +", " +postType +", " +dbnames +", " +postRel +", " +jvmnames +", " +hostnames +", " +postHostEnv);
+	console.log(appNames +", " +postConsExpo +", " +tracknames +", " +subnames +", " +postAppUrl +", " +postService +", " +postProcess +", " +postJobName +", " +postType +", " +dbnames +", " +postRel +", " +jvmNames +", " +hostNames +", " +postHostEnv);
 	
 	return;
 }
 
+
+///////////////////////   onChange Events for Form Elements (Excluding multi-select) //////////////////////
 $("input[type=\"text\"].required").change(function(){
 	if($(this).val() == "" && !elementid.includes($(this).attr("id"))){
 		regress();
@@ -68,7 +92,6 @@ $("input[type=\"text\"].required").change(function(){
 		elementid.splice(elementid.indexOf($(this).attr("id")), 1);
 	}
 });
-
 
 $("select.required").change(function(){
 	if($(this).val().length > 1 && elementid.includes($(this).attr("id"))){
@@ -83,39 +106,38 @@ $("select.required").change(function(){
 
 /////////////////////////////////////    Multi-Select Dropdowns   ///////////////////////////////////////
 //====== Application Names
-var appnames = [];
+var appNames = [];
 var appI = 0;
-$("#appname input").each(function(){
+$("#appName input").each(function(){
 	if($(this).is(":checked")){
-		appnames.push($(this).attr("name"));
+		appNames.push($(this).attr("name"));
 		appI++;
 	}
 });
-$("#appname input").change(function(){
+$("#appName input").change(function(){
 	var addedBox = $(this).attr("name");
 	if(!$(this).is(":checked")){
-		var delInd = appnames.indexOf(addedBox);
-		appnames.splice(delInd, 1);
+		var delInd = appNames.indexOf(addedBox);
+		appNames.splice(delInd, 1);
 		appI--;
 		
-		if(appnames.length == 0 && !elementid.includes("appname")){
+		if(appNames.length == 0 && !elementid.includes("appName")){
 			regress();
-			elementid.push("appname");
+			elementid.push("appName");
 		}
 	}
 	else{
-		appnames[appI] = addedBox;
+		appNames[appI] = addedBox;
 		appI++;
-		if(elementid.includes("appname")){
+		if(elementid.includes("appName")){
 			progress();
-			elementid.splice(elementid.indexOf("appname"), 1);
+			elementid.splice(elementid.indexOf("appName"), 1);
 		}
 	}
-	//console.log(appnames);
+	//console.log(appNames);
 });
 
 //====== Tracks
-
 var tracknames = [];
 var trackI = 0;
 $("#track input").each(function(){
@@ -148,7 +170,6 @@ $("#track input").change(function(){
 });
 
 //====== Subtracks
-
 var subnames = [];
 var subI = 0;
 $("#subtrack input").each(function(){
@@ -180,7 +201,6 @@ $("#subtrack input").change(function(){
 });
 
 //====== Databases
-
 var dbnames = [];
 var dbI = 0;
 $("#db input").each(function(){
@@ -212,65 +232,65 @@ $("#db input").change(function(){
 });
 
 //====== JVM Names
-var jvmnames = [];
+var jvmNames = [];
 var jvmI = 0;
-$("#jvmname input").each(function(){
+$("#jvmName input").each(function(){
 	if($(this).is(":checked")){
-		jvmnames.push($(this).attr("name"));
+		jvmNames.push($(this).attr("name"));
 		jvmI++;
 	}
 });
-$("#jvmname input").change(function(){
+$("#jvmName input").change(function(){
 	var addedBox = $(this).attr("name");
 	if(!$(this).is(":checked")){
-		var delInd = jvmnames.indexOf(addedBox);
-		jvmnames.splice(delInd, 1);
+		var delInd = jvmNames.indexOf(addedBox);
+		jvmNames.splice(delInd, 1);
 		jvmI--;
-		if(jvmnames.length == 0 && !elementid.includes("jvmname")){
+		if(jvmNames.length == 0 && !elementid.includes("jvmName")){
 			regress();
-			elementid.push("jvmname");
+			elementid.push("jvmName");
 		}
 	}
 	else{
-		jvmnames[jvmI] = addedBox;
+		jvmNames[jvmI] = addedBox;
 		jvmI++;
-		if(elementid.includes("jvmname")){
+		if(elementid.includes("jvmName")){
 			progress();
-			elementid.splice(elementid.indexOf("jvmname"), 1);
+			elementid.splice(elementid.indexOf("jvmName"), 1);
 		}
 	}
-	//console.log(jvmnames);
+	//console.log(jvmNames);
 });
 
 //====== Host Names
-var hostnames = [];
+var hostNames = [];
 var hostI = 0;
-$("hostname input").each(function(){
+$("hostName input").each(function(){
 	if($(this).is(":checked")){
-		hostnames.push($(this).attr("name"));
+		hostNames.push($(this).attr("name"));
 		hostI++;
 	}
 });
-$("#hostname input").change(function(){
+$("#hostName input").change(function(){
 	var addedBox = $(this).attr("name");
 	if(!$(this).is(":checked")){
-		var delInd = hostnames.indexOf(addedBox);
-		hostnames.splice(delInd, 1);
+		var delInd = hostNames.indexOf(addedBox);
+		hostNames.splice(delInd, 1);
 		hostI--;
-		if(hostnames.length == 0 && !elementid.includes("hostname")){
+		if(hostNames.length == 0 && !elementid.includes("hostName")){
 			regress();
-			elementid.push("hostname");
+			elementid.push("hostName");
 		}
 	}
 	else{
-		hostnames[hostI] = addedBox;
+		hostNames[hostI] = addedBox;
 		hostI++;
-		if(elementid.includes("hostname")){
+		if(elementid.includes("hostName")){
 			progress();
-			elementid.splice(elementid.indexOf("hostname"), 1);
+			elementid.splice(elementid.indexOf("hostName"), 1);
 		}
 	}
-	//console.log(hostnames);
+	//console.log(hostNames);
 });
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
