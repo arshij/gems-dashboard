@@ -154,3 +154,11 @@ input:checked + .multi-label{
 	margin-top: 15px;
 	display: none;
 }
+
+.hide{
+    display:none;
+    }
+
+.active{
+    display:block;
+}
