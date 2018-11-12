@@ -105,13 +105,31 @@ select:hover{
 	padding: 0px;
 }
 
-.multi-select input{
+.multi-select-element{
+	margin-bottom: 0px;
+}
+
+.multi-select-element input{
 	margin-left: 5px;
+}
+
+.multi-select div.multi-select {
+	width: 90%;
+	height: 0%;
+	margin-left: 10%;
+	display: none;
+	max-height: none;
+	overflow-y: visible;
+}
+
+input:checked ~ .multi-select{
+	display: block;
+	height: auto;
 }
 
 .multi-label{
 	display: inline-block;
-	width: 96%;
+	width: 95%;
 	margin-bottom: 0px;
 	padding-top: 5px;
 	padding-bottom: 5px;
@@ -123,18 +141,10 @@ select:hover{
 	background-color: #eee;
 }
 
+
 input:checked + .multi-label{
 	background-color: #097DBC;
 	color: white;
-}
-
-.menu-select{
-	padding: 0px;
-}
-
-
-.menu-select li input{
-	margin-right: 5px;
 }
 
 .btn-submit{
@@ -154,3 +164,4 @@ input:checked + .multi-label{
 	margin-top: 15px;
 	display: none;
 }
+
