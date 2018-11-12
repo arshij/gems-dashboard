@@ -1,27 +1,54 @@
 // jQuery Document
 var bar = document.getElementById("status");
 var percent = 0;
+var formData = "";
 
 //Selects all required elements
-var elements = document.getElementsByClassName("required");
-var elementid = [];
-for(var i=0; i<elements.length; i++){
-	elementid[i] = elements[i].id;
+var reqelements = document.getElementsByClassName("required");
+var reqElementIds = [];
+for(var i=0; i<reqelements.length; i++){
+	reqElementIds[i] = reqelements[i].id;
 }
+
+function init(){
+	formData = '{';
+	//formData += "\"psn\": \"\", ";
+	//formData += "\"appUrl\": \"\" ";
+	formData += '}';
+}
+init();
+var formJson = JSON.parse(formData);
 
 //Populates the multi-select dropdowns
 function populateMultiSelect(fieldName, length, target){
 	target = "#" +target;
 	for(var i=1; i<=length; i++){
-		$(target).append("<input name=\""+ fieldName+i +"\" type=\"checkbox\" id=\""+ fieldName+i +"\" selected=\"\"/><label class=\"multi-label\" for=\""+ fieldName+i +"\">"+ fieldName+i +"</label><br>");
+		var content = fieldName +" " +i;
+		var nameId = fieldName +i;
+		var addfield = "<div class=\"multi-select-element\"><input id=\"" +nameId +"\" name=\"" +nameId +"\" type=\"checkbox\"/> <label class=\"multi-label\" for=\"" +nameId +"\">" +content +"</label></div>";
+		$(target).append(addfield);
 	}
 }
-populateMultiSelect("app", 3, "appName");
-populateMultiSelect("host", 6, "hostName");
+
+
+function populateMultiSelectChild(fieldName, length, target){
+	//target = "#" +target;
+	$("div[name=\"" +target +"\"]").each(function(){
+		for(var i=1; i<=length; i++){
+			var content = fieldName +" " +i;
+			var nameId = fieldName +i;
+			var addfield = "<div class=\"multi-select-element\"><input id=\"" +nameId +"\" name=\"" +nameId +"\" type=\"checkbox\"/> <label class=\"multi-label\" for=\"" +nameId +"\">" +content +"</label></div>";
+		}
+	});
+}
+//populateMultiSelect("app", 3, "appName");
+populateMultiSelect("app", 6, "appName");
+populateMultiSelect("database", 8, "db");
 
 //Populates the dropdown menus
 function populateDropdown(fieldName, length, target){
 	target = "#" +target;
+	$(target).append("<option value=\"0\">-- Please Select --</option>");
 	for(var i=1; i<length; i++){
 		$(target).append("<option value=\""+ fieldName +i +"\">" + fieldName +" " +i +"</option>");
 	}
@@ -32,7 +59,7 @@ function progress(){
 	var barwidth = bar.style.width;
 	barwidth = barwidth.substr(0, barwidth.length -1);
 	if(Number(barwidth) < 100){
-		percent += 1/elements.length * 100;
+		percent += 1/reqelements.length * 100;
 		bar.style.width = percent+"%";
 	}
 }
@@ -42,7 +69,7 @@ function regress(){
 	var barwidth = bar.style.width;
 	barwidth = barwidth.substr(0, barwidth.length -1);
 	if(Number(barwidth) > 0){
-		percent -= 1/elements.length * 100;
+		percent -= 1/reqelements.length * 100;
 		bar.style.width = percent+"%";
 	}
 }
@@ -50,63 +77,143 @@ function regress(){
 //Validates form
 function validate(){
 	var idstyle;
-	if(elementid.length>0){
+	$(".required").each(function(){
+		$(this).removeClass("req-show");
+	});
+	if(reqElementIds.length>0){
 		alert("Some fields were not filled out. Please check all 3 tabs.");
-		for(var i=0; i<elementid.length; i++){
-			idstyle = "#" +elementid[i];
+		for(var i=0; i<reqElementIds.length; i++){
+			idstyle = "#" +reqElementIds[i];
 			$(idstyle).addClass("req-show");
 		}
 		return;
 	}
 	else{
-		$(".required").each(function(){
-			$(this).removeClass("req-show");
-		});
 		$("#dash").slideUp(500);
 		$("#success").slideDown(500);
 	}
-	var postConsExpo, postAppUrl, postService, postProcess, postJobName, postType, postRel, postHostEnv;
-	postConsExpo = $("#consExpo").val();
-	postAppUrl = $("#appUrl").val();
-	postService = $("#serviceOff").val();
-	postProcess = $("#process").val();
-	postJobName = $("#jobName").val();
-	postType = $("#type").val();
-	postRel = $("#relTo").val();
-	postHostEnv = $("#hostEnv").val();
-	
-	console.log(appNames +", " +postConsExpo +", " +tracknames +", " +subnames +", " +postAppUrl +", " +postService +", " +postProcess +", " +postJobName +", " +postType +", " +dbnames +", " +postRel +", " +jvmNames +", " +hostNames +", " +postHostEnv);
 	
 	return;
 }
 
-
-///////////////////////   onChange Events for Form Elements (Excluding multi-select) //////////////////////
-$("input[type=\"text\"].required").change(function(){
-	if($(this).val() == "" && !elementid.includes($(this).attr("id"))){
-		regress();
-		elementid.push($(this).attr("id"));
+///////////////////////   onChange Events for Form Elements //////////////////////
+$("input[type=\"text\"]").on("mouseleave blur", function(){
+	formJson[$(this).attr("id")] = $(this).val();
+	console.log(formJson);
+	if($(this).is(".required")){
+		if($(this).val() == "" && !reqElementIds.includes($(this).attr("id"))){
+			regress();
+			reqElementIds.push($(this).attr("id"));
+		}
+		else if(reqElementIds.includes($(this).attr("id")) && $(this).val() != ""){
+			progress();
+			reqElementIds.splice(reqElementIds.indexOf($(this).attr("id")), 1);
+		}
 	}
-	else if(elementid.includes($(this).attr("id"))){
-		progress();
-		elementid.splice(elementid.indexOf($(this).attr("id")), 1);
+	
+});
+
+$("select").change(function(){
+	
+	formJson[$(this).attr("id")] = $(this).val();
+	console.log(formJson);
+	
+	if($(this).is(".required")){
+		if($(this).val().length > 1 && reqElementIds.includes($(this).attr("id"))){
+			progress();
+			reqElementIds.splice(reqElementIds.indexOf($(this).attr("id")), 1);
+		}
+		else if($(this).val().length <= 1){
+			regress();
+			reqElementIds.push($(this).attr("id"));
+		}	
 	}
 });
 
-$("select.required").change(function(){
-	if($(this).val().length > 1 && elementid.includes($(this).attr("id"))){
-		progress();
-		elementid.splice(elementid.indexOf($(this).attr("id")), 1);
+//====== Parent multi-selects
+$(".multi-select-element > input").change(function(){
+	var addedBox = $(this).attr("id");
+	var parent = $(this).parent().parent().attr("id");
+	var nested = $(this).siblings(".multi-select").attr("name");
+	
+	if(typeof(formJson[parent]) == "undefined" && typeof(nested) == "undefined"){
+		formJson[parent] = [];
+		formJson[parent].push(addedBox);
+		if($(this).parent().parent().is(".required")){
+			progress();
+			reqElementIds.splice(reqElementIds.indexOf(parent), 1);
+		}
 	}
-	else if($(this).val().length <= 1){
+	else if(typeof(nested) != "undefined"){
+		if(typeof(formJson[parent]) == "undefined"){
+			formJson[parent] = {};
+		}
+		
+		if(typeof(formJson[parent][addedBox]) == "undefined"){
+			formJson[parent][addedBox] = {};
+			formJson[parent][addedBox][nested] = [];
+		}
+		else{
+			delete formJson[parent][addedBox];
+			//alert("Clearing all checkboxes!");
+			$(".multi-select-element > .multi-select > input").each(function(){
+				$(this).prop("checked", false);
+			});
+			if(Object.keys(formJson[parent]).length == 0){
+				regress();
+				reqElementIds.push(parent);
+			}
+		}
+	}
+	else if(formJson[parent].includes(addedBox)){
+		var delInd = formJson[parent].indexOf(addedBox);
+		formJson[parent].splice(delInd, 1);
+		if($(this).parent().parent().is(".required") && formJson[parent].length == 0){
+			regress();
+			reqElementIds.push(parent);
+		}
+	}
+	else if(formJson[parent].length > 0){
+		formJson[parent].push(addedBox);
+	}
+	else{
+		delete formJson[parent];
 		regress();
-		elementid.push($(this).attr("id"));
+		reqElementIds.push(parent);
 	}
+	console.log(JSON.stringify(formJson));
+	
 });
 
-/////////////////////////////////////    Multi-Select Dropdowns   ///////////////////////////////////////
+//====== Child/Nested multi-selects
+$(".multi-select-element > .multi-select > input").change(function(){
+	var parent = $(this).parent().parent().parent().attr("id");
+	var relative = $(this).parent().siblings("input").attr("id");
+	var subset = $(this).parent().attr("name");
+	var thisBox = $(this).attr("id");
+	
+	if(formJson[parent][relative][subset].includes(thisBox)){
+		var delInd = formJson[parent][relative][subset].indexOf(thisBox);
+		formJson[parent][relative][subset].splice(delInd, 1);
+		if($(this).parent().parent().parent().is(".required") && formJson[parent][relative][subset].length == 0){
+			regress();
+			reqElementIds.push(parent);
+		}
+	}
+	else{
+		formJson[parent][relative][subset].push(thisBox);
+		if($(this).parent().parent().parent().is(".required") && formJson[parent][relative][subset].length == 1){
+			progress();
+			reqElementIds.splice(reqElementIds.indexOf(parent), 1);
+		}
+	}
+	console.log(JSON.stringify(formJson));
+});
+
+
+
 //====== Application Names
-var appNames = [];
+/*var appNames = [];
 var appI = 0;
 $("#appName input").each(function(){
 	if($(this).is(":checked")){
@@ -136,51 +243,29 @@ $("#appName input").change(function(){
 	}
 	//console.log(appNames);
 });
-
+*/
 //====== Tracks
-var tracknames = [];
-var trackI = 0;
-$("#track input").each(function(){
-	if($(this).is(":checked")){
-		tracknames.push($(this).attr("name"));
-		trackI++;
-	}
-});
-$("#track input").change(function(){
+/*formJson.track = {};
+$("#track > .multi-select-element > input").change(function(){
 	var addedBox = $(this).attr("name");
-	if(!$(this).is(":checked")){
-		var delInd = tracknames.indexOf(addedBox);
-		tracknames.splice(delInd, 1);
-		trackI--;
-		if(tracknames.length == 0 && !elementid.includes("track")){
-			regress();
-			elementid.push("track");
+	if($(this).is(":checked")){
+		formJson.track[addedBox] = {};
+		if(typeof(formJson.track[addedBox]["subtracks"]) == "undefined"){
+			formJson.track[addedBox]["subtracks"] = [];
 		}
 	}
 	else{
-		tracknames[trackI] = addedBox;
-		trackI++;
-		if(elementid.includes("track")){
-			progress();
-			elementid.splice(elementid.indexOf("track"), 1);
-		}
+		delete formJson.track[addedBox];
 	}
-	//console.log(tracknames);
+	console.log(JSON.stringify(formJson));
 	
 });
-
-//====== Subtracks
-var subnames = [];
-var subI = 0;
-$("#subtrack input").each(function(){
-	if($(this).is(":checked")){
-		subnames.push($(this).attr("name"));
-		subI++;
-	}
-});
-$("#subtrack input").change(function(){
+/*
+$("#subtrack > .multi-select-element > input").change(function(){
+	
 	var addedBox = $(this).attr("name");
-	if(!$(this).is(":checked")){
+	formJson.track.subtrack = addedBox;
+	if($(this).is(":checked")){
 		var delInd = subnames.indexOf(addedBox);
 		subnames.splice(delInd, 1);
 		subI--;
@@ -292,5 +377,6 @@ $("#hostName input").change(function(){
 	}
 	//console.log(hostNames);
 });
+*/
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
