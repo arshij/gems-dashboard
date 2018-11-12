@@ -105,31 +105,13 @@ select:hover{
 	padding: 0px;
 }
 
-.multi-select-element{
-	margin-bottom: 0px;
-}
-
-.multi-select-element input{
+.multi-select input{
 	margin-left: 5px;
-}
-
-.multi-select div.multi-select {
-	width: 90%;
-	height: 0%;
-	margin-left: 10%;
-	display: none;
-	max-height: none;
-	overflow-y: visible;
-}
-
-input:checked ~ .multi-select{
-	display: block;
-	height: auto;
 }
 
 .multi-label{
 	display: inline-block;
-	width: 95%;
+	width: 96%;
 	margin-bottom: 0px;
 	padding-top: 5px;
 	padding-bottom: 5px;
@@ -141,10 +123,18 @@ input:checked ~ .multi-select{
 	background-color: #eee;
 }
 
-
 input:checked + .multi-label{
 	background-color: #097DBC;
 	color: white;
+}
+
+.menu-select{
+	padding: 0px;
+}
+
+
+.menu-select li input{
+	margin-right: 5px;
 }
 
 .btn-submit{
@@ -164,6 +154,7 @@ input:checked + .multi-label{
 	margin-top: 15px;
 	display: none;
 }
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 .hide{
@@ -175,3 +166,5 @@ input:checked + .multi-label{
 }
 =======
 >>>>>>> b604cd9e67cf31cfad893ae161612a3b84964dba
+=======
+>>>>>>> parent of b604cd9... Nest subtrack within track. Replace element-specific JavaScript functions with generalized ones.

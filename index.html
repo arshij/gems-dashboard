@@ -44,7 +44,16 @@
 						<!--General Settings-->
 						<div role="tabpanel" class="tab-pane fade show active" id="home1" aria-labelledby="hometab">
 							<label>Application Name <span class="text-danger">*</span></label>
-							<div id="appName" class="form-control multi-select required"></div>
+							<div id="appName" class="form-control multi-select required">
+								<!--input name="app1" type="checkbox" id="app1" selected=""/><label class="multi-label" for="app1">App 1</label><br>
+								<input name="app2" type="checkbox" id="app2" selected=""/><label class="multi-label" for="app2">App 2</label><br>
+								<input name="app3" type="checkbox" id="app3" selected=""/><label class="multi-label" for="app3">App 3</label><br>
+								<input name="app4" type="checkbox" id="app4" selected=""/><label class="multi-label" for="app4">App 4</label><br>
+								<input name="app5" type="checkbox" id="app5" selected=""/><label class="multi-label" for="app5">App 5</label><br>
+								<input name="app6" type="checkbox" id="app6" selected=""/><label class="multi-label" for="app6">App 6</label><br>
+								<input name="app7" type="checkbox" id="app7" selected=""/><label class="multi-label" for="app7">App 7</label><br>
+								<input name="app8" type="checkbox" id="app8" selected=""/><label class="multi-label" for="app8">App 8</label><br-->
+							</div>
 							<br />
 							<label>Consumed/Exposed</label>
 							<br />
@@ -56,6 +65,7 @@
 							<br>
 							<label>Track<span class="text-danger">*</span></label>
 							<div id="track" class="form-control multi-select required">
+<<<<<<< HEAD
 <<<<<<< HEAD
 								<input name="track1" type="checkbox" id="track1" selected=""/><label  class="multi-label" for="track1">Track 1</label><br>
                                 
@@ -237,6 +247,20 @@
 							<label>Subtrack<span class="text-danger ">*</span></label>
 							<div id="subtrack" class="form-control  multi select required hide">
                                 Select One Subtrack Only
+=======
+								<input name="track1" type="checkbox" id="track1" selected=""/><label class="multi-label" for="track1">Track 1</label><br>
+								<input name="track2" type="checkbox" id="track2" selected=""/><label class="multi-label" for="track2">Track 2</label><br>
+								<input name="track3" type="checkbox" id="track3" selected=""/><label class="multi-label" for="track3">Track 3</label><br>
+								<input name="track4" type="checkbox" id="track4" selected=""/><label class="multi-label" for="track4">Track 4</label><br>
+								<input name="track5" type="checkbox" id="track5" selected=""/><label class="multi-label" for="track5">Track 5</label><br>
+								<input name="track6" type="checkbox" id="track6" selected=""/><label class="multi-label" for="track6">Track 6</label><br>
+								<input name="track7" type="checkbox" id="track7" selected=""/><label class="multi-label" for="track7">Track 7</label><br>
+								<input name="track8" type="checkbox" id="track8" selected=""/><label class="multi-label" for="track8">Track 8</label><br>
+							</div>
+							<br />
+							<label>Subtrack<span class="text-danger">*</span></label>
+							<div id="subtrack" class="form-control multi-select required">
+>>>>>>> parent of b604cd9... Nest subtrack within track. Replace element-specific JavaScript functions with generalized ones.
 								<input name="subtrack1" type="checkbox" id="subtrack1" selected=""/><label class="multi-label" for="subtrack1">Subtrack 1</label><br>
 								<input name="subtrack2" type="checkbox" id="subtrack2" selected=""/><label class="multi-label" for="subtrack2">Subtrack 2</label><br>
 								<input name="subtrack3" type="checkbox" id="subtrack3" selected=""/><label class="multi-label" for="subtrack3">Subtrack 3</label><br>
@@ -245,6 +269,7 @@
 								<input name="subtrack6" type="checkbox" id="subtrack6" selected=""/><label class="multi-label" for="subtrack6">Subtrack 6</label><br>
 								<input name="subtrack7" type="checkbox" id="subtrack7" selected=""/><label class="multi-label" for="subtrack7">Subtrack 7</label><br>
 								<input name="subtrack8" type="checkbox" id="subtrack8" selected=""/><label class="multi-label" for="subtrack8">Subtrack 8</label><br>
+<<<<<<< HEAD
 =======
 								<div class="multi-select-element">
 									<input id="track1" name="track1" type="checkbox"/>
@@ -289,6 +314,8 @@
 									<label class="multi-label" for="track8">Track 8</label><br>
 								</div>
 >>>>>>> b604cd9e67cf31cfad893ae161612a3b84964dba
+=======
+>>>>>>> parent of b604cd9... Nest subtrack within track. Replace element-specific JavaScript functions with generalized ones.
 							</div>
 							-->
                             <br />
@@ -312,7 +339,11 @@
 							<br>
 							<label>Job Name<span class="text-danger">*</span></label>
 							<br>
-							<input type ="text" name="jobName" id="jobName" class="form-control required" />
+							<select name="jobName" id="jobName" class="form-control form-dropdown required">
+								<option value="0" selected>-- Please Select --</option>
+								<option value="job1">Job 1</option>
+								<option value="job2">Job 2</option>
+							</select>
 							<br>
 							<label>Type<span class="text-danger">*</span></label>
 							<br>
@@ -324,6 +355,14 @@
 							<br>
 							<label>Database<span class="text-danger">*</span></label>
 							<div id="db" class="form-control multi-select required">
+								<input name="db1" type="checkbox" id="db1" selected=""/><label class="multi-label" for="db1">Database 1</label><br>
+								<input name="db2" type="checkbox" id="db2" selected=""/><label class="multi-label" for="db2">Database 2</label><br>
+								<input name="db3" type="checkbox" id="db3" selected=""/><label class="multi-label" for="db3">Database 3</label><br>
+								<input name="db4" type="checkbox" id="db4" selected=""/><label class="multi-label" for="db4">Database 4</label><br>
+								<input name="db5" type="checkbox" id="db5" selected=""/><label class="multi-label" for="db5">Database 5</label><br>
+								<input name="db6" type="checkbox" id="db6" selected=""/><label class="multi-label" for="db6">Database 6</label><br>
+								<input name="db7" type="checkbox" id="db7" selected=""/><label class="multi-label" for="db7">Database 7</label><br>
+								<input name="db8" type="checkbox" id="db8" selected=""/><label class="multi-label" for="db8">Database 8</label><br>
 							</div>
 							<br />
 							<label>Related To: <span class="text-danger">*</span></label>
@@ -338,6 +377,7 @@
 						<div role="tabpanel" class="tab-pane fade show" id="panelThree" aria-labelledby="tab3">
 							<label>JVM Name<span class="text-danger">*</span></label>
 							<div id="jvmName" class="form-control multi-select required">
+<<<<<<< HEAD
 <<<<<<< HEAD
 								<input name="jvm1" type="checkbox" id="jvm1" selected=""/><label class="multi-label" for="jvm1">JVM 1</label>
                                 <div id="host1" class="hide">
@@ -487,6 +527,9 @@
 										<input id="host8" type="checkbox" name="host8"/><label class="multi-label" for="host8">Host 8</label><br>
 									</div>
 								</div>
+=======
+								<input name="jvm1" type="checkbox" id="jvm1" selected=""/><label class="multi-label" for="jvm1">JVM 1</label><br>
+>>>>>>> parent of b604cd9... Nest subtrack within track. Replace element-specific JavaScript functions with generalized ones.
 								<input name="jvm2" type="checkbox" id="jvm2" selected=""/><label class="multi-label" for="jvm2">JVM 2</label><br>
 								<input name="jvm3" type="checkbox" id="jvm3" selected=""/><label class="multi-label" for="jvm3">JVM 3</label><br>
 								<input name="jvm4" type="checkbox" id="jvm4" selected=""/><label class="multi-label" for="jvm4">JVM 4</label><br>
@@ -547,16 +590,23 @@
 							</div>
 							<br />
 <<<<<<< HEAD
+<<<<<<< HEAD
                             <!--
 							<label>Host Name<span class="text-danger">*</span></label>
 							<div id="hostName" class="form-control multi-select required ">
 								<input name="host1" type="checkbox" id="host1" selected=""/><label class="multi-label" for="host1">Host 1</label><br>
+=======
+							<label>Host Name<span class="text-danger">*</span></label>
+							<div id="hostName" class="form-control multi-select required">
+								<!--input name="host1" type="checkbox" id="host1" selected=""/><label class="multi-label" for="host1">Host 1</label><br>
+>>>>>>> parent of b604cd9... Nest subtrack within track. Replace element-specific JavaScript functions with generalized ones.
 								<input name="host2" type="checkbox" id="host2" selected=""/><label class="multi-label" for="host2">Host 2</label><br>
 								<input name="host3" type="checkbox" id="host3" selected=""/><label class="multi-label" for="host3">Host 3</label><br>
 								<input name="host4" type="checkbox" id="host4" selected=""/><label class="multi-label" for="host4">Host 4</label><br>
 								<input name="host5" type="checkbox" id="host5" selected=""/><label class="multi-label" for="host5">Host 5</label><br>
 								<input name="host6" type="checkbox" id="host6" selected=""/><label class="multi-label" for="host6">Host 6</label><br>
 								<input name="host7" type="checkbox" id="host7" selected=""/><label class="multi-label" for="host7">Host 7</label><br>
+<<<<<<< HEAD
 								<input name="host8" type="checkbox" id="host8" selected=""/><label class="multi-label" for="host8">Host 8</label><br>
 							</div>
                             -->
@@ -564,6 +614,10 @@
 =======
 							
 >>>>>>> b604cd9e67cf31cfad893ae161612a3b84964dba
+=======
+								<input name="host8" type="checkbox" id="host8" selected=""/><label class="multi-label" for="host8">Host 8</label><br-->
+							</div>
+>>>>>>> parent of b604cd9... Nest subtrack within track. Replace element-specific JavaScript functions with generalized ones.
 							<br />
 							<label>Host Environment<span class="text-danger">*</span></label>
 							<select name="hostEnv" id="hostEnv" class="form-control form-dropdown required">
