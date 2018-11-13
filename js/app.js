@@ -91,6 +91,7 @@ function validate(){
 	else{
 		$("#dash").slideUp(500);
 		$("#success").slideDown(500);
+		$("#success").prepend("<p>" +JSON.stringify(formJson) +"</p>");
 	}
 	
 	return;
@@ -98,8 +99,11 @@ function validate(){
 
 ///////////////////////   onChange Events for Form Elements //////////////////////
 $("input[type=\"text\"]").on("mouseleave blur", function(){
+	/* When the user moves the mouse away from the text field (drag and drop) or when they click away from it, check if we need to 
+	 * progress the bar
+	 */
 	formJson[$(this).attr("id")] = $(this).val();
-	console.log(formJson);
+	
 	if($(this).is(".required")){
 		if($(this).val() == "" && !reqElementIds.includes($(this).attr("id"))){
 			regress();
@@ -116,7 +120,6 @@ $("input[type=\"text\"]").on("mouseleave blur", function(){
 $("select").change(function(){
 	
 	formJson[$(this).attr("id")] = $(this).val();
-	console.log(formJson);
 	
 	if($(this).is(".required")){
 		if($(this).val().length > 1 && reqElementIds.includes($(this).attr("id"))){
@@ -136,51 +139,59 @@ $(".multi-select-element > input").change(function(){
 	var parent = $(this).parent().parent().attr("id");
 	var nested = $(this).siblings(".multi-select").attr("name");
 	
-	if(typeof(formJson[parent]) == "undefined" && typeof(nested) == "undefined"){
-		formJson[parent] = [];
-		formJson[parent].push(addedBox);
-		if($(this).parent().parent().is(".required")){
-			progress();
-			reqElementIds.splice(reqElementIds.indexOf(parent), 1);
+	/* This block runs if the multi-select does not have a nested multi-select. It only runs once per session,  
+	 * to initialize the JSON object
+	 */
+	if(typeof(nested) == "undefined"){
+		//Initialize array
+		if(typeof(formJson[parent]) == "undefined"){
+			formJson[parent] = [];
+		}
+		//If the array exists and the current checkbox is in it, delete it.
+		if(formJson[parent].indexOf(addedBox) >= 0){
+			formJson[parent].splice(formJson[parent].indexOf(addedBox), 1);
+			if($("#" +parent).is(".required") && formJson[parent].length == 0){
+				regress();
+				reqElementIds.push(parent);
+			}
+		}
+		//Else the array exists and the current element is not in it, so we add it in.
+		else{
+			formJson[parent].push(addedBox);
+			if($("#" +parent).is(".required") && formJson[parent].length == 1){
+				progress();
+				reqElementIds.splice(reqElementIds.indexOf(parent), 1);
+			}
+			
 		}
 	}
-	else if(typeof(nested) != "undefined"){
+	
+	//If there is a nested multi-select, checking a parent checkbox does not progress the slider.
+	else{
+		//This block initializes the JSON object and runs once per session.
 		if(typeof(formJson[parent]) == "undefined"){
 			formJson[parent] = {};
 		}
-		
+		//This block initializes the JSON object for the nested multi-select. It runs every time the object is deleted.
 		if(typeof(formJson[parent][addedBox]) == "undefined"){
 			formJson[parent][addedBox] = {};
 			formJson[parent][addedBox][nested] = [];
 		}
+		//This block runs if the parent checkbox is unchecked. It unchecks all nested checkboxes.
 		else{
 			delete formJson[parent][addedBox];
-			//alert("Clearing all checkboxes!");
+			
 			$(".multi-select-element > .multi-select > input").each(function(){
 				$(this).prop("checked", false);
 			});
-			if(Object.keys(formJson[parent]).length == 0){
+			
+			if($("#" +parent).is(".required") && Object.keys(formJson[parent]).length == 0){
 				regress();
 				reqElementIds.push(parent);
 			}
 		}
 	}
-	else if(formJson[parent].includes(addedBox)){
-		var delInd = formJson[parent].indexOf(addedBox);
-		formJson[parent].splice(delInd, 1);
-		if($(this).parent().parent().is(".required") && formJson[parent].length == 0){
-			regress();
-			reqElementIds.push(parent);
-		}
-	}
-	else if(formJson[parent].length > 0){
-		formJson[parent].push(addedBox);
-	}
-	else{
-		delete formJson[parent];
-		regress();
-		reqElementIds.push(parent);
-	}
+	
 	console.log(JSON.stringify(formJson));
 	
 });
@@ -192,6 +203,7 @@ $(".multi-select-element > .multi-select > input").change(function(){
 	var subset = $(this).parent().attr("name");
 	var thisBox = $(this).attr("id");
 	
+	//If the checkbox has already been logged, then the user wants to delete it.
 	if(formJson[parent][relative][subset].includes(thisBox)){
 		var delInd = formJson[parent][relative][subset].indexOf(thisBox);
 		formJson[parent][relative][subset].splice(delInd, 1);
@@ -200,6 +212,7 @@ $(".multi-select-element > .multi-select > input").change(function(){
 			reqElementIds.push(parent);
 		}
 	}
+	//Otherwise, add it to the JSON object
 	else{
 		formJson[parent][relative][subset].push(thisBox);
 		if($(this).parent().parent().parent().is(".required") && formJson[parent][relative][subset].length == 1){
@@ -211,172 +224,4 @@ $(".multi-select-element > .multi-select > input").change(function(){
 });
 
 
-
-//====== Application Names
-/*var appNames = [];
-var appI = 0;
-$("#appName input").each(function(){
-	if($(this).is(":checked")){
-		appNames.push($(this).attr("name"));
-		appI++;
-	}
-});
-$("#appName input").change(function(){
-	var addedBox = $(this).attr("name");
-	if(!$(this).is(":checked")){
-		var delInd = appNames.indexOf(addedBox);
-		appNames.splice(delInd, 1);
-		appI--;
-		
-		if(appNames.length == 0 && !elementid.includes("appName")){
-			regress();
-			elementid.push("appName");
-		}
-	}
-	else{
-		appNames[appI] = addedBox;
-		appI++;
-		if(elementid.includes("appName")){
-			progress();
-			elementid.splice(elementid.indexOf("appName"), 1);
-		}
-	}
-	//console.log(appNames);
-});
-*/
-//====== Tracks
-/*formJson.track = {};
-$("#track > .multi-select-element > input").change(function(){
-	var addedBox = $(this).attr("name");
-	if($(this).is(":checked")){
-		formJson.track[addedBox] = {};
-		if(typeof(formJson.track[addedBox]["subtracks"]) == "undefined"){
-			formJson.track[addedBox]["subtracks"] = [];
-		}
-	}
-	else{
-		delete formJson.track[addedBox];
-	}
-	console.log(JSON.stringify(formJson));
-	
-});
-/*
-$("#subtrack > .multi-select-element > input").change(function(){
-	
-	var addedBox = $(this).attr("name");
-	formJson.track.subtrack = addedBox;
-	if($(this).is(":checked")){
-		var delInd = subnames.indexOf(addedBox);
-		subnames.splice(delInd, 1);
-		subI--;
-		if(subnames.length == 0 && !elementid.includes("subtrack")){
-			regress();
-			elementid.push("subtrack");
-		}
-	}
-	else{
-		subnames[subI] = addedBox;
-		subI++;
-		if(elementid.includes("subtrack")){
-			progress();
-			elementid.splice(elementid.indexOf("subtrack"), 1);
-		}
-	}
-	//console.log(subnames);
-});
-
-//====== Databases
-var dbnames = [];
-var dbI = 0;
-$("#db input").each(function(){
-	if($(this).is(":checked")){
-		dbnames.push($(this).attr("name"));
-		dbI++;
-	}
-});
-$("#db input").change(function(){
-	var addedBox = $(this).attr("name");
-	if(!$(this).is(":checked")){
-		var delInd = dbnames.indexOf(addedBox);
-		dbnames.splice(delInd, 1);
-		dbI--;
-		if(dbnames.length == 0 && !elementid.includes("db")){
-			regress();
-			elementid.push("db");
-		}
-	}
-	else{
-		dbnames[dbI] = addedBox;
-		dbI++;
-		if(elementid.includes("db")){
-			progress();
-			elementid.splice(elementid.indexOf("db"), 1);
-		}
-	}
-	//console.log(dbnames);
-});
-
-//====== JVM Names
-var jvmNames = [];
-var jvmI = 0;
-$("#jvmName input").each(function(){
-	if($(this).is(":checked")){
-		jvmNames.push($(this).attr("name"));
-		jvmI++;
-	}
-});
-$("#jvmName input").change(function(){
-	var addedBox = $(this).attr("name");
-	if(!$(this).is(":checked")){
-		var delInd = jvmNames.indexOf(addedBox);
-		jvmNames.splice(delInd, 1);
-		jvmI--;
-		if(jvmNames.length == 0 && !elementid.includes("jvmName")){
-			regress();
-			elementid.push("jvmName");
-		}
-	}
-	else{
-		jvmNames[jvmI] = addedBox;
-		jvmI++;
-		if(elementid.includes("jvmName")){
-			progress();
-			elementid.splice(elementid.indexOf("jvmName"), 1);
-		}
-	}
-	//console.log(jvmNames);
-});
-
-//====== Host Names
-var hostNames = [];
-var hostI = 0;
-$("hostName input").each(function(){
-	if($(this).is(":checked")){
-		hostNames.push($(this).attr("name"));
-		hostI++;
-	}
-});
-$("#hostName input").change(function(){
-	var addedBox = $(this).attr("name");
-	if(!$(this).is(":checked")){
-		var delInd = hostNames.indexOf(addedBox);
-		hostNames.splice(delInd, 1);
-		hostI--;
-		if(hostNames.length == 0 && !elementid.includes("hostName")){
-			regress();
-			elementid.push("hostName");
-		}
-	}
-	else{
-		hostNames[hostI] = addedBox;
-		hostI++;
-		if(elementid.includes("hostName")){
-			progress();
-			elementid.splice(elementid.indexOf("hostName"), 1);
-		}
-	}
-	//console.log(hostNames);
-});
-*/
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////// END //////////////////////////////////////////////////
