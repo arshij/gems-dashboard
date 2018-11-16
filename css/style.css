@@ -105,6 +105,7 @@ select:hover{
 	padding: 0px;
 }
 
+<<<<<<< HEAD
 .multi-select-element{
 	margin-bottom: 0px;
 	border-bottom: solid rgb(222, 226, 230) thin;
@@ -135,6 +136,15 @@ input:checked ~ .multi-select{
 .multi-label{
 	display: inline-block;
 	width: 90%;
+=======
+.multi-select input{
+	margin-left: 5px;
+}
+
+.multi-label{
+	display: inline-block;
+	width: 96%;
+>>>>>>> origin/master
 	margin-bottom: 0px;
 	padding-top: 5px;
 	padding-bottom: 5px;
@@ -145,10 +155,18 @@ input:checked ~ .multi-select{
 	background-color: #eee;
 }
 
-
 input:checked + .multi-label{
 	background-color: #097DBC;
 	color: white;
+}
+
+.menu-select{
+	padding: 0px;
+}
+
+
+.menu-select li input{
+	margin-right: 5px;
 }
 
 .btn-submit{
@@ -168,4 +186,20 @@ input:checked + .multi-label{
 	margin-top: 15px;
 	display: none;
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
 
+<<<<<<< HEAD
+.hide{
+    display:none;
+    }
+
+.active{
+    display:block;
+}
+=======
+>>>>>>> b604cd9e67cf31cfad893ae161612a3b84964dba
+=======
+>>>>>>> parent of b604cd9... Nest subtrack within track. Replace element-specific JavaScript functions with generalized ones.
+=======
+>>>>>>> parent of b604cd9... Nest subtrack within track. Replace element-specific JavaScript functions with generalized ones.
