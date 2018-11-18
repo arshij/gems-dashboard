@@ -12,16 +12,13 @@
 </head>
 
 <body>
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+	<nav class="navbar navbar-expand-lg navbar-light">
+		<a class="navbar-brand" href="index.html"><img src="images/Cisco_logo_blue_2016.png" alt="Cisco Systems" height="55" /></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> <span class="nav-button-text hidden-sm-down">MENU</span></button>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item"> <a class="nav-link" href="readme.md">Guide</a> </li>
+				<li class="nav-item"> <a class="nav-link" href="readme.md">User Guide</a> </li>
 			</ul>
-		</div>
-		<div class="navbar-header">
-			<a class="navbar-brand" href="index.html"><img src="images/Cisco_logo_blue_2016.png" alt="Cisco Systems" height="40" /></a>
 		</div>
 	</nav>
 	<header>
@@ -60,14 +57,14 @@
 									<label class="multi-label" for="track1">Track 1</label>
 									<a class="dropdown-toggle" type="button"></a>
 									<div name="subtracks" class="form-control multi-select">
-										<input id="subtrack1" type="checkbox"/><label class="multi-label" for="subtrack1">Subtrack 1</label><br>
-										<input id="subtrack2" type="checkbox"/><label class="multi-label" for="subtrack2">Subtrack 2</label><br>
-										<input id="subtrack3" type="checkbox"/><label class="multi-label" for="subtrack3">Subtrack 3</label><br>
-										<input id="subtrack4" type="checkbox"/><label class="multi-label" for="subtrack4">Subtrack 4</label><br>
-										<input id="subtrack5" type="checkbox"/><label class="multi-label" for="subtrack5">Subtrack 5</label><br>
-										<input id="subtrack6" type="checkbox"/><label class="multi-label" for="subtrack6">Subtrack 6</label><br>
-										<input id="subtrack7" type="checkbox"/><label class="multi-label" for="subtrack7">Subtrack 7</label><br>
-										<input id="subtrack8" type="checkbox"/><label class="multi-label" for="subtrack8">Subtrack 8</label><br>
+										<input id="subtrack1" type="checkbox"/> <label class="multi-label" for="subtrack1">Subtrack 1</label><br>
+										<input id="subtrack2" type="checkbox"/> <label class="multi-label" for="subtrack2">Subtrack 2</label><br>
+										<input id="subtrack3" type="checkbox"/> <label class="multi-label" for="subtrack3">Subtrack 3</label><br>
+										<input id="subtrack4" type="checkbox"/> <label class="multi-label" for="subtrack4">Subtrack 4</label><br>
+										<input id="subtrack5" type="checkbox"/> <label class="multi-label" for="subtrack5">Subtrack 5</label><br>
+										<input id="subtrack6" type="checkbox"/> <label class="multi-label" for="subtrack6">Subtrack 6</label><br>
+										<input id="subtrack7" type="checkbox"/> <label class="multi-label" for="subtrack7">Subtrack 7</label><br>
+										<input id="subtrack8" type="checkbox"/> <label class="multi-label" for="subtrack8">Subtrack 8</label><br>
 									</div>
 								</div>
 								<div class="multi-select-element">
@@ -138,8 +135,6 @@
 							<br />
 							<select name="relTo" id="relTo" class="form-control form-dropdown required">
 								<option value="0" selected>-- Please Select --</option>
-								<option value="rel1">Relation 1</option>
-								<option value="rel2">Relation 2</option>
 							</select>
 						</div>
 						<!--JVM Settings-->
@@ -179,7 +174,12 @@
 						</div>
 					</div>
 				</div>
-				<button id="submit" class="btn btn-submit offset-5"	>Submit</button>
+				<div class="row">
+					<div class="offset-md-3 offset-sm-1 offset-xs-1">
+						<button id="submit" class="btn btn-submit"	>Submit</button>
+					</div>
+				</div>
+				
 			</form>
 			<aside id="success" class="jumbotron">
 				<h1 class="text-center">Success! Data processing...</h1>

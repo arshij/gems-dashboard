@@ -14,14 +14,41 @@ div{}
 	padding: 0px;
 }
 
-.navbar-header {
-    float: left;
-    text-align: center;
-    width: 100%;
+.navbar-expand-lg{
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+	box-shadow: 0px 1px 15px #ccc;
 }
-.navbar-brand {
-	float:none;
-	padding: 0px;
+
+#navbarSupportedContent{
+	background-color: #049fd9;
+}
+
+#navbarSupportedContent ul{
+	padding-left: 10px;
+}
+
+.navbar-light .navbar-nav .nav-link{
+	color: white;
+}
+
+.navbar-brand{
+	position:absolute;
+	left:calc(50% - 30px);
+	top:3px;
+	height:90%;
+}
+
+.navbar-light button.navbar-toggler{
+	height: 100%;
+	border-radius: 0px;
+	border-color: transparent rgba(0, 0, 0, 0.1) transparent transparent;
+	font-size: 40px;
+}
+
+.nav-button-text{
+	font-size: 15px;
 }
 
 header{}
@@ -124,13 +151,8 @@ select:hover{
 }
 
 .multi-select div.multi-select label{
-	width: 95%;
+	width: 94%;
 	border-bottom: solid rgb(222, 226, 230) thin;
-}
-
-input:checked ~ .multi-select{
-	display: block;
-	height: auto;
 }
 
 .multi-label{
@@ -140,6 +162,25 @@ input:checked ~ .multi-select{
 	padding-top: 5px;
 	padding-bottom: 5px;
 	padding-left: 3px;
+	border-right: solid thin rgb(222, 226, 230);
+}
+
+.multi-select-element a.dropdown-toggle{
+	display: inline-block;
+	width: 5%;
+	height: 100%;
+	line-height: 30px;
+	margin-left: -5px;
+	padding-left: 3px;
+	box-sizing: border-box;
+}
+
+.multi-select-element a.dropdown-toggle:hover{
+	background-color: #eee;
+}
+
+.multi-select-element a.dropdown-toggle:active{
+	background-color: #aaa;
 }
 
 .multi-label:hover{
@@ -148,25 +189,31 @@ input:checked ~ .multi-select{
 
 
 input:checked + .multi-label{
-	background-color: #097DBC;
+	background-color: #097dbc;
 	color: white;
+}
+
+.multi-label-full{
+	width: 95%;
 }
 
 .btn-submit{
 	width: 200px;
 	background-color: auto;
-	border: solid thin #049FD9;
+	border: solid thin #049fd9;
 	border-radius: 30px;
 	margin-left: 35%;
 }
 
 .btn-submit:active{
 	border-color: transparent;
-	background-color: #049FD9;
+	background-color: #049fd9;
 }
 
 #success{
 	margin-top: 15px;
 	display: none;
 }
+
+
 

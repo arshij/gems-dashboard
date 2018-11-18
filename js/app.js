@@ -1,9 +1,7 @@
 // jQuery Document
 var bar = document.getElementById("status");
 var percent = 0;
-var formData = "";
-
-
+//var formData = "";
 
 //Selects all required elements
 var reqelements = document.getElementsByClassName("required");
@@ -12,14 +10,14 @@ for(var i=0; i<reqelements.length; i++){
 	reqElementIds[i] = reqelements[i].id;
 }
 
-function init(){
+/*function init(){
 	formData = '{';
 	//formData += "\"psn\": \"\", ";
 	//formData += "\"appUrl\": \"\" ";
 	formData += '}';
-}
-init();
-var formJson = JSON.parse(formData);
+}*/
+//init();
+var formJson = {};//JSON.parse(formData);
 
 //Populates the multi-select dropdowns
 function populateMultiSelect(fieldName, length, target){
@@ -27,7 +25,7 @@ function populateMultiSelect(fieldName, length, target){
 	for(var i=1; i<=length; i++){
 		var content = fieldName +" " +i;
 		var nameId = fieldName +i;
-		var addfield = "<div class=\"multi-select-element\"><input id=\"" +nameId +"\" name=\"" +nameId +"\" type=\"checkbox\"/> <label class=\"multi-label\" for=\"" +nameId +"\">" +content +"</label></div>";
+		var addfield = "<div class=\"multi-select-element\"><input id=\"" +nameId +"\" name=\"" +nameId +"\" type=\"checkbox\"/> <label class=\"multi-label multi-label-full\" for=\"" +nameId +"\">" +content +"</label></div>";
 		$(target).append(addfield);
 	}
 }
@@ -39,11 +37,11 @@ function populateMultiSelectChild(fieldName, length, target){
 		for(var i=1; i<=length; i++){
 			var content = fieldName +" " +i;
 			var nameId = fieldName +i;
-			var addfield = "<div class=\"multi-select-element\"><input id=\"" +nameId +"\" name=\"" +nameId +"\" type=\"checkbox\"/> <label class=\"multi-label\" for=\"" +nameId +"\">" +content +"</label></div>";
+			var addfield = "<div class=\"multi-select-element\"><input id=\"" +nameId +"\" name=\"" +nameId +"\" type=\"checkbox\"/> <label class=\"multi-label multi-labal-full\" for=\"" +nameId +"\">" +content +"</label></div>";
 		}
 	});
 }
-//populateMultiSelect("app", 3, "appName");
+
 populateMultiSelect("app", 6, "appName");
 populateMultiSelect("database", 8, "db");
 
@@ -99,7 +97,11 @@ function validate(){
 	return;
 }
 
+
+
 ///////////////////////   onChange Events for Form Elements //////////////////////
+
+//====== Text boxes
 $("input[type=\"text\"]").on("mouseleave blur", function(){
 	/* When the user moves the mouse away from the text field (drag and drop) or when they click away from it, check if we need to 
 	 * progress the bar
@@ -119,6 +121,7 @@ $("input[type=\"text\"]").on("mouseleave blur", function(){
 	
 });
 
+//====== Dropdown-menus
 $("select").change(function(){
 	
 	formJson[$(this).attr("id")] = $(this).val();
@@ -135,11 +138,31 @@ $("select").change(function(){
 	}
 });
 
+//====== Toggle dropdown buttons in multi-select menus
+$(".dropdown-toggle").click(function(){
+	$(this).siblings(".multi-select").toggle(1000);
+	var rotation;
+	if($(this).attr("style")){
+		rotation = parseInt($(this).attr("style").substr(18, 3));
+	}
+	else{
+		rotation = 0;
+	}
+	console.log(rotation);
+	rotation = 180 - rotation;
+	$(this).css("transform", "rotate(" +rotation +"deg)");
+});
+
 //====== Parent multi-selects
 $(".multi-select-element > input").change(function(){
 	var addedBox = $(this).attr("id");
 	var parent = $(this).parent().parent().attr("id");
 	var nested = $(this).siblings(".multi-select").attr("name");
+	
+	if($(this).is(":checked")){
+		$(this).siblings(".multi-select").show();
+		$(this).siblings(".dropdown-toggle").css("transform", "rotate(180deg)");
+	}
 	
 	/* This block runs if the multi-select does not have a nested multi-select. It only runs once per session,  
 	 * to initialize the JSON object
@@ -192,6 +215,18 @@ $(".multi-select-element > input").change(function(){
 				reqElementIds.push(parent);
 			}
 		}
+		
+		//Bind the options in the relTo dropdown menu to whatever is checked in the "track" multi-select
+		if(parent == "track"){
+			var inpName = $(this).siblings("label").html();
+			if($(this).is(":checked")){
+				$("#relTo").append("<option value=\"" +addedBox +"\">" +inpName +"</option>")
+			}
+			else{
+				//alert("unchecked");
+				$("#relTo option[value=\"" +addedBox +"\"]").remove();
+			}
+		}
 	}
 	
 	console.log(JSON.stringify(formJson));
@@ -204,6 +239,11 @@ $(".multi-select-element > .multi-select > input").change(function(){
 	var relative = $(this).parent().siblings("input").attr("id");
 	var subset = $(this).parent().attr("name");
 	var thisBox = $(this).attr("id");
+	
+	if(!$("#" +relative).is(":checked")){
+		$("#" +relative).prop("checked", true);
+		$("#" +relative).trigger("change");
+	}
 	
 	//If the checkbox has already been logged, then the user wants to delete it.
 	if(formJson[parent][relative][subset].includes(thisBox)){
