@@ -7,22 +7,18 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Real@Work Cisco</title>
 	<!-- Bootstrap -->
-	<link href="css/bootstrap-4.0.0.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 	<link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+	<nav class="navbar navbar-expand-lg navbar-light">
+		<a class="navbar-brand" href="index.html"><img src="images/Cisco_logo_blue_2016.png" alt="Cisco Systems" height="55" /></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> <span class="nav-button-text hidden-sm-down">MENU</span></button>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active"> <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a> </li>
-				<li class="nav-item"> <a class="nav-link" href="#">Link</a> </li>
+				<li class="nav-item"> <a class="nav-link" href="readme.md">User Guide</a> </li>
 			</ul>
-		</div>
-		<div class="navbar-header">
-			<a class="navbar-brand" href="index.html"><img src="images/Cisco_logo_blue_2016.png" alt="Cisco Systems" height="40" /></a>
 		</div>
 	</nav>
 	<header>
@@ -44,16 +40,7 @@
 						<!--General Settings-->
 						<div role="tabpanel" class="tab-pane fade show active" id="home1" aria-labelledby="hometab">
 							<label>Application Name <span class="text-danger">*</span></label>
-							<div id="appName" class="form-control multi-select required">
-								<!--input name="app1" type="checkbox" id="app1" selected=""/><label class="multi-label" for="app1">App 1</label><br>
-								<input name="app2" type="checkbox" id="app2" selected=""/><label class="multi-label" for="app2">App 2</label><br>
-								<input name="app3" type="checkbox" id="app3" selected=""/><label class="multi-label" for="app3">App 3</label><br>
-								<input name="app4" type="checkbox" id="app4" selected=""/><label class="multi-label" for="app4">App 4</label><br>
-								<input name="app5" type="checkbox" id="app5" selected=""/><label class="multi-label" for="app5">App 5</label><br>
-								<input name="app6" type="checkbox" id="app6" selected=""/><label class="multi-label" for="app6">App 6</label><br>
-								<input name="app7" type="checkbox" id="app7" selected=""/><label class="multi-label" for="app7">App 7</label><br>
-								<input name="app8" type="checkbox" id="app8" selected=""/><label class="multi-label" for="app8">App 8</label><br-->
-							</div>
+							<div id="appName" class="form-control multi-select required"></div>
 							<br />
 							<label>Consumed/Exposed</label>
 							<br />
@@ -65,6 +52,7 @@
 							<br>
 							<label>Track<span class="text-danger">*</span></label>
 							<div id="track" class="form-control multi-select required">
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -285,18 +273,21 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> d72ded89d041ddb6eaab5ed0ca24753451437dbb
 								<div class="multi-select-element">
 									<input id="track1" name="track1" type="checkbox"/>
 									<label class="multi-label" for="track1">Track 1</label>
+									<a class="dropdown-toggle" type="button"></a>
 									<div name="subtracks" class="form-control multi-select">
-										<input id="subtrack1" type="checkbox"/><label class="multi-label" for="subtrack1">Subtrack 1</label><br>
-										<input id="subtrack2" type="checkbox"/><label class="multi-label" for="subtrack2">Subtrack 2</label><br>
-										<input id="subtrack3" type="checkbox"/><label class="multi-label" for="subtrack3">Subtrack 3</label><br>
-										<input id="subtrack4" type="checkbox"/><label class="multi-label" for="subtrack4">Subtrack 4</label><br>
-										<input id="subtrack5" type="checkbox"/><label class="multi-label" for="subtrack5">Subtrack 5</label><br>
-										<input id="subtrack6" type="checkbox"/><label class="multi-label" for="subtrack6">Subtrack 6</label><br>
-										<input id="subtrack7" type="checkbox"/><label class="multi-label" for="subtrack7">Subtrack 7</label><br>
-										<input id="subtrack8" type="checkbox"/><label class="multi-label" for="subtrack8">Subtrack 8</label><br>
+										<input id="subtrack1" type="checkbox"/> <label class="multi-label" for="subtrack1">Subtrack 1</label><br>
+										<input id="subtrack2" type="checkbox"/> <label class="multi-label" for="subtrack2">Subtrack 2</label><br>
+										<input id="subtrack3" type="checkbox"/> <label class="multi-label" for="subtrack3">Subtrack 3</label><br>
+										<input id="subtrack4" type="checkbox"/> <label class="multi-label" for="subtrack4">Subtrack 4</label><br>
+										<input id="subtrack5" type="checkbox"/> <label class="multi-label" for="subtrack5">Subtrack 5</label><br>
+										<input id="subtrack6" type="checkbox"/> <label class="multi-label" for="subtrack6">Subtrack 6</label><br>
+										<input id="subtrack7" type="checkbox"/> <label class="multi-label" for="subtrack7">Subtrack 7</label><br>
+										<input id="subtrack8" type="checkbox"/> <label class="multi-label" for="subtrack8">Subtrack 8</label><br>
 									</div>
 								</div>
 								<div class="multi-select-element">
@@ -327,6 +318,7 @@
 									<input name="track8" type="checkbox" id="track8" selected=""/>
 									<label class="multi-label" for="track8">Track 8</label><br>
 								</div>
+<<<<<<< HEAD
 >>>>>>> b604cd9e67cf31cfad893ae161612a3b84964dba
 =======
 >>>>>>> parent of b604cd9... Nest subtrack within track. Replace element-specific JavaScript functions with generalized ones.
@@ -334,9 +326,10 @@
 >>>>>>> parent of b604cd9... Nest subtrack within track. Replace element-specific JavaScript functions with generalized ones.
 =======
 >>>>>>> parent of b604cd9... Nest subtrack within track. Replace element-specific JavaScript functions with generalized ones.
+=======
+>>>>>>> d72ded89d041ddb6eaab5ed0ca24753451437dbb
 							</div>
-							-->
-                            <br />
+							<br />
 							<label>Application URL</label>
 							<br />
 							<input type="text" id="appUrl" class="form form-control" />
@@ -357,11 +350,7 @@
 							<br>
 							<label>Job Name<span class="text-danger">*</span></label>
 							<br>
-							<select name="jobName" id="jobName" class="form-control form-dropdown required">
-								<option value="0" selected>-- Please Select --</option>
-								<option value="job1">Job 1</option>
-								<option value="job2">Job 2</option>
-							</select>
+							<input type ="text" name="jobName" id="jobName" class="form-control required" />
 							<br>
 							<label>Type<span class="text-danger">*</span></label>
 							<br>
@@ -373,28 +362,19 @@
 							<br>
 							<label>Database<span class="text-danger">*</span></label>
 							<div id="db" class="form-control multi-select required">
-								<input name="db1" type="checkbox" id="db1" selected=""/><label class="multi-label" for="db1">Database 1</label><br>
-								<input name="db2" type="checkbox" id="db2" selected=""/><label class="multi-label" for="db2">Database 2</label><br>
-								<input name="db3" type="checkbox" id="db3" selected=""/><label class="multi-label" for="db3">Database 3</label><br>
-								<input name="db4" type="checkbox" id="db4" selected=""/><label class="multi-label" for="db4">Database 4</label><br>
-								<input name="db5" type="checkbox" id="db5" selected=""/><label class="multi-label" for="db5">Database 5</label><br>
-								<input name="db6" type="checkbox" id="db6" selected=""/><label class="multi-label" for="db6">Database 6</label><br>
-								<input name="db7" type="checkbox" id="db7" selected=""/><label class="multi-label" for="db7">Database 7</label><br>
-								<input name="db8" type="checkbox" id="db8" selected=""/><label class="multi-label" for="db8">Database 8</label><br>
 							</div>
 							<br />
 							<label>Related To: <span class="text-danger">*</span></label>
 							<br />
 							<select name="relTo" id="relTo" class="form-control form-dropdown required">
 								<option value="0" selected>-- Please Select --</option>
-								<option value="rel1">Relation 1</option>
-								<option value="rel2">Relation 2</option>
 							</select>
 						</div>
 						<!--JVM Settings-->
 						<div role="tabpanel" class="tab-pane fade show" id="panelThree" aria-labelledby="tab3">
 							<label>JVM Name<span class="text-danger">*</span></label>
 							<div id="jvmName" class="form-control multi-select required">
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -534,6 +514,8 @@
                                 
                                 <br>
 =======
+=======
+>>>>>>> d72ded89d041ddb6eaab5ed0ca24753451437dbb
 								<div class="multi-select-element">
 									<input id="jvm1" name="jvm1" type="checkbox"/> <label class="multi-label" for="jvm1">JVM 1</label>
 									<div class="form-control multi-select" name="hostName">
@@ -547,6 +529,7 @@
 										<input id="host8" type="checkbox" name="host8"/><label class="multi-label" for="host8">Host 8</label><br>
 									</div>
 								</div>
+<<<<<<< HEAD
 =======
 								<input name="jvm1" type="checkbox" id="jvm1" selected=""/><label class="multi-label" for="jvm1">JVM 1</label><br>
 >>>>>>> parent of b604cd9... Nest subtrack within track. Replace element-specific JavaScript functions with generalized ones.
@@ -556,65 +539,18 @@
 =======
 								<input name="jvm1" type="checkbox" id="jvm1" selected=""/><label class="multi-label" for="jvm1">JVM 1</label><br>
 >>>>>>> parent of b604cd9... Nest subtrack within track. Replace element-specific JavaScript functions with generalized ones.
+=======
+>>>>>>> d72ded89d041ddb6eaab5ed0ca24753451437dbb
 								<input name="jvm2" type="checkbox" id="jvm2" selected=""/><label class="multi-label" for="jvm2">JVM 2</label><br>
 								<input name="jvm3" type="checkbox" id="jvm3" selected=""/><label class="multi-label" for="jvm3">JVM 3</label><br>
 								<input name="jvm4" type="checkbox" id="jvm4" selected=""/><label class="multi-label" for="jvm4">JVM 4</label><br>
 								<input name="jvm5" type="checkbox" id="jvm5" selected=""/><label class="multi-label" for="jvm5">JVM 5</label><br>
 								<input name="jvm6" type="checkbox" id="jvm6" selected=""/><label class="multi-label" for="jvm6">JVM 6</label><br>
->>>>>>> b604cd9e67cf31cfad893ae161612a3b84964dba
 								<input name="jvm7" type="checkbox" id="jvm7" selected=""/><label class="multi-label" for="jvm7">JVM 7</label><br>
-                                
-                                  <div id="host7" class="hide">
-                                 <form action="/action_page.php" method="get">
-                                      <label>Select a host:<span class="text-danger ">*</span></label>
-                                        <input list="browsers" name="browser">
-                                        <datalist id="browsers">
-                                                <option value="host1">
-                                            <option value="host2">
-                                            <option value="host3">
-                                            <option value="host4">
-                                            <option value="host5">
-                                        </datalist>
-                           
-                                </form>
-                                </div>
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-								<input name="jvm8" type="checkbox" id="jvm8" selected=""/><label class="multi-label" for="jvm8">JVM 8</label>
-                                
-                                  <div id="host8" class="hide">
-                                 <form action="/action_page.php" method="get">
-                                      <label>Select a host:<span class="text-danger ">*</span></label>
-                                        <input list="browsers" name="browser">
-                                        <datalist id="browsers">
-                                                <option value="host1">
-                                            <option value="host2">
-                                            <option value="host3">
-                                            <option value="host4">
-                                            <option value="host5">
-                                        </datalist>
-                           
-                                </form>
-                                </div>
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                <br>
+								<input name="jvm8" type="checkbox" id="jvm8" selected=""/><label class="multi-label" for="jvm8">JVM 8</label><br>
 							</div>
 							<br />
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -666,6 +602,9 @@
 								<input name="host8" type="checkbox" id="host8" selected=""/><label class="multi-label" for="host8">Host 8</label><br-->
 							</div>
 >>>>>>> parent of b604cd9... Nest subtrack within track. Replace element-specific JavaScript functions with generalized ones.
+=======
+							
+>>>>>>> d72ded89d041ddb6eaab5ed0ca24753451437dbb
 							<br />
 							<label>Host Environment<span class="text-danger">*</span></label>
 							<select name="hostEnv" id="hostEnv" class="form-control form-dropdown required">
@@ -676,7 +615,12 @@
 						</div>
 					</div>
 				</div>
-				<button id="submit" class="btn btn-submit offset-5"	>Submit</button>
+				<div class="row">
+					<div class="offset-md-3 offset-sm-1 offset-xs-1">
+						<button id="submit" class="btn btn-submit"	>Submit</button>
+					</div>
+				</div>
+				
 			</form>
 			<aside id="success" class="jumbotron">
 				<h1 class="text-center">Success! Data processing...</h1>
@@ -693,82 +637,10 @@
 		</div>
 	</footer>
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<!-- Include all compiled plugins (below), or include individual files as needed -->
-	<!--script src="js/popper.min.js"></script-->
-	<script src="js/bootstrap-4.0.0.js"></script>
+	<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 	<script src="js/app.js"></script>
-    <script>
-        
-    $(document).ready(function(){
-        $('#track1').click(function(){
-           $('#sub1').removeClass('hide');
-        });
-        
-         $('#track2').click(function(){
-           $('#sub2').removeClass('hide');
-        });
-        
-        $('#track3').click(function(){
-           $('#sub3').removeClass('hide');
-        });
-        
-         $('#track4').click(function(){
-           $('#sub4').removeClass('hide');
-        });
-        
-          $('#track5').click(function(){
-           $('#sub5').removeClass('hide');
-        });
-        
-          $('#track6').click(function(){
-           $('#sub6').removeClass('hide');
-        });
-        
-         $('#track7').click(function(){
-           $('#sub7').removeClass('hide');
-        });
-        
-         $('#track8').click(function(){
-           $('#sub8').removeClass('hide');
-        });
-        
-         $('#jvm1').click(function(){
-           $('#host1').removeClass('hide');
-        });
-        
-        $('#jvm2').click(function(){
-           $('#host2').removeClass('hide');
-        });
-        
-         $('#jvm3').click(function(){
-           $('#host3').removeClass('hide');
-        });
-          $('#jvm4').click(function(){
-           $('#host4').removeClass('hide');
-        });
-        
-          $('#jvm5').click(function(){
-           $('#host5').removeClass('hide');
-        });
-        
-         $('#jvm6').click(function(){
-           $('#host6').removeClass('hide');
-        });
-        
-        $('#jvm7').click(function(){
-           $('#host7').removeClass('hide');
-        });
-        
-        $('#jvm8').click(function(){
-           $('#host8').removeClass('hide');
-        });
-        
-        
-    });
-    
-    
-    </script>
 </body>
 
 </html>
