@@ -20,18 +20,33 @@ for(var i=0; i<reqelements.length; i++){
 var formJson = {};//JSON.parse(formData);
 
 //Populates the multi-select dropdowns
-function populateMultiSelect(fieldName, length, target){
-	target = "#" +target;
-	for(var i=1; i<=length; i++){
+function populateMultiSelect(fieldName, target, id, hasNestedMenu){
+	var targetId = "#" +target;
+	$.ajax({
+		type: "GET",
+		url: "/populateUI",
+		success: function(data){
+			$(targetId).append("<div class=\"multi-select-element\"></div>");
+			$.each(data[target], function(i, obj){
+				var trimmed = obj.replace(/ /g, "");
+				$(targetId +" div.multi-select-element").append("<input id=\"" +trimmed +"\" name=\"" +trimmed +"\" type=\"checkbox\"/><label class=\"multi-label\" for=\"" +trimmed +"\">" +fieldName +"</label><a class=\"dropdown-toggle\" type=\"button\"></a>");
+			});
+		},
+		failure: function(err){
+			console.log(err);
+			$(targetId).append("<p>:( A connection error occurred. Please try reloading the page.</p>");
+		}
+	});
+	/*for(var i=1; i<=length; i++){
 		var content = fieldName +" " +i;
 		var nameId = fieldName +i;
 		var addfield = "<div class=\"multi-select-element\"><input id=\"" +nameId +"\" name=\"" +nameId +"\" type=\"checkbox\"/> <label class=\"multi-label multi-label-full\" for=\"" +nameId +"\">" +content +"</label></div>";
 		$(target).append(addfield);
-	}
+	}*/
 }
 
 
-function populateMultiSelectChild(fieldName, length, target){
+function populateMultiSelectChild(fieldName, target, id){
 	//target = "#" +target;
 	$("div[name=\"" +target +"\"]").each(function(){
 		for(var i=1; i<=length; i++){
@@ -42,17 +57,38 @@ function populateMultiSelectChild(fieldName, length, target){
 	});
 }
 
-populateMultiSelect("app", 6, "appName");
-populateMultiSelect("database", 8, "db");
+//populateMultiSelect("app", 6, "appName");
+//populateMultiSelect("database", 8, "db");
 
 //Populates the dropdown menus
-function populateDropdown(fieldName, length, target){
+function populateDropdown(fieldName, target, id){
 	target = "#" +target;
 	$(target).append("<option value=\"0\">-- Please Select --</option>");
-	for(var i=1; i<length; i++){
+	/*for(var i=1; i<length; i++){
 		$(target).append("<option value=\""+ fieldName +i +"\">" + fieldName +" " +i +"</option>");
-	}
+	}*/
+	$.ajax({
+		type: "GET",
+		url: "/populateUI",
+		success: function(data){
+			console.log("Success!");
+			$.each(data[id], function(i, obj){
+				console.log("Populating...");
+				var trimmed = obj.replace(/ /g, "");
+				$(target).append("<option value=\"" +trimmed +"\">" +obj +"</option>");
+			});
+		},
+		error: function(err){
+			console.log(err);
+			alert("Error populating " +fieldName +" field.");
+		}
+	});
 }
+
+populateDropdown("Consumed/Exposed", "consExpo", "consumed_exposed");
+populateDropdown("Service Offering Name", "serviceOff", "service_offering_name");
+populateDropdown("Type", "type", "type");
+populateDropdown("Host Environment", "hostEnv", "host_env");
 
 //Moves the progress bar forward
 function progress(){
@@ -138,9 +174,9 @@ $("select").change(function(){
 	}
 });
 
-//====== Toggle dropdown buttons in multi-select menus
+//====== Toggle dropdown caret in multi-select menus
 $(".dropdown-toggle").click(function(){
-	$(this).siblings(".multi-select").toggle(1000);
+	$(this).siblings(".multi-select").toggle();
 	var rotation;
 	if($(this).attr("style")){
 		rotation = parseInt($(this).attr("style").substr(18, 3));
@@ -148,7 +184,7 @@ $(".dropdown-toggle").click(function(){
 	else{
 		rotation = 0;
 	}
-	console.log(rotation);
+	//console.log(rotation);
 	rotation = 180 - rotation;
 	$(this).css("transform", "rotate(" +rotation +"deg)");
 });
@@ -158,6 +194,7 @@ $(".multi-select-element > input").change(function(){
 	var addedBox = $(this).attr("id");
 	var parent = $(this).parent().parent().attr("id");
 	var nested = $(this).siblings(".multi-select").attr("name");
+	var inpName = $(this).siblings("label").html();
 	
 	if($(this).is(":checked")){
 		$(this).siblings(".multi-select").show();
@@ -197,7 +234,7 @@ $(".multi-select-element > input").change(function(){
 		if(typeof(formJson[parent]) == "undefined"){
 			formJson[parent] = {};
 		}
-		//This block initializes the JSON object for the nested multi-select. It runs every time the object is deleted.
+		//This block initializes the JSON object for the nested multi-select. It runs every time the checkbox is checked.
 		if(typeof(formJson[parent][addedBox]) == "undefined"){
 			formJson[parent][addedBox] = {};
 			formJson[parent][addedBox][nested] = [];
@@ -214,19 +251,13 @@ $(".multi-select-element > input").change(function(){
 				regress();
 				reqElementIds.push(parent);
 			}
+			
+			if(parent == "track"){
+				$("#relTo option[value=\"" +addedBox +"\"]").remove();			
+			}
 		}
 		
 		//Bind the options in the relTo dropdown menu to whatever is checked in the "track" multi-select
-		if(parent == "track"){
-			var inpName = $(this).siblings("label").html();
-			if($(this).is(":checked")){
-				$("#relTo").append("<option value=\"" +addedBox +"\">" +inpName +"</option>")
-			}
-			else{
-				//alert("unchecked");
-				$("#relTo option[value=\"" +addedBox +"\"]").remove();
-			}
-		}
 	}
 	
 	console.log(JSON.stringify(formJson));
@@ -239,6 +270,7 @@ $(".multi-select-element > .multi-select > input").change(function(){
 	var relative = $(this).parent().siblings("input").attr("id");
 	var subset = $(this).parent().attr("name");
 	var thisBox = $(this).attr("id");
+	var inpName = $("#" +relative).siblings("label").html();
 	
 	if(!$("#" +relative).is(":checked")){
 		$("#" +relative).prop("checked", true);
@@ -253,6 +285,10 @@ $(".multi-select-element > .multi-select > input").change(function(){
 			regress();
 			reqElementIds.push(parent);
 		}
+		
+		if(formJson[parent][relative][subset].length == 0 && parent == "track"){
+			$("#relTo option[value=\"" +relative +"\"]").remove();
+		}
 	}
 	//Otherwise, add it to the JSON object
 	else{
@@ -260,6 +296,11 @@ $(".multi-select-element > .multi-select > input").change(function(){
 		if($(this).parent().parent().parent().is(".required") && formJson[parent][relative][subset].length == 1){
 			progress();
 			reqElementIds.splice(reqElementIds.indexOf(parent), 1);
+		}
+		
+		//If the user checks a box in the track menu, add it to the relTo dropdown.
+		if(formJson[parent][relative][subset].length == 1 && parent == "track"){
+			$("#relTo").append("<option value=\"" +relative +"\">" +inpName +"</option>")			
 		}
 	}
 	console.log(JSON.stringify(formJson));

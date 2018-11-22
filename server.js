@@ -57,10 +57,72 @@
     from which the Excel sheets will be created
  */
 
-var MongoClient = require('mongodb').MongoClient;
+var express = require("express");
+var bodyparser = require("body-parser");
+var mongoose = require("mongoose");
+//var MongoClient = require('mongodb').MongoClient;
 
-// Current URL is local host
-var url = "mongodb://localhost:27017/";
+var app = express();
+
+//var url = "mongodb://localhost:27017/"; // Current URL is local host
+var url = "mongodb://gems:Cisco123@ds261917.mlab.com:61917/gemsdashboard";
+
+mongoose.connect(url, {useNewUrlParser: true});
+
+var gemsGetSchema = new mongoose.Schema({
+	application_name: [String],
+	consumed_exposed: [String],
+	track: [String],
+	subtrack: [String],
+	service_offering_name: [String],
+	type: [String],
+	database: [String],
+	related_to: [String],
+	jvm_name: [String],
+	host: [String],
+	host_env: [String]
+});
+
+var gemsPostSchema = new mongoose.Schema({}); //Populate this as necessary
+
+var gemsGetModel = mongoose.model("gemsGetModel", gemsGetSchema, "dummydatabase"); //The third parameter is the collection. Change as necessary
+
+var gemsPostModel = mongoose.model("gemsPostModel", gemsPostSchema, "");
+
+app.listen(3000); //Arbitrarily make the app listen to port 3000.
+
+//Initialize all files and dependencies.
+app.get("/", function(req, res){
+	res.sendFile(__dirname +"/index.html");
+});
+
+app.get("/index.html", function(req, res){
+	res.sendFile(__dirname +"/index.html");
+});
+
+app.get("/css/style.css", function(req, res){
+	res.sendFile(__dirname +"/css/style.css");
+});
+
+app.get("/js/app.js", function(req, res){
+	res.sendFile(__dirname +"/js/app.js");
+});
+
+app.get("/readme.md", function(req, res){
+	res.sendFile(__dirname +"/readme.md");
+});
+
+app.get("/images/Cisco_logo_blue_2016.png", function(req, res){
+	res.sendFile(__dirname +"/images/Cisco_logo_blue_2016.png");
+});
+
+
+
+app.get("/populateUI", function(req, res){
+	gemsGetModel.find().then(function(doc){
+		res.send(doc[0]);
+	});
+});
 
 /*
 // Takes field from the dummy database and returns the entire array
@@ -172,6 +234,7 @@ MongoClient.connect(url, function(err, db) {
 /* Excel Sheets */
 
 var Excel = require('exceljs');
+
 var jobs = new Excel.Workbook();
 var jobsws = jobs.addWorksheet('Jobs');
 var jvms = new Excel.Workbook();
@@ -180,7 +243,7 @@ var processflow = new Excel.Workbook();
 var processflowws = processflow.addWorksheet('Process Flow States');
 var serviceurl = new Excel.Workbook();
 var serviceurlws = serviceurl.addWorksheet('Service URL');
-
+/*
 MongoClient.connect(url, function(err, db) {
     if (err) throw err;
     var dbo = db.db("gemsdashboard");
@@ -246,11 +309,11 @@ function serviceURLExcel(application_name,application_url,consumed_exposed,proce
 		{ header: 'consumed_exposed', key: 'consumed_exposed', width: 15},
 		{ header: 'process_state', key: 'process_state', width: 10}
 	];
-	name = application_name;
+	var name = application_name;// =============================================== I added the word "var" here. Is it necessary?
 	worksheet.addRow([application_name,name,application_url,consumed_exposed,process_state]);
 }
 
 function writeToExcel(workbook, filename) {
-	workbook.xlsx.writeFile(filename)
-    	.then(function() {});
+	workbook.xlsx.writeFile(filename).then(function(){});
 }
+*/

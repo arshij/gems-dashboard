@@ -27,7 +27,9 @@ _____
 	* Make sure to change the menu from the default value, "Please Select"
 	* __For the "Related To" dropdown:__
 		* The options are populated from whatever is selected in the "track" multi-select menu
-		* Unchecking a box from "track" removes it form "Related To"
+		* To add an option to "Related To," check a box in the "Track" menu and then select a corresponding subtrack
+		* Unchecking a box from "track" removes it from "Related To"
+		* Additionally, deselecting all subtracks from a particular track removes it from "Related To"
 		* If you selected a track in "Related To" but unchecked it from "Track", then the "Related To" will revert to the default value
 	
 ----
@@ -43,3 +45,10 @@ _____
 	* Occurs when text-entry fields have characters that look like code injection
 	* All fields that are invalid will be outlined in red
 	* Please write letters, numbers, and underscores *only*
+
+---
+
+### Dependencies
+
+See package.json for npm dependencies. Please use `npm install` to install all dependencies.
+Nodemon is recommended. To install, type `npm install nodemon -g`.
