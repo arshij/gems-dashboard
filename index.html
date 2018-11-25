@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<!-- ============================ NOTICE: This file shows ONLY if the NodeJS server does not run ========================================== -->
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -23,155 +23,9 @@
 	</nav>
 	<header>
 		<div class="container col-lg-6 col-md-6 col-sm-8 col-xs-12">
-			<form id="dash" name="dash" method="POST" onSubmit="validate(); return false;">
-				<div class="progressbar"><div id="status" class="status"></div></div>
-				<label>Process State Name<span class="text-danger">*</span></label>
-				<input id="psn" class="form-control form-inline required" type="text" autofocus/>
-				<br>
-				<br />
-				<div class="container-fluid sections">
-					<ul id="form-tabs" class="nav nav-tabs" role="tablist">
-						<li class="nav-item"><a class="nav-link active" href="#home1" id="hometab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">General</a> </li>
-						<li class="nav-item"> <a class="nav-link" href="#paneTwo" role="tab" id="tab2" data-toggle="tab" aria-controls="hats">Job</a> </li>
-						<li class="nav-item"> <a id="tab3" class="nav-link" href="#panelThree" role="tab" data-toggle="tab" aria-controls="hats">JVM</a></li>
-					</ul>
-					<!-- Content Panel -->
-					<div id="form-sections" class="tab-content">
-						<!--General Settings-->
-						<div role="tabpanel" class="tab-pane fade show active" id="home1" aria-labelledby="hometab">
-							<label>Application Name <span class="text-danger">*</span></label>
-							<div id="appName" class="form-control multi-select required"></div>
-							<br />
-							<label>Consumed/Exposed</label>
-							<br />
-							<select name="consExpo" id="consExpo" class="form form-control form-dropdown">
-							</select>
-							<br>
-							<label>Track<span class="text-danger">*</span></label>
-							<div id="track" class="form-control multi-select required">
-								<div class="multi-select-element">
-									<input id="track1" name="track1" type="checkbox"/>
-									<label class="multi-label" for="track1">Track 1</label>
-									<a class="dropdown-toggle" type="button"></a>
-									<div name="subtracks" class="form-control multi-select">
-										<input id="subtrack1" type="checkbox"/> <label class="multi-label" for="subtrack1">Subtrack 1</label><br>
-										<input id="subtrack2" type="checkbox"/> <label class="multi-label" for="subtrack2">Subtrack 2</label><br>
-										<input id="subtrack3" type="checkbox"/> <label class="multi-label" for="subtrack3">Subtrack 3</label><br>
-										<input id="subtrack4" type="checkbox"/> <label class="multi-label" for="subtrack4">Subtrack 4</label><br>
-										<input id="subtrack5" type="checkbox"/> <label class="multi-label" for="subtrack5">Subtrack 5</label><br>
-										<input id="subtrack6" type="checkbox"/> <label class="multi-label" for="subtrack6">Subtrack 6</label><br>
-										<input id="subtrack7" type="checkbox"/> <label class="multi-label" for="subtrack7">Subtrack 7</label><br>
-										<input id="subtrack8" type="checkbox"/> <label class="multi-label" for="subtrack8">Subtrack 8</label><br>
-									</div>
-								</div>
-								<div class="multi-select-element">
-									<input name="track2" type="checkbox" id="track2" selected=""/>
-									<label class="multi-label" for="track2">Track 2</label>
-								</div>
-								<div class="multi-select-element">
-									<input name="track3" type="checkbox" id="track3" selected=""/>
-									<label class="multi-label" for="track3">Track 3</label><br>
-								</div>
-								<div class="multi-select-element">
-									<input name="track4" type="checkbox" id="track4" selected=""/>
-									<label class="multi-label" for="track4">Track 4</label><br>
-								</div>
-								<div class="multi-select-element">
-									<input name="track5" type="checkbox" id="track5" selected=""/>
-									<label class="multi-label" for="track5">Track 5</label><br>
-								</div>
-								<div class="multi-select-element">
-									<input name="track6" type="checkbox" id="track6" selected=""/>
-									<label class="multi-label" for="track6">Track 6</label><br>
-								</div>
-								<div class="multi-select-element">
-									<input name="track7" type="checkbox" id="track7" selected=""/>
-									<label class="multi-label" for="track7">Track 7</label><br>
-								</div>
-								<div class="multi-select-element">
-									<input name="track8" type="checkbox" id="track8" selected=""/>
-									<label class="multi-label" for="track8">Track 8</label><br>
-								</div>
-							</div>
-							<br />
-							<label>Application URL</label>
-							<br />
-							<input type="text" id="appUrl" class="form form-control" />
-						</div>
-						<!--Job Settings-->
-						<div role="tabpanel" class="tab-pane fade" id="paneTwo" aria-labelledby="tab2">
-							<label>Service Offering Name<span class="text-danger">*</span></label>
-							<br>
-							<select name="serviceOff" id="serviceOff" class="form-control form-dropdown required">
-							</select>
-							<br>
-							<label>Process Name<span class="text-danger">*</span></label>
-							<br>
-							<input type="text" name="process" id="process" class="form-control required" />
-							<br>
-							<label>Job Name<span class="text-danger">*</span></label>
-							<br>
-							<input type ="text" name="jobName" id="jobName" class="form-control required" />
-							<br>
-							<label>Type<span class="text-danger">*</span></label>
-							<br>
-							<select name="type" id="type" class="form-control form-dropdown required">
-							</select>
-							<br>
-							<label>Database<span class="text-danger">*</span></label>
-							<div id="db" class="form-control multi-select required">
-							</div>
-							<br />
-							<label>Related To: <span class="text-danger">*</span></label>
-							<br />
-							<select name="relTo" id="relTo" class="form-control form-dropdown required">
-							</select>
-						</div>
-						<!--JVM Settings-->
-						<div role="tabpanel" class="tab-pane fade show" id="panelThree" aria-labelledby="tab3">
-							<label>JVM Name<span class="text-danger">*</span></label>
-							<div id="jvmName" class="form-control multi-select required">
-								<div class="multi-select-element">
-									<input id="jvm1" name="jvm1" type="checkbox"/> <label class="multi-label" for="jvm1">JVM 1</label>
-									<div class="form-control multi-select" name="hostName">
-										<input id="host1" type="checkbox" name="host1"/><label class="multi-label" for="host1">Host 1</label><br>
-										<input id="host2" type="checkbox" name="host2"/><label class="multi-label" for="host2">Host 2</label><br>
-										<input id="host3" type="checkbox" name="host3"/><label class="multi-label" for="host3">Host 3</label><br>
-										<input id="host4" type="checkbox" name="host4"/><label class="multi-label" for="host4">Host 4</label><br>
-										<input id="host5" type="checkbox" name="host5"/><label class="multi-label" for="host5">Host 5</label><br>
-										<input id="host6" type="checkbox" name="host6"/><label class="multi-label" for="host6">Host 6</label><br>
-										<input id="host7" type="checkbox" name="host7"/><label class="multi-label" for="host7">Host 7</label><br>
-										<input id="host8" type="checkbox" name="host8"/><label class="multi-label" for="host8">Host 8</label><br>
-									</div>
-								</div>
-								<input name="jvm2" type="checkbox" id="jvm2" selected=""/><label class="multi-label" for="jvm2">JVM 2</label><br>
-								<input name="jvm3" type="checkbox" id="jvm3" selected=""/><label class="multi-label" for="jvm3">JVM 3</label><br>
-								<input name="jvm4" type="checkbox" id="jvm4" selected=""/><label class="multi-label" for="jvm4">JVM 4</label><br>
-								<input name="jvm5" type="checkbox" id="jvm5" selected=""/><label class="multi-label" for="jvm5">JVM 5</label><br>
-								<input name="jvm6" type="checkbox" id="jvm6" selected=""/><label class="multi-label" for="jvm6">JVM 6</label><br>
-								<input name="jvm7" type="checkbox" id="jvm7" selected=""/><label class="multi-label" for="jvm7">JVM 7</label><br>
-								<input name="jvm8" type="checkbox" id="jvm8" selected=""/><label class="multi-label" for="jvm8">JVM 8</label><br>
-							</div>
-							<br />
-							
-							<br />
-							<label>Host Environment<span class="text-danger">*</span></label>
-							<select name="hostEnv" id="hostEnv" class="form-control form-dropdown required">
-								<option value="0" selected>-- Please Select --</option>
-							</select>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="offset-md-3 offset-sm-1 offset-xs-1">
-						<button id="submit" class="btn btn-submit"	>Submit</button>
-					</div>
-				</div>
-				
-			</form>
-			<aside id="success" class="jumbotron">
-				<h1 class="text-center">Success! Data processing...</h1>
-			</aside>
+			<main id="success" class="jumbotron">
+				<h1 class="text-center">Sorry, a connection could not be established. Please try again.</h1>
+			</main>
 		</div>
 	</header>
 	<footer class="text-center">

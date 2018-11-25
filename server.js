@@ -62,7 +62,12 @@ var bodyparser = require("body-parser");
 var mongoose = require("mongoose");
 //var MongoClient = require('mongodb').MongoClient;
 
+var urlencodedParser = bodyparser.urlencoded({extended: false});
+
 var app = express();
+
+app.set("view engine", "ejs");
+app.use(bodyparser.json());
 
 //var url = "mongodb://localhost:27017/"; // Current URL is local host
 var url = "mongodb://gems:Cisco123@ds261917.mlab.com:61917/gemsdashboard";
@@ -72,32 +77,57 @@ mongoose.connect(url, {useNewUrlParser: true});
 var gemsGetSchema = new mongoose.Schema({
 	application_name: [String],
 	consumed_exposed: [String],
-	track: [String],
-	subtrack: [String],
+	track: [
+		{name: String, subtrack: [String]}
+	],
 	service_offering_name: [String],
 	type: [String],
 	database: [String],
 	related_to: [String],
-	jvm_name: [String],
-	host: [String],
+	jvm_name: [
+		{name: String, host: [String]}
+	],
 	host_env: [String]
 });
 
-var gemsPostSchema = new mongoose.Schema({}); //Populate this as necessary
+var gemsPostSchema = new mongoose.Schema({
+	psn: String,
+	appName: [String],
+	consExpo: String,
+	track: [
+		{name: String, subtrack: [String]}
+	],
+	serviceOff: String,
+	process: String,
+	job: String,
+	type: String,
+	database: [String],
+	relTo: String,
+	jvmName: [
+		{name: String, host: [String]}
+	],
+	hostEnv: String
+});
 
 var gemsGetModel = mongoose.model("gemsGetModel", gemsGetSchema, "dummydatabase"); //The third parameter is the collection. Change as necessary
 
-var gemsPostModel = mongoose.model("gemsPostModel", gemsPostSchema, "");
+var gemsPostModel = mongoose.model("gemsPostModel", gemsPostSchema, "userinput");
 
 app.listen(3000); //Arbitrarily make the app listen to port 3000.
 
 //Initialize all files and dependencies.
 app.get("/", function(req, res){
-	res.sendFile(__dirname +"/index.html");
+	//res.sendFile(__dirname +"/index.html");
+	gemsGetModel.find().then(function(doc){
+		//console.log(doc[0]);
+		res.render("home", {data: doc[0]});
+	});
 });
 
 app.get("/index.html", function(req, res){
-	res.sendFile(__dirname +"/index.html");
+	gemsGetModel.find().then(function(doc){
+		res.render("home", {data: doc[0]});
+	});
 });
 
 app.get("/css/style.css", function(req, res){
@@ -116,11 +146,16 @@ app.get("/images/Cisco_logo_blue_2016.png", function(req, res){
 	res.sendFile(__dirname +"/images/Cisco_logo_blue_2016.png");
 });
 
-
-
 app.get("/populateUI", function(req, res){
 	gemsGetModel.find().then(function(doc){
 		res.send(doc[0]);
+	});
+});
+
+app.post("/send", urlencodedParser, function(req, res){
+	gemsPostModel(req.body).save(function(err, data){
+		if(err) throw err;
+		console.log(data);
 	});
 });
 
@@ -231,7 +266,7 @@ MongoClient.connect(url, function(err, db) {
 });
 */
 
-/* Excel Sheets */
+/* Excel Sheets /////////////////////////////////////////////////////////////////////////////////////////////////Please end multi-line comment HERE/////////////////////
 
 var Excel = require('exceljs');
 
