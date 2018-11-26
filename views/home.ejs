@@ -70,7 +70,7 @@ function count(ele){
 							<br />
 							<label>Consumed/Exposed</label>
 							<br />
-							<select name="consumed_exposed" id="consExpo" class="form form-control form-dropdown">
+							<select name="consumed_exposed" id="consumed_exposed" class="form form-control form-dropdown">
 								<option value="0" >-- Please Select --</option>
 								<% data.consumed_exposed.forEach(function(item){
 									var objVal = item
@@ -216,7 +216,7 @@ function count(ele){
 									<input id="<%= trimmed %>" name=" <%= trimmed %>" type="checkbox"/>
 									<label class="multi-label" for="<%= trimmed %>"><%= obj.name %></label>
 									<a class="dropdown-toggle"></a>
-									<div name="host" class="form-control multi-select">
+									<div name="hosts" class="form-control multi-select">
 										<% obj.host.forEach(function(subObj){
 											trimmed = subObj.replace(/ /g, "");
 											if(count(subObj) > 0){trimmed = trimmed +count(subObj);}

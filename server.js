@@ -25,7 +25,7 @@
  * process_state = LPN Pack for BTS --> lpn_pack_for_bts
  * process_state_code = lpn_pack_for_bts_sc_nonprod_ts3
 */
- 
+
 // Add field process = 'Y'
 
 /* Sample Modified Input JSON data
@@ -91,22 +91,23 @@ var gemsGetSchema = new mongoose.Schema({
 });
 
 var gemsPostSchema = new mongoose.Schema({
-	psn: String,
-	appName: [String],
-	consExpo: String,
+	process_state_name: String,
+	app_name: [String],
+	consumed_exposed: String,
 	track: [
-		{name: String, subtrack: [String]}
+		{name: String, subtracks: [String]}
 	],
-	serviceOff: String,
+	app_url: String,
+	service_offering_name: String,
 	process: String,
 	job: String,
 	type: String,
 	database: [String],
-	relTo: String,
-	jvmName: [
-		{name: String, host: [String]}
+	related_to: String,
+	jvm_name: [
+		{name: String, hosts: [String]}
 	],
-	hostEnv: String
+	host_env: String
 });
 
 var gemsGetModel = mongoose.model("gemsGetModel", gemsGetSchema, "dummydatabase"); //The third parameter is the collection. Change as necessary
@@ -155,7 +156,6 @@ app.get("/populateUI", function(req, res){
 app.post("/send", urlencodedParser, function(req, res){
 	gemsPostModel(req.body).save(function(err, data){
 		if(err) throw err;
-		console.log(data);
 	});
 });
 
@@ -164,67 +164,67 @@ app.post("/send", urlencodedParser, function(req, res){
 MongoClient.connect(url, function(err, db) {
 	if (err) throw err;
 	var dbo = db.db("gemsdashboard");
-	
+
 	// Application Name
 	var applicationName = dbo.collection("dummydatabase").distinct('application_name');
 	applicationName.then(function (item) {
 		console.log(item);
 	});
-	
+
 	// Consumed or Exposed
 	var applicationName = dbo.collection("dummydatabase").distinct('consumed_exposed');
 	applicationName.then(function (item) {
 		console.log(item);
 	});
-	
+
 	// Track
 	var applicationName = dbo.collection("dummydatabase").distinct('track');
 	applicationName.then(function (item) {
 		console.log(item);
 	});
-	
+
 	// Subtrack
 	var applicationName = dbo.collection("dummydatabase").distinct('subtrack');
 	applicationName.then(function (item) {
 		console.log(item);
 	});
-	
+
 	// Service Offering Name
 	var applicationName = dbo.collection("dummydatabase").distinct('service_offering_name');
 	applicationName.then(function (item) {
 		console.log(item);
 	});
-	
+
 	// Type
 	var applicationName = dbo.collection("dummydatabase").distinct('type');
 	applicationName.then(function (item) {
 		console.log(item);
 	});
-	
+
 	// Database
 	var applicationName = dbo.collection("dummydatabase").distinct('database');
 	applicationName.then(function (item) {
 		console.log(item);
 	});
-	
+
 	// Related To
 	var applicationName = dbo.collection("dummydatabase").distinct('related_to');
 	applicationName.then(function (item) {
 		console.log(item);
 	});
-	
+
 	// JVM Name
 	var applicationName = dbo.collection("dummydatabase").distinct('jvm_name');
 	applicationName.then(function (item) {
 		console.log(item);
 	});
-	
+
 	// Host
 	var applicationName = dbo.collection("dummydatabase").distinct('host');
 	applicationName.then(function (item) {
 		console.log(item);
 	});
-	
+
 	// Host Environment
 	var applicationName = dbo.collection("dummydatabase").distinct('host_env');
 	applicationName.then(function (item) {

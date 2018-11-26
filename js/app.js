@@ -12,112 +12,19 @@ for(var i=0; i<reqelements.length; i++){
 
 var formJson = {};
 
-////////////////////////////////   Populates UI    ///////////////////////////////
+////////////////////////////////   Other Important Stuff    ///////////////////////////////
 
-//===== Populates the multi-select dropdowns
-/*function populateMultiSelect(fieldName, target, id){
-	var targetId = "#" +target;
-	$.ajax({
-		type: "GET",
-		url: "/populateUI",
-		success: function(data){
-			$.each(data[id], function(i, obj){
-				$(targetId).append("<div class=\"multi-select-element\"></div>");
-				var trimmed = obj.replace(/ /g, "");
-				var ind = i+1;
-				$(targetId +" div.multi-select-element:nth-of-type(" +ind +")").append("<input id=\"" +trimmed +"\" name=\"" +trimmed +"\" type=\"checkbox\"/> <label class=\"multi-label multi-label-full\" for=\"" +trimmed +"\">" +obj +"</label><br>");
-			});
-		},
-		error: function(err){
-			console.log(err);
-			$(targetId).append("<p>:( A connection error occurred. Please try reloading the page.</p>");
+//===== Check if a multi-select object is already in formJson (which means it should be deleted)
+function jsonElementId(element, section){
+	for(var i=0; i<formJson[section].length; i++){
+		if(formJson[section][i]["name"] == element){
+			return i;
 		}
-	});
-	/*for(var i=1; i<=length; i++){
-		var content = fieldName +" " +i;
-		var nameId = fieldName +i;
-		var addfield = "<div class=\"multi-select-element\"><input id=\"" +nameId +"\" name=\"" +nameId +"\" type=\"checkbox\"/> <label class=\"multi-label multi-label-full\" for=\"" +nameId +"\">" +content +"</label></div>";
-		$(target).append(addfield);
-	}*/
-//}
-
-//===== Populates the multi-select menus with nested menus
-/*function populateMultiSelectChild(fieldName, target, id, subId){
-
-	var targetId = "#" +target;
-	$.ajax({
-		type: "GET",
-		url: "/populateUI",
-		success: function(data){
-			$.each(data[id], function(i, obj){
-				$(targetId).append("<div class=\"multi-select-element\"></div>");
-				var objName = obj.name;
-				var trimmed = objName.replace(/ /g, "");
-				var ind = i+1;
-
-				$(targetId +" div.multi-select-element:nth-of-type(" +ind +")").append("<input id=\"" +trimmed +"\" name=\"" +trimmed +"\" type=\"checkbox\"/> <label class=\"multi-label\" for=\"" +trimmed +"\">" +objName +"</label> <a class=\"dropdown-toggle\" type=\"button\"></a>");
-
-				$(targetId +" div.multi-select-element:nth-of-type(" +ind +")").append("<div name=\"" +subId +"\" class=\"form-control multi-select\"></div>");
-
-				$.each(obj[subId], function(j, subObj){
-					trimmed = subObj.replace(/ /g, "");
-
-					$(targetId +" div.multi-select-element:nth-of-type(" +ind +") div.multi-select").append("<input id=\"" +trimmed +"\" type=\"checkbox\"/> <label class=\"multi-label\" for=\"" +trimmed +"\">" +subObj +"</label><br>");
-				});
-
-			});
-		},
-		error: function(err){
-			console.log(err);
-			$(targetId).append("<p>:( A connection error occurred. Please try reloading the page.</p>");
-		}
-	});
-	/*for(var i=1; i<=length; i++){
-		var content = fieldName +" " +i;
-		var nameId = fieldName +i;
-		var addfield = "<div class=\"multi-select-element\"><input id=\"" +nameId +"\" name=\"" +nameId +"\" type=\"checkbox\"/> <label class=\"multi-label multi-label-full\" for=\"" +nameId +"\">" +content +"</label></div>";
-		$(target).append(addfield);
 	}
+	return -1;
 }
 
-//===== Populates the dropdown menus
-function populateDropdown(fieldName, target, id){
-	target = "#" +target;
-	$(target).append("<option value=\"0\">-- Please Select --</option>");
-	/*for(var i=1; i<length; i++){
-		$(target).append("<option value=\""+ fieldName +i +"\">" + fieldName +" " +i +"</option>");
-	}
-	$.ajax({
-		type: "GET",
-		url: "/populateUI",
-		success: function(data){
-			$.each(data[id], function(i, obj){
-				var trimmed = obj.replace(/ /g, "");
-				$(target).append("<option value=\"" +trimmed +"\">" +obj +"</option>");
-			});
-		},
-		error: function(err){
-			console.log(err);
-			alert("Error populating " +fieldName +" field.");
-		}
-	});
-
-
-/*populateMultiSelectChild("Track", "track", "track", "subtrack");
-populateMultiSelectChild("JVM Name", "jvmName", "jvm_name", "host");
-
-populateMultiSelect("Application Name", "appName", "application_name");
-populateMultiSelect("Database", "db", "database");
-populateDropdown("Consumed/Exposed", "consExpo", "consumed_exposed");
-populateDropdown("Service Offering Name", "serviceOff", "service_offering_name");
-populateDropdown("Type", "type", "type");
-populateDropdown("Host Environment", "hostEnv", "host_env");
-
-$(document).ajaxComplete(function(event, request, settings){
-
-});*/
-
-//===== Validates form
+//===== Validates and processes form. VERY important.
 function validate(){
 	var idstyle;
 	$(".required").each(function(){
@@ -144,6 +51,7 @@ function validate(){
 				$("#success").append("<em>Writing to database</em>");
 			},
 			error: function(err){
+				$("#success").append("<strong>There was a problem writing to the database.</strong>")
 				console.log(err);
 			}
 		});
@@ -274,13 +182,14 @@ $(".multi-select-element > input").change(function(){
 			formJson[parent] = [];
 		}
 		//This block initializes the JSON object for the nested multi-select. It runs every time the checkbox is checked.
-		if(typeof(formJson[parent][addedBox]) == "undefined"){
-			formJson[parent].push({"name": addedBox, nested: []});
-			//formJson[parent][addedBox][nested] = [];
+		if(jsonElementId(inpName, parent) == -1){
+			var tempJson = "{\"name\": \"" +inpName +"\", \"" +nested +"\": []}";
+			console.log(tempJson);
+			formJson[parent].push(JSON.parse(tempJson));
 		}
-		//This block runs if the parent checkbox is unchecked. It unchecks all nested checkboxes.
+		//This block runs if the parent checkbox is unchecked by the user. It unchecks all nested checkboxes.
 		else{
-			//delete formJson[parent].splice();
+			formJson[parent].splice(jsonElementId(inpName, parent), 1);
 
 			$(".multi-select-element > .multi-select > input").each(function(){
 				$(this).prop("checked", false);
@@ -292,7 +201,7 @@ $(".multi-select-element > input").change(function(){
 			}
 
 			if(parent == "track"){
-				$("#relTo option[value=\"" +addedBox +"\"]").remove();
+				$("#related_to option[value=\"" +inpName +"\"]").remove();
 			}
 		}
 
@@ -309,6 +218,7 @@ $(".multi-select-element > .multi-select > input").change(function(){
 	var relative = $(this).parent().siblings("input").attr("id");
 	var subset = $(this).parent().attr("name");
 	var thisBox = $(this).attr("id");
+	var thisLabel = $("label[for=\"" +thisBox +"\"]").html();
 	var inpName = $("#" +relative).siblings("label").html();
 
 	if(!$("#" +relative).is(":checked")){
@@ -316,30 +226,40 @@ $(".multi-select-element > .multi-select > input").change(function(){
 		$("#" +relative).trigger("change");
 	}
 
+	var relativeInd = jsonElementId(inpName, parent);
 	//If the checkbox has already been logged, then the user wants to delete it.
-	if(formJson[parent][relative][subset].includes(thisBox)){
-		var delInd = formJson[parent][relative][subset].indexOf(thisBox);
-		formJson[parent][relative][subset].splice(delInd, 1);
-		if($(this).parent().parent().parent().is(".required") && formJson[parent][relative][subset].length == 0){
-			regress();
-			reqElementIds.push(parent);
-		}
+	if(formJson[parent][relativeInd][subset].includes(thisLabel)){
+		var delInd = formJson[parent][relativeInd][subset].indexOf(thisLabel);
+		formJson[parent][relativeInd][subset].splice(delInd, 1);
+		if(formJson[parent][relativeInd][subset].length == 0){
+			formJson[parent].splice(relativeInd, 1);
+			$("#" +relative).prop("checked", false);
+			if($("#" +parent).is(".required") && formJson[parent].length == 0){
+				regress();
+				reqElementIds.push(parent);
+			}
 
-		if(formJson[parent][relative][subset].length == 0 && parent == "track"){
-			$("#relTo option[value=\"" +relative +"\"]").remove();
+			if(parent == "track"){
+				$("#related_to option[value=\"" +inpName +"\"]").remove();
+			}
 		}
 	}
 	//Otherwise, add it to the JSON object
 	else{
-		formJson[parent][relative][subset].push(thisBox);
+		if(!$("#" +relative).is(":checked")){
+			$("#" +relative).prop("checked", true);
+			$("#" +relative).trigger("change");
+		}
+
+		formJson[parent][relativeInd][subset].push(thisLabel);
 		if($("#" +parent).is(".required") && reqElementIds.includes(parent)){
 			progress();
 			reqElementIds.splice(reqElementIds.indexOf(parent), 1);
 		}
 
 		//If the user checks a box in the track menu, add it to the relTo dropdown.
-		if(formJson[parent][relative][subset].length == 1 && parent == "track"){
-			$("#relTo").append("<option value=\"" +relative +"\">" +inpName +"</option>")
+		if(formJson[parent][relativeInd][subset].length == 1 && parent == "track"){
+			$("#related_to").append("<option value=\"" +inpName +"\">" +inpName +"</option>");
 		}
 	}
 	console.log(JSON.stringify(formJson));
