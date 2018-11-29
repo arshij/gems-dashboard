@@ -7,6 +7,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Real@Work Cisco</title>
 	<!-- Bootstrap -->
+        
+
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 	<link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
@@ -23,10 +25,24 @@
 	</nav>
 	<header>
 		<div class="container col-lg-6 col-md-6 col-sm-8 col-xs-12">
-			<form id="dash" name="dash" method="POST" onSubmit="validate(); return false;">
+			
+            <form method="POST" action="/addname" id="dash" name="dash"  >
+                
+                
+                
+                
+                
+                
+                
 				<div class="progressbar"><div id="status" class="status"></div></div>
 				<label>Process State Name<span class="text-danger">*</span></label>
-				<input id="psn" class="form-control form-inline required" type="text" autofocus/>
+				<input id="psn" name="process_state" class="form-control form-inline required" type="text" autofocus/>
+                
+               
+                
+                
+                
+                
 				<br>
 				<br />
 				<div class="container-fluid sections">
@@ -40,7 +56,15 @@
 						<!--General Settings-->
 						<div role="tabpanel" class="tab-pane fade show active" id="home1" aria-labelledby="hometab">
 							<label>Application Name <span class="text-danger">*</span></label>
-							<div id="appName" class="form-control multi-select required"></div>
+							<div id="appName" name="appName" class="form-control multi-select required">
+                            
+                            
+                          
+                            </div>
+                           
+                          
+                            
+                            
 							<br />
 							<label>Consumed/Exposed</label>
 							<br />
@@ -53,53 +77,74 @@
 							<label>Track<span class="text-danger">*</span></label>
 							<div id="track" class="form-control multi-select required">
 								<div class="multi-select-element">
-									<input id="track1" name="track1" type="checkbox"/>
+									<input id="track1" name="track" value="track1"type="checkbox"/>
 									<label class="multi-label" for="track1">Track 1</label>
-									<a class="dropdown-toggle" type="button"></a>
+									    <a class="dropdown-toggle" type="button"></a>
 									<div name="subtracks" class="form-control multi-select">
-										<input id="subtrack1" type="checkbox"/> <label class="multi-label" for="subtrack1">Subtrack 1</label><br>
-										<input id="subtrack2" type="checkbox"/> <label class="multi-label" for="subtrack2">Subtrack 2</label><br>
-										<input id="subtrack3" type="checkbox"/> <label class="multi-label" for="subtrack3">Subtrack 3</label><br>
-										<input id="subtrack4" type="checkbox"/> <label class="multi-label" for="subtrack4">Subtrack 4</label><br>
-										<input id="subtrack5" type="checkbox"/> <label class="multi-label" for="subtrack5">Subtrack 5</label><br>
-										<input id="subtrack6" type="checkbox"/> <label class="multi-label" for="subtrack6">Subtrack 6</label><br>
-										<input id="subtrack7" type="checkbox"/> <label class="multi-label" for="subtrack7">Subtrack 7</label><br>
-										<input id="subtrack8" type="checkbox"/> <label class="multi-label" for="subtrack8">Subtrack 8</label><br>
+										<input id="subtrack1" name="track1"  name="sub"value="subtrack1" type="checkbox"/> <label class="multi-label" for="subtrack1">Subtrack 1</label><br>
+										<input id="subtrack2" name="track1"name="sub" value="subtrack2"type="checkbox"/> <label class="multi-label" for="subtrack2">Subtrack 2</label><br>
+										<input id="subtrack3" name="track1"name="sub" value="subtrack3"type="checkbox"/> <label class="multi-label" for="subtrack3">Subtrack 3</label><br>
+										<input id="subtrack4" name="track1"name="sub" value="subtrack4" type="checkbox"/> <label class="multi-label" for="subtrack4">Subtrack 4</label><br>
+										<input id="subtrack5" name="track1"name="sub"value ="subtrack5" type="checkbox"/> <label class="multi-label" for="subtrack5">Subtrack 5</label><br>
+										<input id="subtrack6" name="track1"name="sub"value= "subtrack6" type="checkbox"/> <label class="multi-label" for="subtrack6">Subtrack 6</label><br>
+										<input id="subtrack7" name="track1"name="sub"value="subtrack7" type="checkbox"/> <label class="multi-label" for="subtrack7">Subtrack 7</label><br>
+										<input id="subtrack8" name="track1"name="sub" value="subtrack8" type="checkbox"/> <label class="multi-label" for="subtrack8">Subtrack 8</label><br>
 									</div>
+                                   
 								</div>
+                                
+                               
+                                
+                                
+                                
 								<div class="multi-select-element">
-									<input name="track2" type="checkbox" id="track2" selected=""/>
-									<label class="multi-label" for="track2">Track 2</label>
-								</div>
+									<input name="track" value="track2" type="checkbox" id="track2" selected=""/>
+                                    
+                                    <label class="multi-label" for="track2">Track 2</label>
+                                    <a class="dropdown-toggle" type="button"></a>
+									<div name="subtracks" class="form-control multi-select">
+										<input id="subtrack1" name="s2"name="sub" value="subtrack1" type="checkbox"/> <label class="multi-label" for="subtrack1">Subtrack 1</label><br>
+										<input id="subtrack2"  name="track2"name="sub" value="subtrack2"type="checkbox"/> <label class="multi-label" for="subtrack2">Subtrack 2</label><br>
+										<input id="subtrack3"  name="track2"name="sub" value="subtrack3"type="checkbox"/> <label class="multi-label" for="subtrack3">Subtrack 3</label><br>
+										<input id="subtrack4"  name="track2"name="sub" value="subtrack4" type="checkbox"/> <label class="multi-label" for="subtrack4">Subtrack 4</label><br>
+										<input id="subtrack5"  name="track2"name="sub"value ="subtrack5" type="checkbox"/> <label class="multi-label" for="subtrack5">Subtrack 5</label><br>
+										<input id="subtrack6"  name="track2"name="sub"value= "subtrack6" type="checkbox"/> <label class="multi-label" for="subtrack6">Subtrack 6</label><br>
+										<input id="subtrack7"  name="track2"name="sub"value="subtrack7" type="checkbox"/> <label class="multi-label" for="subtrack7">Subtrack 7</label><br>
+										<input id="subtrack8"  name="track2"name="sub" value="subtrack8" type="checkbox"/> <label class="multi-label" for="subtrack8">Subtrack 8</label><br>
+									</div>
+                                    
+                        </div>
+                                
+                                
 								<div class="multi-select-element">
-									<input name="track3" type="checkbox" id="track3" selected=""/>
+									<input name="track" value="track3" type="checkbox" id="track3" selected=""/>
 									<label class="multi-label" for="track3">Track 3</label><br>
 								</div>
 								<div class="multi-select-element">
-									<input name="track4" type="checkbox" id="track4" selected=""/>
+									<input name="track" value="track4"type="checkbox" id="track4" selected=""/>
 									<label class="multi-label" for="track4">Track 4</label><br>
 								</div>
 								<div class="multi-select-element">
-									<input name="track5" type="checkbox" id="track5" selected=""/>
+									<input name="track" value="track5"type="checkbox" id="track5" selected=""/>
 									<label class="multi-label" for="track5">Track 5</label><br>
 								</div>
 								<div class="multi-select-element">
-									<input name="track6" type="checkbox" id="track6" selected=""/>
+									<input name="track" value="track6" type="checkbox" id="track6" selected=""/>
 									<label class="multi-label" for="track6">Track 6</label><br>
 								</div>
 								<div class="multi-select-element">
-									<input name="track7" type="checkbox" id="track7" selected=""/>
+									<input name="track" value="track7" type="checkbox" id="track7" selected=""/>
 									<label class="multi-label" for="track7">Track 7</label><br>
 								</div>
 								<div class="multi-select-element">
-									<input name="track8" type="checkbox" id="track8" selected=""/>
+									<input name="track" value="track8" type="checkbox" id="track8" selected=""/>
 									<label class="multi-label" for="track8">Track 8</label><br>
 								</div>
 							</div>
 							<br />
 							<label>Application URL</label>
 							<br />
-							<input type="text" id="appUrl" class="form form-control" />
+							<input type="text" id="appUrl" name="appUrl"class="form form-control" />
 						</div>
 						<!--Job Settings-->
 						<div role="tabpanel" class="tab-pane fade" id="paneTwo" aria-labelledby="tab2">
@@ -121,7 +166,7 @@
 							<br>
 							<label>Type<span class="text-danger">*</span></label>
 							<br>
-							<select name="type" id="type" class="form-control form-dropdown required">
+							<select name="theType" id="type" class="form-control form-dropdown required">
 								<option value="0" selected>-- Please Select --</option>
 								<option value="type1">Type 1</option>
 								<option value="type2">Type 2</option>
@@ -142,26 +187,47 @@
 							<label>JVM Name<span class="text-danger">*</span></label>
 							<div id="jvmName" class="form-control multi-select required">
 								<div class="multi-select-element">
-									<input id="jvm1" name="jvm1" type="checkbox"/> <label class="multi-label" for="jvm1">JVM 1</label>
+									<input id="jvm1" name="jvm" value="jvm1"type="checkbox"/> <label class="multi-label" for="jvm1">JVM 1</label>
 									<div class="form-control multi-select" name="hostName">
-										<input id="host1" type="checkbox" name="host1"/><label class="multi-label" for="host1">Host 1</label><br>
-										<input id="host2" type="checkbox" name="host2"/><label class="multi-label" for="host2">Host 2</label><br>
-										<input id="host3" type="checkbox" name="host3"/><label class="multi-label" for="host3">Host 3</label><br>
-										<input id="host4" type="checkbox" name="host4"/><label class="multi-label" for="host4">Host 4</label><br>
-										<input id="host5" type="checkbox" name="host5"/><label class="multi-label" for="host5">Host 5</label><br>
-										<input id="host6" type="checkbox" name="host6"/><label class="multi-label" for="host6">Host 6</label><br>
-										<input id="host7" type="checkbox" name="host7"/><label class="multi-label" for="host7">Host 7</label><br>
-										<input id="host8" type="checkbox" name="host8"/><label class="multi-label" for="host8">Host 8</label><br>
+										<input id="host1" type="checkbox" name="jvm1" value="host1"/><label class="multi-label" for="host1">Host 1</label><br>
+										<input id="host2" type="checkbox" name="jvm1" value="host2"/><label class="multi-label" for="host2">Host 2</label><br>
+										<input id="host3" type="checkbox" name="jvm1" value="host3"/><label class="multi-label" for="host3">Host 3</label><br>
+										<input id="host4" type="checkbox" name="jvm1" value="host4"/><label class="multi-label" for="host4">Host 4</label><br>
+										<input id="host5" type="checkbox" name="jvm1"value="host5"/><label class="multi-label" for="host5">Host 5</label><br>
+										<input id="host6" type="checkbox" name="jvm1"value="host6"/><label class="multi-label" for="host6">Host 6</label><br>
+										<input id="host7" type="checkbox" name="jvm1"value="host7"/><label class="multi-label" for="host7">Host 7</label><br>
+										<input id="host8" type="checkbox" name="jvm1"value="host8"/><label class="multi-label" for="host8">Host 8</label><br>
 									</div>
-								</div>
-								<input name="jvm2" type="checkbox" id="jvm2" selected=""/><label class="multi-label" for="jvm2">JVM 2</label><br>
-								<input name="jvm3" type="checkbox" id="jvm3" selected=""/><label class="multi-label" for="jvm3">JVM 3</label><br>
-								<input name="jvm4" type="checkbox" id="jvm4" selected=""/><label class="multi-label" for="jvm4">JVM 4</label><br>
-								<input name="jvm5" type="checkbox" id="jvm5" selected=""/><label class="multi-label" for="jvm5">JVM 5</label><br>
-								<input name="jvm6" type="checkbox" id="jvm6" selected=""/><label class="multi-label" for="jvm6">JVM 6</label><br>
-								<input name="jvm7" type="checkbox" id="jvm7" selected=""/><label class="multi-label" for="jvm7">JVM 7</label><br>
-								<input name="jvm8" type="checkbox" id="jvm8" selected=""/><label class="multi-label" for="jvm8">JVM 8</label><br>
+                                
+								<input name="jvm" value="jv2"type="checkbox" id="jvm2" selected=""/><label class="multi-label" for="jvm2">JVM 2</label><br>
+								
+                                	<div class="form-control multi-select" name="hostName">
+										<input id="host1" type="checkbox" name="jvm2" value="host1"/><label class="multi-label" for="host1">Host 1</label><br>
+										<input id="host2" type="checkbox" name="jvm2" value="host2"/><label class="multi-label" for="host2">Host 2</label><br>
+										<input id="host3" type="checkbox" name="jvm2" value="host3"/><label class="multi-label" for="host3">Host 3</label><br>
+										<input id="host4" type="checkbox" name="jvm2" value="host4"/><label class="multi-label" for="host4">Host 4</label><br>
+										<input id="host5" type="checkbox" name="jvm2"value="host5"/><label class="multi-label" for="host5">Host 5</label><br>
+										<input id="host6" type="checkbox" name="jvm2"value="host6"/><label class="multi-label" for="host6">Host 6</label><br>
+										<input id="host7" type="checkbox" name="jvm2"value="host7"/><label class="multi-label" for="host7">Host 7</label><br>
+										<input id="host8" type="checkbox" name="jvm2"value="host8"/><label class="multi-label" for="host8">Host 8</label><br>
+									</div>
+                            
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                <input name="jvm" value="jv3" type="checkbox" id="jvm3" selected=""/><label class="multi-label" for="jvm3">JVM 3</label><br>
+								<input name="jvm" value="jv4" type="checkbox" id="jvm4" selected=""/><label class="multi-label" for="jvm4">JVM 4</label><br>
+								<input name="jvm" value="jvm5" type="checkbox" id="jvm5" selected=""/><label class="multi-label" for="jvm5">JVM 5</label><br>
+								<input name="jvm" value="jvm6" type="checkbox" id="jvm6" selected=""/><label class="multi-label" for="jvm6">JVM 6</label><br>
+								<input name="jvm" value="jvm7" type="checkbox" id="jvm7" selected=""/><label class="multi-label" for="jvm7">JVM 7</label><br>
+								<input name="jvm" value="jvm8"type="checkbox" id="jvm8" selected=""/><label class="multi-label" for="jvm8">JVM 8</label><br>
 							</div>
+                                
+                            </div>
 							<br />
 							
 							<br />
@@ -176,7 +242,8 @@
 				</div>
 				<div class="row">
 					<div class="offset-md-3 offset-sm-1 offset-xs-1">
-						<button id="submit" class="btn btn-submit"	>Submit</button>
+					
+                        <button id="submit" class="btn btn-submit"><input type="submit" value="Submit"> </button>
 					</div>
 				</div>
 				

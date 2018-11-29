@@ -20,12 +20,13 @@ for(var i=0; i<reqelements.length; i++){
 var formJson = {};//JSON.parse(formData);
 
 //Populates the multi-select dropdowns
+
 function populateMultiSelect(fieldName, length, target){
 	target = "#" +target;
 	for(var i=1; i<=length; i++){
 		var content = fieldName +" " +i;
 		var nameId = fieldName +i;
-		var addfield = "<div class=\"multi-select-element\"><input id=\"" +nameId +"\" name=\"" +nameId +"\" type=\"checkbox\"/> <label class=\"multi-label multi-label-full\" for=\"" +nameId +"\">" +content +"</label></div>";
+		var addfield = "<div class=\"multi-select-element\"><input id=\"" +nameId +"\" name=\"" +fieldName +  "\"value=\""+ nameId+"\" type=\"checkbox\"/> <label class=\"multi-label multi-label-full\" for=\"" +nameId +"\">" +content +"</label></div>";
 		$(target).append(addfield);
 	}
 }
@@ -37,12 +38,12 @@ function populateMultiSelectChild(fieldName, length, target){
 		for(var i=1; i<=length; i++){
 			var content = fieldName +" " +i;
 			var nameId = fieldName +i;
-			var addfield = "<div class=\"multi-select-element\"><input id=\"" +nameId +"\" name=\"" +nameId +"\" type=\"checkbox\"/> <label class=\"multi-label multi-labal-full\" for=\"" +nameId +"\">" +content +"</label></div>";
+			var addfield = "<div class=\"multi-select-element\"><input id=\"" +nameId +"\" name=\"" +nameId + "\"value=\""+ nameId+"\" type=\"checkbox\" /> <label class=\"multi-label multi-labal-full\" for=\"" +nameId +"\">" +content +"</label></div>";
 		}
 	});
 }
 
-populateMultiSelect("app", 6, "appName");
+populateMultiSelect("app", 7, "appName");
 populateMultiSelect("database", 8, "db");
 
 //Populates the dropdown menus
