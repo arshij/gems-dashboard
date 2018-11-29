@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<%
+var idArray = [];
+function count(ele){
+	var count = 0;
+
+	for(var i=0; i<idArray.length; i++){
+		if(idArray[i] == ele){
+			count++;
+		}
+	}
+
+	return count;
+}
+
+%>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Real@Work Cisco</title>
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+	<link href="css/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light">
+		<a class="navbar-brand" href="index.html"><img src="images/Cisco_logo_blue_2016.png" alt="Cisco Systems" height="55" /></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> <span class="nav-button-text hidden-sm-down">MENU</span></button>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item"> <a class="nav-link" href="readme.md">User Guide</a> </li>
+			</ul>
+		</div>
+	</nav>
+	<header>
+		<div class="container col-lg-6 col-md-6 col-sm-8 col-xs-12">
+			<form id="dash" name="dash" method="POST" onSubmit="validate(); return false;">
+				<div class="progressbar"><div id="status" class="status"></div></div>
+				<label>Process State Name<span class="text-danger">*</span></label>
+				<input id="process_state_name" class="form-control form-inline required" type="text" autofocus/>
+				<br>
+				<br />
+				<div class="container-fluid sections">
+					<ul id="form-tabs" class="nav nav-tabs" role="tablist">
+						<li class="nav-item"><a class="nav-link active" href="#home1" id="hometab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">General</a> </li>
+						<li class="nav-item"> <a class="nav-link" href="#paneTwo" role="tab" id="tab2" data-toggle="tab" aria-controls="hats">Job</a> </li>
+						<li class="nav-item"> <a id="tab3" class="nav-link" href="#panelThree" role="tab" data-toggle="tab" aria-controls="hats">JVM</a></li>
+					</ul>
+					<!-- Content Panel -->
+					<div id="form-sections" class="tab-content">
+						<!--General Settings-->
+						<div role="tabpanel" class="tab-pane fade show active" id="home1" aria-labelledby="hometab">
+							<label>Application Name <span class="text-danger">*</span></label>
+							<div id="app_name" class="form-control multi-select required">
+								<% data.application_name.forEach(function(obj){
+									var trimmed = obj.replace(/ /g, "");
+									if(count(obj) > 0){trimmed = trimmed+count(obj);}
+									idArray.push(obj);
+								%>
+								<div class="multi-select-element">
+									<input id="<%= trimmed %>" name=" <%= trimmed %>" type="checkbox"/>
+									<label class="multi-label multi-label-full" for="<%= trimmed %>"><%= obj %></label>
+								</div>
+								<% }); %>
+							</div>
+							<br />
+							<label>Consumed/Exposed</label>
+							<br />
+							<select name="consumed_exposed" id="consumed_exposed" class="form form-control form-dropdown">
+								<option value="0" >-- Please Select --</option>
+								<% data.consumed_exposed.forEach(function(item){
+									var objVal = item
+									if(count(item) > 0){objVal = objVal+count(item);}
+									idArray.push(item);
+								%>
+								<option value="<%= objVal %>" ><%= item %></option>
+								<% }); %>
+							</select>
+							<br>
+							<label>Track<span class="text-danger">*</span></label>
+							<div id="track" class="form-control multi-select required">
+								<% data.track.forEach(function(obj){
+									var trimmed = obj.name.replace(/ /g, "");
+									if(count(obj) > 0){trimmed = trimmed+count(obj);}
+									idArray.push(obj);
+								%>
+								<div class="multi-select-element">
+									<input id="<%= trimmed %>" name=" <%= trimmed %>" type="checkbox"/>
+									<label class="multi-label" for="<%= trimmed %>"><%= obj.name %></label>
+									<a class="dropdown-toggle"></a>
+									<div name="subtracks" class="form-control multi-select">
+										<% obj.subtrack.forEach(function(subObj){
+											trimmed = subObj.replace(/ /g, "");
+											if(count(subObj) > 0){trimmed = trimmed +count(subObj);}
+											idArray.push(subObj);
+										%>
+										<input id="<%= trimmed %>" type="checkbox"/> <label class="multi-label" for="<%= trimmed %>"><%= subObj %></label><br>
+										<!--input id="subtrack2" type="checkbox"/> <label class="multi-label" for="subtrack2">Subtrack 2</label><br>
+										<input id="subtrack3" type="checkbox"/> <label class="multi-label" for="subtrack3">Subtrack 3</label><br>
+										<input id="subtrack4" type="checkbox"/> <label class="multi-label" for="subtrack4">Subtrack 4</label><br>
+										<input id="subtrack5" type="checkbox"/> <label class="multi-label" for="subtrack5">Subtrack 5</label><br>
+										<input id="subtrack6" type="checkbox"/> <label class="multi-label" for="subtrack6">Subtrack 6</label><br>
+										<input id="subtrack7" type="checkbox"/> <label class="multi-label" for="subtrack7">Subtrack 7</label><br>
+										<input id="subtrack8" type="checkbox"/> <label class="multi-label" for="subtrack8">Subtrack 8</label><br-->
+										<% }); %>
+									</div>
+								</div>
+								<% }); %>
+								<!--div class="multi-select-element">
+									<input name="track2" type="checkbox" id="track2" selected=""/>
+									<label class="multi-label" for="track2">Track 2</label>
+								</div>
+								<div class="multi-select-element">
+									<input name="track3" type="checkbox" id="track3" selected=""/>
+									<label class="multi-label" for="track3">Track 3</label><br>
+								</div>
+								<div class="multi-select-element">
+									<input name="track4" type="checkbox" id="track4" selected=""/>
+									<label class="multi-label" for="track4">Track 4</label><br>
+								</div>
+								<div class="multi-select-element">
+									<input name="track5" type="checkbox" id="track5" selected=""/>
+									<label class="multi-label" for="track5">Track 5</label><br>
+								</div>
+								<div class="multi-select-element">
+									<input name="track6" type="checkbox" id="track6" selected=""/>
+									<label class="multi-label" for="track6">Track 6</label><br>
+								</div>
+								<div class="multi-select-element">
+									<input name="track7" type="checkbox" id="track7" selected=""/>
+									<label class="multi-label" for="track7">Track 7</label><br>
+								</div>
+								<div class="multi-select-element">
+									<input name="track8" type="checkbox" id="track8" selected=""/>
+									<label class="multi-label" for="track8">Track 8</label><br>
+								</div-->
+							</div>
+							<br />
+							<label>Application URL</label>
+							<br />
+							<input type="text" id="app_url" class="form form-control" />
+						</div>
+						<!--Job Settings-->
+						<div role="tabpanel" class="tab-pane fade" id="paneTwo" aria-labelledby="tab2">
+							<label>Service Offering Name<span class="text-danger">*</span></label>
+							<br>
+							<select name="service_offering_name" id="serviceOff" class="form-control form-dropdown required">
+								<option value="0" >-- Please Select --</option>
+								<% data.service_offering_name.forEach(function(item){ %>
+								<option value="<%= item %>" ><%= item %></option>
+								<% }); %>
+							</select>
+							<br>
+
+							<label>Process Name<span class="text-danger">*</span></label>
+							<br>
+							<input type="text" name="process_name" id="process_name" class="form-control required" />
+							<br>
+
+							<label>Job Name<span class="text-danger">*</span></label>
+							<br>
+							<input type ="text" name="job_name" id="job_name" class="form-control required" />
+							<br>
+
+							<label>Type<span class="text-danger">*</span></label>
+							<br>
+							<select name="type" id="type" class="form-control form-dropdown required">
+								<option value="0" >-- Please Select --</option>
+								<% data.type.forEach(function(item){
+									var itemVal = item
+									/*if(existsMoreThanOnce(item)){
+										itemVal = itemVal +"1";
+									}*/
+								%>
+								<option value="<%= itemVal %>" ><%= item %></option>
+								<% }); %>
+							</select>
+							<br>
+
+							<label>Database<span class="text-danger">*</span></label>
+							<div id="database" class="form-control multi-select required">
+								<% data.database.forEach(function(obj){
+									var trimmed = obj.replace(/ /g, "");
+									/*if(existsMoreThanOnce(obj)){
+										trimmed = trimmed +"1";
+									}*/
+								%>
+								<div class="multi-select-element">
+									<input id="<%= trimmed %>" name=" <%= trimmed %>" type="checkbox"/>
+									<label class="multi-label multi-label-full" for="<%= trimmed %>"><%= obj %></label>
+								</div>
+								<% }); %>
+							</div>
+							<br />
+
+							<label>Related To: <span class="text-danger">*</span></label>
+							<br />
+							<select name="related_to" id="related_to" class="form-control form-dropdown required">
+								<option value="0" >-- Please Select --</option>
+							</select>
+						</div>
+						<!--JVM Settings-->
+						<div role="tabpanel" class="tab-pane fade show" id="panelThree" aria-labelledby="tab3">
+							<label>JVM Name<span class="text-danger">*</span></label>
+							<div id="jvm_name" class="form-control multi-select required">
+								<% data.jvm_name.forEach(function(obj){
+									var trimmed = obj.name.replace(/ /g, "");
+									if(count(obj) > 0){trimmed = trimmed+count(obj);}
+									idArray.push(obj);
+								%>
+								<div class="multi-select-element">
+									<input id="<%= trimmed %>" name=" <%= trimmed %>" type="checkbox"/>
+									<label class="multi-label" for="<%= trimmed %>"><%= obj.name %></label>
+									<a class="dropdown-toggle"></a>
+									<div name="hosts" class="form-control multi-select">
+										<% obj.host.forEach(function(subObj){
+											trimmed = subObj.replace(/ /g, "");
+											if(count(subObj) > 0){trimmed = trimmed +count(subObj);}
+											idArray.push(subObj);
+										%>
+										<input id="<%= trimmed %>" type="checkbox"/> <label class="multi-label" for="<%= trimmed %>"><%= subObj %></label><br>
+										<% }); %>
+									</div>
+								</div>
+								<% }); %>
+							</div>
+							<br />
+
+							<br />
+							<label>Host Environment<span class="text-danger">*</span></label>
+							<select name="host_env" id="host_env" class="form-control form-dropdown required">
+								<option value="0" >-- Please Select --</option>
+								<% data.host_env.forEach(function(item){ %>
+								<option value="<%= item %>" ><%= item %></option>
+								<% }); %>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="offset-md-3 offset-sm-1 offset-xs-1">
+						<button id="submit" class="btn btn-submit"	>Submit</button>
+					</div>
+				</div>
+
+			</form>
+			<aside id="success" class="jumbotron">
+				<h1 class="text-center">Success! Data processing...</h1>
+			</aside>
+		</div>
+	</header>
+	<footer class="text-center">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<p>Copyright © Pan American World Airways</p>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+	<script src="js/app.js"></script>
+</body>
+
+</html>
