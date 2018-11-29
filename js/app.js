@@ -40,7 +40,7 @@ function populateMultiSelect(fieldName, target, id, hasNestedMenu){
 	/*for(var i=1; i<=length; i++){
 		var content = fieldName +" " +i;
 		var nameId = fieldName +i;
-		var addfield = "<div class=\"multi-select-element\"><input id=\"" +nameId +"\" name=\"" +nameId +"\" type=\"checkbox\"/> <label class=\"multi-label multi-label-full\" for=\"" +nameId +"\">" +content +"</label></div>";
+		var addfield = "<div class=\"multi-select-element\"><input id=\"" +nameId +"\" name=\"" +fieldName +  "\"value=\""+ nameId+"\" type=\"checkbox\"/> <label class=\"multi-label multi-label-full\" for=\"" +nameId +"\">" +content +"</label></div>";
 		$(target).append(addfield);
 	}*/
 }
@@ -52,7 +52,7 @@ function populateMultiSelectChild(fieldName, target, id){
 		for(var i=1; i<=length; i++){
 			var content = fieldName +" " +i;
 			var nameId = fieldName +i;
-			var addfield = "<div class=\"multi-select-element\"><input id=\"" +nameId +"\" name=\"" +nameId +"\" type=\"checkbox\"/> <label class=\"multi-label multi-labal-full\" for=\"" +nameId +"\">" +content +"</label></div>";
+			var addfield = "<div class=\"multi-select-element\"><input id=\"" +nameId +"\" name=\"" +nameId + "\"value=\""+ nameId+"\" type=\"checkbox\" /> <label class=\"multi-label multi-labal-full\" for=\"" +nameId +"\">" +content +"</label></div>";
 		}
 	});
 }
@@ -129,7 +129,7 @@ function validate(){
 		$("#success").slideDown(500);
 		$("#success").prepend("<p>" +JSON.stringify(formJson) +"</p>");
 	}
-	
+
 	return;
 }
 
@@ -139,11 +139,11 @@ function validate(){
 
 //====== Text boxes
 $("input[type=\"text\"]").on("mouseleave blur", function(){
-	/* When the user moves the mouse away from the text field (drag and drop) or when they click away from it, check if we need to 
+	/* When the user moves the mouse away from the text field (drag and drop) or when they click away from it, check if we need to
 	 * progress the bar
 	 */
 	formJson[$(this).attr("id")] = $(this).val();
-	
+
 	if($(this).is(".required")){
 		if($(this).val() == "" && !reqElementIds.includes($(this).attr("id"))){
 			regress();
@@ -154,14 +154,14 @@ $("input[type=\"text\"]").on("mouseleave blur", function(){
 			reqElementIds.splice(reqElementIds.indexOf($(this).attr("id")), 1);
 		}
 	}
-	
+
 });
 
 //====== Dropdown-menus
 $("select").change(function(){
-	
+
 	formJson[$(this).attr("id")] = $(this).val();
-	
+
 	if($(this).is(".required")){
 		if($(this).val().length > 1 && reqElementIds.includes($(this).attr("id"))){
 			progress();
@@ -170,7 +170,7 @@ $("select").change(function(){
 		else if($(this).val().length <= 1){
 			regress();
 			reqElementIds.push($(this).attr("id"));
-		}	
+		}
 	}
 });
 
@@ -195,13 +195,13 @@ $(".multi-select-element > input").change(function(){
 	var parent = $(this).parent().parent().attr("id");
 	var nested = $(this).siblings(".multi-select").attr("name");
 	var inpName = $(this).siblings("label").html();
-	
+
 	if($(this).is(":checked")){
 		$(this).siblings(".multi-select").show();
 		$(this).siblings(".dropdown-toggle").css("transform", "rotate(180deg)");
 	}
-	
-	/* This block runs if the multi-select does not have a nested multi-select. It only runs once per session,  
+
+	/* This block runs if the multi-select does not have a nested multi-select. It only runs once per session,
 	 * to initialize the JSON object
 	 */
 	if(typeof(nested) == "undefined"){
@@ -224,10 +224,10 @@ $(".multi-select-element > input").change(function(){
 				progress();
 				reqElementIds.splice(reqElementIds.indexOf(parent), 1);
 			}
-			
+
 		}
 	}
-	
+
 	//If there is a nested multi-select, checking a parent checkbox does not progress the slider.
 	else{
 		//This block initializes the JSON object and runs once per session.
@@ -242,26 +242,26 @@ $(".multi-select-element > input").change(function(){
 		//This block runs if the parent checkbox is unchecked. It unchecks all nested checkboxes.
 		else{
 			delete formJson[parent][addedBox];
-			
+
 			$(".multi-select-element > .multi-select > input").each(function(){
 				$(this).prop("checked", false);
 			});
-			
+
 			if($("#" +parent).is(".required") && Object.keys(formJson[parent]).length == 0){
 				regress();
 				reqElementIds.push(parent);
 			}
-			
+
 			if(parent == "track"){
-				$("#relTo option[value=\"" +addedBox +"\"]").remove();			
+				$("#relTo option[value=\"" +addedBox +"\"]").remove();
 			}
 		}
-		
+
 		//Bind the options in the relTo dropdown menu to whatever is checked in the "track" multi-select
 	}
-	
+
 	console.log(JSON.stringify(formJson));
-	
+
 });
 
 //====== Child/Nested multi-selects
@@ -271,12 +271,12 @@ $(".multi-select-element > .multi-select > input").change(function(){
 	var subset = $(this).parent().attr("name");
 	var thisBox = $(this).attr("id");
 	var inpName = $("#" +relative).siblings("label").html();
-	
+
 	if(!$("#" +relative).is(":checked")){
 		$("#" +relative).prop("checked", true);
 		$("#" +relative).trigger("change");
 	}
-	
+
 	//If the checkbox has already been logged, then the user wants to delete it.
 	if(formJson[parent][relative][subset].includes(thisBox)){
 		var delInd = formJson[parent][relative][subset].indexOf(thisBox);
@@ -285,7 +285,7 @@ $(".multi-select-element > .multi-select > input").change(function(){
 			regress();
 			reqElementIds.push(parent);
 		}
-		
+
 		if(formJson[parent][relative][subset].length == 0 && parent == "track"){
 			$("#relTo option[value=\"" +relative +"\"]").remove();
 		}
@@ -297,10 +297,10 @@ $(".multi-select-element > .multi-select > input").change(function(){
 			progress();
 			reqElementIds.splice(reqElementIds.indexOf(parent), 1);
 		}
-		
+
 		//If the user checks a box in the track menu, add it to the relTo dropdown.
 		if(formJson[parent][relative][subset].length == 1 && parent == "track"){
-			$("#relTo").append("<option value=\"" +relative +"\">" +inpName +"</option>")			
+			$("#relTo").append("<option value=\"" +relative +"\">" +inpName +"</option>")
 		}
 	}
 	console.log(JSON.stringify(formJson));

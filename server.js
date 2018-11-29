@@ -25,7 +25,7 @@
  * process_state = LPN Pack for BTS --> lpn_pack_for_bts
  * process_state_code = lpn_pack_for_bts_sc_nonprod_ts3
 */
- 
+
 // Add field process = 'Y'
 
 /* Sample Modified Input JSON data
@@ -128,68 +128,68 @@ app.get("/populateUI", function(req, res){
 // Takes field from the dummy database and returns the entire array
 MongoClient.connect(url, function(err, db) {
 	if (err) throw err;
-	var dbo = db.db("gemsdashboard");
-	
+	var dbo = db.db("test");
+
 	// Application Name
-	var applicationName = dbo.collection("dummydatabase").distinct('application_name');
+	var applicationName = dbo.collection("users").distinct('application_name');
 	applicationName.then(function (item) {
 		console.log(item);
 	});
-	
+
 	// Consumed or Exposed
 	var applicationName = dbo.collection("dummydatabase").distinct('consumed_exposed');
 	applicationName.then(function (item) {
 		console.log(item);
 	});
-	
+
 	// Track
 	var applicationName = dbo.collection("dummydatabase").distinct('track');
 	applicationName.then(function (item) {
 		console.log(item);
 	});
-	
+
 	// Subtrack
 	var applicationName = dbo.collection("dummydatabase").distinct('subtrack');
 	applicationName.then(function (item) {
 		console.log(item);
 	});
-	
+
 	// Service Offering Name
 	var applicationName = dbo.collection("dummydatabase").distinct('service_offering_name');
 	applicationName.then(function (item) {
 		console.log(item);
 	});
-	
+
 	// Type
 	var applicationName = dbo.collection("dummydatabase").distinct('type');
 	applicationName.then(function (item) {
 		console.log(item);
 	});
-	
+
 	// Database
 	var applicationName = dbo.collection("dummydatabase").distinct('database');
 	applicationName.then(function (item) {
 		console.log(item);
 	});
-	
+
 	// Related To
 	var applicationName = dbo.collection("dummydatabase").distinct('related_to');
 	applicationName.then(function (item) {
 		console.log(item);
 	});
-	
+
 	// JVM Name
 	var applicationName = dbo.collection("dummydatabase").distinct('jvm_name');
 	applicationName.then(function (item) {
 		console.log(item);
 	});
-	
+
 	// Host
 	var applicationName = dbo.collection("dummydatabase").distinct('host');
 	applicationName.then(function (item) {
 		console.log(item);
 	});
-	
+
 	// Host Environment
 	var applicationName = dbo.collection("dummydatabase").distinct('host_env');
 	applicationName.then(function (item) {
@@ -230,7 +230,8 @@ MongoClient.connect(url, function(err, db) {
     });
 });
 */
-
+var MongoClient=require('mongodb').MongoClient;
+var url="mongodb://localhost:27017/test";
 /* Excel Sheets */
 
 var Excel = require('exceljs');
@@ -246,13 +247,18 @@ var serviceurlws = serviceurl.addWorksheet('Service URL');
 /*
 MongoClient.connect(url, function(err, db) {
     if (err) throw err;
-    var dbo = db.db("gemsdashboard");
-	dbo.collection("userinput").find().toArray(function(err, docs) {
+    var dbo = db.db("test");
+    console.log("connected");//connected!
+    var app=dbo.collection("users").find().toArray(function(err,docs){
+        console.log(docs);   });
+
+
+	dbo.collection("users").find().toArray(function(err, docs) {
 		docs.forEach(function(doc) {
-			jobsExcel(doc.application_name,doc.service_offering_name,doc.process_state,doc.process_state_code,doc.process_name,doc.job_name,doc.type,doc.database,doc.process,doc.related_to,jobsws);
-			jvmsExcel(doc.application_name,doc.jvm_name,doc.host,doc.host_env,doc.process_state_code,doc.process,jvmsws);
-			processFlowExcel(doc.process_state,doc.process_state_code,doc.track,doc.subtrack,doc.process,processflowws);
-			serviceURLExcel(doc.application_name,doc.application_url,doc.consumed_exposed,doc.process_state,serviceurlws)
+			jobsExcel(doc.app,doc.serviceOff,doc.process_state,doc.process_state,doc.process,doc.jobName,doc.theType,doc.database,doc.process,doc.relTo,jobsws);
+			jvmsExcel(doc.app,doc.jvm,doc.hosts,doc.hostEnv,doc.process_state,doc.process,jvmsws);
+			processFlowExcel(doc.process,doc.process_state,doc.track,doc.sub_tracks,doc.process,processflowws);
+			serviceURLExcel(doc.app,doc.appUrl,doc.consExpo,doc.process,serviceurlws)
 		});
 		writeToExcel(jobs, "Jobs.xlsx");
 		writeToExcel(jvms, "JVMs.xlsx");
@@ -260,6 +266,8 @@ MongoClient.connect(url, function(err, db) {
 		writeToExcel(serviceurl, "ServiceURL.xlsx");
 		db.close();
 	});
+
+
 });
 
 function jobsExcel(application_name,service_offering_name,process_state,process_state_code,process_name,job_name,type,database,process,related_to,worksheet) {
@@ -316,4 +324,3 @@ function serviceURLExcel(application_name,application_url,consumed_exposed,proce
 function writeToExcel(workbook, filename) {
 	workbook.xlsx.writeFile(filename).then(function(){});
 }
-*/
