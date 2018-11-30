@@ -20,7 +20,7 @@ function count(ele){
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Real@Work Cisco</title>
+	<title>GEMS Dashboard</title>
 	<!-- Bootstrap -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 	<link href="css/style.css" rel="stylesheet" type="text/css">
@@ -55,7 +55,7 @@ function count(ele){
 						<!--General Settings-->
 						<div role="tabpanel" class="tab-pane fade show active" id="home1" aria-labelledby="hometab">
 							<label>Application Name <span class="text-danger">*</span></label>
-							<div id="app_name" class="form-control multi-select required">
+							<div id="application_name" class="form-control multi-select required">
 								<% data.application_name.forEach(function(obj){
 									var trimmed = obj.replace(/ /g, "");
 									if(count(obj) > 0){trimmed = trimmed+count(obj);}
@@ -253,7 +253,7 @@ function count(ele){
 		<div class="container">
 			<div class="row">
 				<div class="col-12">
-					<p>Copyright © Pan American World Airways</p>
+					<p>Copyright © Cisco Systems, Inc.</p>
 				</div>
 			</div>
 		</div>
