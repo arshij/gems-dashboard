@@ -90,20 +90,21 @@ var gemsGetSchema = new mongoose.Schema({
 });
 
 var gemsPostSchema = new mongoose.Schema({
+	process_state_code: String,
 	process_state_name: String,
 	app_name: String,
 	consumed_exposed: String,
 	track: String,
-	subtracks: String,
+	subtrack: String,
 	app_url: String,
 	service_offering_name: String,
 	process: String,
-	job: String,
+	job_name: String,
 	type: String,
 	database: String,
 	related_to: String,
 	jvm_name: String,
-	hosts: [String],
+	host: String,
 	host_env: String
 });
 

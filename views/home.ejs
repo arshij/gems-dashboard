@@ -141,7 +141,7 @@ function count(ele){
 						<div role="tabpanel" class="tab-pane fade" id="paneTwo" aria-labelledby="tab2">
 							<label>Service Offering Name<span class="text-danger">*</span></label>
 							<br>
-							<select name="service_offering_name" id="serviceOff" class="form-control form-dropdown required">
+							<select name="service_offering_name" id="service_offering_name" class="form-control form-dropdown required">
 								<option value="0" >-- Please Select --</option>
 								<% data.service_offering_name.forEach(function(item){ %>
 								<option value="<%= item %>" ><%= item %></option>
