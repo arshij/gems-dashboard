@@ -164,6 +164,8 @@ app.post("/send", urlencodedParser, function(req, res){
 
 	for(var i=0; i < formJson.track.length; i++){
 		tempJson.track = formJson.track[i]["name"];
+		var process_state_code = tempJson.process_state_name.replace(/ /g, "_").toLowerCase() +"_" +tempJson.track.replace(/ /g, "_").toLowerCase();
+		tempJson.process_state_code = process_state_code;
 
 		for(var j=0; j < formJson.jvm_name.length; j++){
 			tempJson.jvm_name = formJson.jvm_name[j]["name"];
@@ -172,7 +174,7 @@ app.post("/send", urlencodedParser, function(req, res){
 				tempJson.app_name = formJson.app_name[k];
 
 				for(var m=0; m < formJson.database.length; m++){
-					tempJson.database = formJson.database[k];
+					tempJson.database = formJson.database[m];
 
 					for(var ii=0; ii<formJson.track[i]["subtracks"].length; ii++){
 						tempJson.subtrack = formJson.track[i]["subtracks"][ii];
