@@ -99,13 +99,6 @@ function count(ele){
 											idArray.push(subObj);
 										%>
 										<input id="<%= trimmed %>" type="checkbox"/> <label class="multi-label" for="<%= trimmed %>"><%= subObj %></label><br>
-										<!--input id="subtrack2" type="checkbox"/> <label class="multi-label" for="subtrack2">Subtrack 2</label><br>
-										<input id="subtrack3" type="checkbox"/> <label class="multi-label" for="subtrack3">Subtrack 3</label><br>
-										<input id="subtrack4" type="checkbox"/> <label class="multi-label" for="subtrack4">Subtrack 4</label><br>
-										<input id="subtrack5" type="checkbox"/> <label class="multi-label" for="subtrack5">Subtrack 5</label><br>
-										<input id="subtrack6" type="checkbox"/> <label class="multi-label" for="subtrack6">Subtrack 6</label><br>
-										<input id="subtrack7" type="checkbox"/> <label class="multi-label" for="subtrack7">Subtrack 7</label><br>
-										<input id="subtrack8" type="checkbox"/> <label class="multi-label" for="subtrack8">Subtrack 8</label><br-->
 										<% }); %>
 									</div>
 								</div>
@@ -249,7 +242,10 @@ function count(ele){
 
 			</form>
 			<aside id="success" class="jumbotron">
-				<h1 class="text-center">Success! Data processing...</h1>
+				<h1 class="text-center">Form sent. Data processing...</h1>
+				<div id="notifications">
+				</div>
+				<div class="text-center spinner"></div>
 			</aside>
 		</div>
 	</header>

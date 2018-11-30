@@ -167,7 +167,7 @@ select:hover{
 
 .multi-select-element a.dropdown-toggle{
 	display: inline-block;
-	width: 5%;
+	width: 20px;
 	height: 100%;
 	line-height: 30px;
 	margin-left: -5px;
@@ -214,26 +214,48 @@ input:checked + .multi-label{
 	margin-top: 15px;
 	display: none;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> d72ded89d041ddb6eaab5ed0ca24753451437dbb
 
-
-<<<<<<< HEAD
 .active{
     display:block;
 }
-=======
->>>>>>> b604cd9e67cf31cfad893ae161612a3b84964dba
-=======
->>>>>>> parent of b604cd9... Nest subtrack within track. Replace element-specific JavaScript functions with generalized ones.
-=======
->>>>>>> parent of b604cd9... Nest subtrack within track. Replace element-specific JavaScript functions with generalized ones.
-=======
->>>>>>> parent of b604cd9... Nest subtrack within track. Replace element-specific JavaScript functions with generalized ones.
-=======
 
->>>>>>> d72ded89d041ddb6eaab5ed0ca24753451437dbb
+.spinner{
+	width: 50px;
+	height: 50px;
+	border: solid;
+	border-width: 7px;
+	border-radius: 50%;
+	border-color: #004BAF #eee #eee #eee;
+	animation: spin 1s infinite cubic-bezier(.58,-0.79,.43,1.9);
+}
+
+@keyframes spin{
+  0%{transform:rotate(0deg);}
+  100%{transform:rotate(360deg);}
+}
+
+@media(max-width: 995px){
+	.multi-label{
+		width: 85%;
+	}
+
+	.multi-label > a.dropdown-toggle{
+		width: 20px;
+	}
+
+
+
+	.multi-label-full{
+		width: 90%;
+	}
+}
+
+@media(max-width: 374px){
+	.multi-label{
+		width: 80%;
+	}
+
+	.multi-label-full{
+		width: 90%;
+	}
+}

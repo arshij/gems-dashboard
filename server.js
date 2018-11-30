@@ -62,8 +62,11 @@ var bodyparser = require("body-parser");
 var mongoose = require("mongoose");
 //var MongoClient = require('mongodb').MongoClient;
 
+var urlencodedParser = bodyparser.urlencoded({extended: false});
+
 var app = express();
 app.set("view engine", "ejs");
+app.use(bodyparser.json());
 
 //var url = "mongodb://localhost:27017/"; // Current URL is local host
 var url = "mongodb://gems:Cisco123@ds261917.mlab.com:61917/gemsdashboard";
@@ -86,11 +89,27 @@ var gemsGetSchema = new mongoose.Schema({
 	host_env: [String]
 });
 
-var gemsPostSchema = new mongoose.Schema({}); //Populate this as necessary
+var gemsPostSchema = new mongoose.Schema({
+	process_state_name: String,
+	app_name: [String],
+	consumed_exposed: String,
+	track: String,
+	subtracks: [String],
+	app_url: String,
+	service_offering_name: String,
+	process: String,
+	job: String,
+	type: String,
+	database: [String],
+	related_to: String,
+	jvm_name: String,
+	hosts: [String],
+	host_env: String
+});
 
 var gemsGetModel = mongoose.model("gemsGetModel", gemsGetSchema, "dummydatabase"); //The third parameter is the collection. Change as necessary
 
-var gemsPostModel = mongoose.model("gemsPostModel", gemsPostSchema, "");
+var gemsPostModel = mongoose.model("gemsPostModel", gemsPostSchema, "userinput");
 
 app.listen(3000); //Arbitrarily make the app listen to port 3000.
 
@@ -127,11 +146,36 @@ app.get("/images/Cisco_logo_blue_2016.png", function(req, res){
 });
 
 
-
 app.get("/populateUI", function(req, res){
 	gemsGetModel.find().then(function(doc){
 		res.send(doc[0]);
 	});
+});
+
+app.post("/send", urlencodedParser, function(req, res){
+	var formJson = req.body;
+	var tempJson = JSON.parse(JSON.stringify(formJson));
+
+	delete tempJson.track;
+	delete tempJson.jvm_name;
+
+	for(var i=0; i < formJson.track.length; i++){
+		tempJson.track = formJson.track[i]["name"];
+		tempJson.subtracks = [];
+		tempJson.subtracks = formJson.track[i]["subtracks"];
+
+		for(var j=0; j < formJson.jvm_name.length; j++){
+			tempJson.jvm_name = formJson.jvm_name[j]["name"];
+			tempJson.hosts = [];
+			tempJson.hosts = formJson.jvm_name[j]["hosts"];
+			gemsPostModel(tempJson).save(function(err, data){
+				if(err) throw err;
+			});
+			//===== TODO: At this point, tempJson is a JSON object that can be used to dynamically create the spreadsheets.
+		}
+	}
+
+	res.json(tempJson); //Optional. But if you remove this, remove the parameter from the success function in app.js
 });
 
 /*
