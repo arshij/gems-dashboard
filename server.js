@@ -34,10 +34,10 @@ var gemsGetSchema = new mongoose.Schema({
 	host_env: [String]
 });
 
-var gemsPostSchema = new mongoose.Schema({
+/*var gemsPostSchema = new mongoose.Schema({
 	process_state_code: String,
 	process_state_name: String,
-	app_name: String,
+	application_name: String,
 	consumed_exposed: String,
 	track: String,
 	subtrack: String,
@@ -51,11 +51,53 @@ var gemsPostSchema = new mongoose.Schema({
 	jvm_name: String,
 	host: String,
 	host_env: String
+}); *///LEGACY
+
+var gemsPostJobs = new mongoose.Schema({
+	application_name: String,
+	service_offering_name: String,
+	process_state_name: String,
+	process_state_code: String,
+	process_name: String,
+	job_name: String,
+	type: String,
+	database: String,
+	process: String,
+	related_to: String
 });
+
+var gemsPostService = new mongoose.Schema({
+	application_name: String,
+	name: String,
+	value: String,
+	consumed_exposed: String,
+	process_state_name: String
+});
+
+var gemsPostJvms = new mongoose.Schema({
+	application_name: String,
+	jvm_name: String,
+	host: String,
+	host_env: String,
+	process_state_code: String,
+	process: String
+});
+
+var gemsPostProcessFlow = new mongoose.Schema({
+	process_state_name: String,
+	process_state_code: String,
+	track: String,
+	subtrack: String
+});
+
 
 var gemsGetModel = mongoose.model("gemsGetModel", gemsGetSchema, "dummydatabase"); //The third parameter is the collection. Change as necessary
 
-var gemsPostModel = mongoose.model("gemsPostModel", gemsPostSchema, "userinput");
+var gemsPostJobsModel = mongoose.model("gemsPostJobsModel", gemsPostJobs, "userinput");
+var gemsPostServiceModel = mongoose.model("gemsPostServiceModel", gemsPostService, "userinput");
+var gemsPostJVMSModel = mongoose.model("gemsPostJVMSModel", gemsPostJvms, "userinput");
+var gemsPostProcessFlowModel = mongoose.model("gemsPostProcessFlowModel", gemsPostProcessFlow, "userinput");
+
 
 app.listen(3000); //Arbitrarily make the app listen to port 3000.
 
@@ -104,7 +146,7 @@ app.post("/send", urlencodedParser, function(req, res){
 
 	delete tempJson.track;
 	delete tempJson.jvm_name;
-	delete tempJson.app_name;
+	delete tempJson.application_name;
 	delete tempJson.database;
 
 	for(var i=0; i < formJson.track.length; i++){
@@ -115,8 +157,8 @@ app.post("/send", urlencodedParser, function(req, res){
 		for(var j=0; j < formJson.jvm_name.length; j++){
 			tempJson.jvm_name = formJson.jvm_name[j]["name"];
 
-			for(var k=0; k < formJson.app_name.length; k++){
-				tempJson.app_name = formJson.app_name[k];
+			for(var k=0; k < formJson.application_name.length; k++){
+				tempJson.application_name = formJson.application_name[k];
 
 				for(var m=0; m < formJson.database.length; m++){
 					tempJson.database = formJson.database[m];
@@ -127,10 +169,22 @@ app.post("/send", urlencodedParser, function(req, res){
 						for(var jj=0; jj< formJson.jvm_name[j]["hosts"].length; jj++){
 							tempJson.host = formJson.jvm_name[j]["hosts"][jj];
 
-							gemsPostModel(tempJson).save(function(err, data){
+							gemsPostJobsModel(tempJson).save(function(err, data){
 								if(err) throw err;
-								//===== TODO: At this point, tempJson is a JSON object that can be used to dynamically create the spreadsheets.
 							});
+
+							gemsPostServiceModel(tempJson).save(function(err, data){
+								if(err) throw err;
+							});
+
+							gemsPostJVMSModel(tempJson).save(function(err, data){
+								if(err) throw err;
+							});
+
+							gemsPostProcessFlowModel(tempJson).save(function(err, data){
+								if(err) throw err;
+							});
+
 							//console.log(JSON.stringify(tempJson));
 							//console.log("=================================================");
 						}
@@ -168,10 +222,10 @@ MongoClient.connect(url, function(err, db) {
 
 	dbo.collection("userinput").find().toArray(function(err, docs) {
 		docs.forEach(function(doc) {
-		jobsExcel(doc.app_name,doc.service_offering_name,doc.process_state_name,doc.process_state_code,doc.process_name,doc.job_name,doc.type,doc.database,doc.process,doc.related_to,jobsws);
-			jvmsExcel(doc.app_name,doc.jvm_name,doc.host,doc.host_env,doc.process_state_code,doc.process,jvmsws);
+		jobsExcel(doc.application_name,doc.service_offering_name,doc.process_state_name,doc.process_state_code,doc.process_name,doc.job_name,doc.type,doc.database,doc.process,doc.related_to,jobsws);
+			jvmsExcel(doc.application_name,doc.jvm_name,doc.host,doc.host_env,doc.process_state_code,doc.process,jvmsws);
 			processFlowExcel(doc.process_state_name,doc.process_state_code,doc.track,doc.subtrack,doc.process,processflowws);
-			serviceURLExcel(doc.app_name,doc.app_url,doc.consumed_exposed,doc.process,serviceurlws)
+			serviceURLExcel(doc.application_name,doc.app_url,doc.consumed_exposed,doc.process,serviceurlws)
 		});
 		writeToExcel(jobs,"Jobs.xlsx");
 		writeToExcel(jvms,"JVMs.xlsx");
@@ -195,7 +249,7 @@ function jobsExcel(application_name,service_offering_name,process_state_name,pro
 		{ header: 'related_to', key: 'related_to', width: 30}
 	];
 	worksheet.addRow([application_name,service_offering_name,process_state_name,process_state_code,process_name,job_name,type,database,process,related_to]);
-	
+
 }
 
 function jvmsExcel(application_name,jvm_name,host,host_env,process_state_code,process,worksheet) {
