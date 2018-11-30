@@ -91,16 +91,16 @@ var gemsGetSchema = new mongoose.Schema({
 
 var gemsPostSchema = new mongoose.Schema({
 	process_state_name: String,
-	app_name: [String],
+	app_name: String,
 	consumed_exposed: String,
 	track: String,
-	subtracks: [String],
+	subtracks: String,
 	app_url: String,
 	service_offering_name: String,
 	process: String,
 	job: String,
 	type: String,
-	database: [String],
+	database: String,
 	related_to: String,
 	jvm_name: String,
 	hosts: [String],
@@ -158,20 +158,40 @@ app.post("/send", urlencodedParser, function(req, res){
 
 	delete tempJson.track;
 	delete tempJson.jvm_name;
+	delete tempJson.app_name;
+	delete tempJson.database;
 
 	for(var i=0; i < formJson.track.length; i++){
 		tempJson.track = formJson.track[i]["name"];
-		tempJson.subtracks = [];
-		tempJson.subtracks = formJson.track[i]["subtracks"];
 
 		for(var j=0; j < formJson.jvm_name.length; j++){
 			tempJson.jvm_name = formJson.jvm_name[j]["name"];
-			tempJson.hosts = [];
-			tempJson.hosts = formJson.jvm_name[j]["hosts"];
-			gemsPostModel(tempJson).save(function(err, data){
-				if(err) throw err;
-			});
-			//===== TODO: At this point, tempJson is a JSON object that can be used to dynamically create the spreadsheets.
+
+			for(var k=0; k < formJson.app_name.length; k++){
+				tempJson.app_name = formJson.app_name[k];
+
+				for(var m=0; m < formJson.database.length; m++){
+					tempJson.database = formJson.database[k];
+
+					for(var ii=0; ii<formJson.track[i]["subtracks"].length; ii++){
+						tempJson.subtrack = formJson.track[i]["subtracks"][ii];
+
+						for(var jj=0; jj< formJson.jvm_name[j]["hosts"].length; jj++){
+							tempJson.host = formJson.jvm_name[j]["hosts"][jj];
+
+							gemsPostModel(tempJson).save(function(err, data){
+								if(err) throw err;
+								//===== TODO: At this point, tempJson is a JSON object that can be used to dynamically create the spreadsheets.
+							});
+							//console.log(JSON.stringify(tempJson));
+							//console.log("=================================================");
+						}
+
+					}
+
+				}
+
+			}
 		}
 	}
 

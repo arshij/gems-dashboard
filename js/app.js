@@ -59,7 +59,6 @@ function validate(){
 				throw err;
 			}
 		});
-		$("#success").append("<em>No front-end errors occurred</em><br>");
 	}
 
 	return;
