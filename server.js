@@ -98,7 +98,7 @@ var gemsPostSchema = new mongoose.Schema({
 	subtrack: String,
 	app_url: String,
 	service_offering_name: String,
-	process: String,
+	process_name: String,
 	job_name: String,
 	type: String,
 	database: String,
