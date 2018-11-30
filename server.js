@@ -63,6 +63,7 @@ var mongoose = require("mongoose");
 //var MongoClient = require('mongodb').MongoClient;
 
 var app = express();
+app.set("view engine", "ejs");
 
 //var url = "mongodb://localhost:27017/"; // Current URL is local host
 var url = "mongodb://gems:Cisco123@ds261917.mlab.com:61917/gemsdashboard";
@@ -72,14 +73,16 @@ mongoose.connect(url, {useNewUrlParser: true});
 var gemsGetSchema = new mongoose.Schema({
 	application_name: [String],
 	consumed_exposed: [String],
-	track: [String],
-	subtrack: [String],
+	track: [
+		{"name": String, "subtrack": [String]}
+	],
 	service_offering_name: [String],
 	type: [String],
 	database: [String],
 	related_to: [String],
-	jvm_name: [String],
-	host: [String],
+	jvm_name: [
+		{"name": String, "host": [String]}
+	],
 	host_env: [String]
 });
 
@@ -93,12 +96,19 @@ app.listen(3000); //Arbitrarily make the app listen to port 3000.
 
 //Initialize all files and dependencies.
 app.get("/", function(req, res){
-	res.sendFile(__dirname +"/index.html");
+	//res.sendFile(__dirname +"/index.html");
+	gemsGetModel.find().then(function(doc){
+		//console.log(doc[0]);
+		res.render("home", {data: doc[0]});
+	});
 });
 
 app.get("/index.html", function(req, res){
-	res.sendFile(__dirname +"/index.html");
+	gemsGetModel.find().then(function(doc){
+		res.render("home", {data: doc[0]});
+	});
 });
+
 
 app.get("/css/style.css", function(req, res){
 	res.sendFile(__dirname +"/css/style.css");
@@ -230,10 +240,11 @@ MongoClient.connect(url, function(err, db) {
     });
 });
 */
+/*
 var MongoClient=require('mongodb').MongoClient;
 var url="mongodb://localhost:27017/test";
 /* Excel Sheets */
-
+/*
 var Excel = require('exceljs');
 
 var jobs = new Excel.Workbook();
@@ -244,7 +255,7 @@ var processflow = new Excel.Workbook();
 var processflowws = processflow.addWorksheet('Process Flow States');
 var serviceurl = new Excel.Workbook();
 var serviceurlws = serviceurl.addWorksheet('Service URL');
-/*
+
 MongoClient.connect(url, function(err, db) {
     if (err) throw err;
     var dbo = db.db("test");
@@ -324,3 +335,4 @@ function serviceURLExcel(application_name,application_url,consumed_exposed,proce
 function writeToExcel(workbook, filename) {
 	workbook.xlsx.writeFile(filename).then(function(){});
 }
+*/
