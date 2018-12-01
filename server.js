@@ -4,21 +4,21 @@
     from which the Excel sheets will be created
  */
 
-var express = require("express");
+var express = require("express"); //require for expressing css,jquery, bootstrap
 var bodyparser = require("body-parser");
-var mongoose = require("mongoose");
+var mongoose = require("mongoose"); //mongoose middleware
 var MongoClient = require('mongodb').MongoClient;
-var urlencodedParser = bodyparser.urlencoded({extended: false});
+var urlencodedParser = bodyparser.urlencoded({extended: false}); //json 
 
 var app = express();
 app.set("view engine", "ejs");
 app.use(bodyparser.json());
 
-var url = "mongodb://gems:Cisco123@ds261917.mlab.com:61917/gemsdashboard";
+var url = "mongodb://gems:Cisco123@ds261917.mlab.com:61917/gemsdashboard"; //url to connect to mongo in mlab
 
 mongoose.connect(url, {useNewUrlParser: true});
 
-var gemsGetSchema = new mongoose.Schema({
+var gemsGetSchema = new mongoose.Schema({ //layout of our data structuring model
 	application_name: [String],
 	consumed_exposed: [String],
 	track: [
