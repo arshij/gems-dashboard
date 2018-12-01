@@ -5,16 +5,16 @@
  */
 
 var express = require("express"); //require for expressing css,jquery, bootstrap
-var bodyparser = require("body-parser");
+var bodyparser = require("body-parser");//returns middleware that parses json
 var mongoose = require("mongoose"); //mongoose middleware
-var MongoClient = require('mongodb').MongoClient;
-var urlencodedParser = bodyparser.urlencoded({extended: false}); //json 
+var MongoClient = require('mongodb').MongoClient;//connect using a server instance
+var urlencodedParser = bodyparser.urlencoded({extended: false}); //need bodyparser if want form data to be available  in req.body 
 
-var app = express();
-app.set("view engine", "ejs");
-app.use(bodyparser.json());
+var app = express();//calling the express module to import applications to our app
+app.set("view engine", "ejs");//where to look for files in, such as our js files folder
+app.use(bodyparser.json());//telling our system that we want json to be used
 
-var url = "mongodb://gems:Cisco123@ds261917.mlab.com:61917/gemsdashboard"; //url to connect to mongo in mlab
+var url = "mongodb://gems:Cisco123@ds261917.mlab.com:61917/gemsdashboard"; //url to connect to mongo 
 
 mongoose.connect(url, {useNewUrlParser: true});
 
