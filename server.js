@@ -53,7 +53,7 @@ var gemsGetSchema = new mongoose.Schema({ //layout of our data structuring model
 	host_env: String
 }); *///LEGACY
 
-var gemsPostJobs = new mongoose.Schema({
+var gemsPostJobs = new mongoose.Schema({ //data schema  structure for jobs excel sheet
 	application_name: String,
 	service_offering_name: String,
 	process_state_name: String,
@@ -67,7 +67,7 @@ var gemsPostJobs = new mongoose.Schema({
 	versionKey: false
 });
 
-var gemsPostService = new mongoose.Schema({
+var gemsPostService = new mongoose.Schema({//data schema structure for service, one of the four excel templates
 	application_name: String,
 	name: String,
 	value: String,
@@ -75,7 +75,7 @@ var gemsPostService = new mongoose.Schema({
 	process_state_name: String
 });
 
-var gemsPostJvms = new mongoose.Schema({
+var gemsPostJvms = new mongoose.Schema({//data schema structure for JVM, one of the four excel templates
 	application_name: String,
 	jvm_name: String,
 	host: String,
@@ -84,7 +84,7 @@ var gemsPostJvms = new mongoose.Schema({
 	process: String
 });
 
-var gemsPostProcessFlow = new mongoose.Schema({
+var gemsPostProcessFlow = new mongoose.Schema({//data schema  structure for process flow state, one of the excel sheets
 	process_state_name: String,
 	process_state_code: String,
 	track: String,
@@ -93,7 +93,7 @@ var gemsPostProcessFlow = new mongoose.Schema({
 });
 
 
-var gemsGetModel = mongoose.model("gemsGetModel", gemsGetSchema, "dummydatabase"); //The third parameter is the collection. Change as necessary
+var gemsGetModel = mongoose.model("gemsGetModel", gemsGetSchema, "dummydatabase"); //The third parameter is the collection of the database. Change as necessary
 
 var gemsPostJobsModel = mongoose.model("gemsPostJobsModel", gemsPostJobs, "job");
 var gemsPostServiceModel = mongoose.model("gemsPostServiceModel", gemsPostService, "serviceurl");
