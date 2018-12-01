@@ -63,7 +63,8 @@ var gemsPostJobs = new mongoose.Schema({
 	type: String,
 	database: String,
 	process: String,
-	related_to: String
+	related_to: String,
+	versionKey: false
 });
 
 var gemsPostService = new mongoose.Schema({
@@ -87,17 +88,17 @@ var gemsPostProcessFlow = new mongoose.Schema({
 	process_state_name: String,
 	process_state_code: String,
 	track: String,
-	subtrack: String
+	subtrack: String,
+	process: String
 });
 
 
 var gemsGetModel = mongoose.model("gemsGetModel", gemsGetSchema, "dummydatabase"); //The third parameter is the collection. Change as necessary
 
-var gemsPostJobsModel = mongoose.model("gemsPostJobsModel", gemsPostJobs, "userinput");
-var gemsPostServiceModel = mongoose.model("gemsPostServiceModel", gemsPostService, "userinput");
-var gemsPostJVMSModel = mongoose.model("gemsPostJVMSModel", gemsPostJvms, "userinput");
-var gemsPostProcessFlowModel = mongoose.model("gemsPostProcessFlowModel", gemsPostProcessFlow, "userinput");
-
+var gemsPostJobsModel = mongoose.model("gemsPostJobsModel", gemsPostJobs, "job");
+var gemsPostServiceModel = mongoose.model("gemsPostServiceModel", gemsPostService, "serviceurl");
+var gemsPostJVMSModel = mongoose.model("gemsPostJVMSModel", gemsPostJvms, "jvm");
+var gemsPostProcessFlowModel = mongoose.model("gemsPostProcessFlowModel", gemsPostProcessFlow, "processflowmodel");
 
 app.listen(3000); //Arbitrarily make the app listen to port 3000.
 
@@ -199,6 +200,7 @@ app.post("/send", urlencodedParser, function(req, res){
 
 	res.json(tempJson); //Optional. But if you remove this, remove the parameter from the success function in app.js
 });
+
 /* Excel Sheets */
 
 var Excel = require('exceljs');
@@ -215,32 +217,213 @@ var serviceurlws = serviceurl.addWorksheet('Service URL');
 MongoClient.connect(url, function(err, db) {
     if (err) throw err;
     var dbo = db.db("gemsdashboard");
-    console.log("connected");	//connected!
-    var app=dbo.collection("userinput").find().toArray(function(err,docs){
-        console.log(docs);
+		
+	var distinctProcessStateCode = [];
+	var distinctApplicationName = [];
+	var distinctDatabase = [];
+	var distinctJVMName = [];
+	var distinctHost = [];
+	var distinctTrack = [];
+	var distinctSubtrack = [];
+	
+	// Removing duplicates from database for JOBS
+	// Else Excel populates with duplicate rows
+	
+	dbo.collection("job").distinct('process_state_code', function(err, docs) {
+		docs.forEach(function(doc) {
+			distinctProcessStateCode.push(doc);
+		});
+		
+		dbo.collection("job").distinct('application_name', function(err, docs) {
+		docs.forEach(function(doc) {
+			distinctApplicationName.push(doc);
+		});
+
+			dbo.collection("job").distinct('database', function(err, docs) {
+				docs.forEach(function(doc) {
+					distinctDatabase.push(doc);
+				});
+			// At this point, have gotten all distinct process state codes, application names, and databases.
+
+			for (var i = 0; i < distinctProcessStateCode.length; i++) {
+				for (var j = 0; j < distinctApplicationName.length; j++) {
+					for (var k = 0; k < distinctDatabase.length; k++) {
+						dbo.collection("job").aggregate([
+							{ $match: { "process_state_code" : distinctProcessStateCode[i], "application_name" : distinctApplicationName[j], "database" : distinctDatabase[k]}}
+						]).toArray().then(function(result) {
+        					if (result.length > 1) {
+        						for (var l = 0; l < result.length-1; l++) {
+									var deleteID = result[l]._id;
+									dbo.collection("job").remove({ "_id" : deleteID });
+        						}
+							}
+    					})
+					}
+				}
+			}
+      		});
+      	});
 	});
 
-	dbo.collection("userinput").find().toArray(function(err, docs) {
+	// Removing duplicates from database for JVM
+	// Else Excel populates with duplicate rows
+	dbo.collection("jvm").distinct('process_state_code', function(err, docs) {
 		docs.forEach(function(doc) {
-		jobsExcel(doc.application_name,doc.service_offering_name,doc.process_state_name,doc.process_state_code,doc.process_name,doc.job_name,doc.type,doc.database,doc.process,doc.related_to,jobsws);
-			jvmsExcel(doc.application_name,doc.jvm_name,doc.host,doc.host_env,doc.process_state_code,doc.process,jvmsws);
-			processFlowExcel(doc.process_state_name,doc.process_state_code,doc.track,doc.subtrack,doc.process,processflowws);
-			serviceURLExcel(doc.application_name,doc.app_url,doc.consumed_exposed,doc.process,serviceurlws)
+			distinctProcessStateCode.push(doc);
 		});
-		writeToExcel(jobs,"Jobs.xlsx");
-		writeToExcel(jvms,"JVMs.xlsx");
-		writeToExcel(processflow,"ProcessFlowStates.xlsx");
-		writeToExcel(serviceurl,"ServiceURL.xlsx");
-		db.close();
+		
+		dbo.collection("jvm").distinct('application_name', function(err, docs) {
+		docs.forEach(function(doc) {
+			distinctApplicationName.push(doc);
+		});
+
+			dbo.collection("jvm").distinct('jvm_name', function(err, docs) {
+				docs.forEach(function(doc) {
+					distinctJVMName.push(doc);
+				});
+				
+				dbo.collection("jvm").distinct('host', function(err, docs) {
+					docs.forEach(function(doc) {
+						distinctHost.push(doc);
+					});
+					
+					 // At this point, have gotten all distinct process state codes, application names, JVMS, and hosts.
+					 
+					for (var i = 0; i < distinctProcessStateCode.length; i++) {
+						for (var j = 0; j < distinctApplicationName.length; j++) {
+							for (var k = 0; k < distinctJVMName.length; k++) {
+								for (var m = 0; m < distinctHost.length; m++) {
+									dbo.collection("jvm").aggregate([
+										{ $match: { "process_state_code" : distinctProcessStateCode[i], "application_name" : distinctApplicationName[j], "jvm_name" : distinctJVMName[k], "host" : distinctHost[m]}}
+									]).toArray().then(function(result) {
+										if (result.length > 1) {
+											for (var l = 0; l < result.length-1; l++) {
+												var deleteID = result[l]._id;
+												dbo.collection("jvm").remove({ "_id" : deleteID });
+											}
+										}
+									})
+								}
+							}
+						}
+					}
+				});
+      		});
+      	});
 	});
+	
+	// Removing duplicates from database for Process Flow Model
+	// Else Excel populates with duplicate rows
+	dbo.collection("processflowmodel").distinct('process_state_code', function(err, docs) {
+		docs.forEach(function(doc) {
+			distinctProcessStateCode.push(doc);
+		});
+		
+		dbo.collection("processflowmodel").distinct('track', function(err, docs) {
+		docs.forEach(function(doc) {
+			distinctTrack.push(doc);
+		});
+
+			dbo.collection("processflowmodel").distinct('subtrack', function(err, docs) {
+				docs.forEach(function(doc) {
+					distinctSubtrack.push(doc);
+				});
+			// At this point, have gotten all distinct process state codes, tracks, and subtracks.
+
+			for (var i = 0; i < distinctProcessStateCode.length; i++) {
+				for (var j = 0; j < distinctTrack.length; j++) {
+					for (var k = 0; k < distinctSubtrack.length; k++) {
+						dbo.collection("processflowmodel").aggregate([
+							{ $match: { "process_state_code" : distinctProcessStateCode[i], "track" : distinctTrack[j], "subtrack" : distinctSubtrack[k]}}
+						]).toArray().then(function(result) {
+        					if (result.length > 1) {
+        						for (var l = 0; l < result.length-1; l++) {
+									var deleteID = result[l]._id;
+									dbo.collection("processflowmodel").remove({ "_id" : deleteID });
+        						}
+							}
+    					})
+					}
+				}
+			}
+      		});
+      	});
+	});
+
+	// Removing duplicates from database for Service URL
+	// Else Excel populates with duplicate rows
+	dbo.collection("serviceurl").distinct('application_name', function(err, docs) {
+		docs.forEach(function(doc) {
+			distinctApplicationName.push(doc);
+		});
+		
+		// At this point, have gotten all distinct application names.
+		
+		for (var i = 0; i < distinctApplicationName.length; i++) {
+			dbo.collection("serviceurl").aggregate([
+				{ $match: { "application_name" : distinctApplicationName[i]}}
+			]).toArray().then(function(result) {
+				if (result.length > 1) {
+					for (var j = 0; j < result.length-1; j++) {
+						var deleteID = result[j]._id;
+						dbo.collection("serviceurl").remove({ "_id" : deleteID });
+					}
+				}
+			})
+		}
+	});
+	makeExcelSheets();
 });
+
+function makeExcelSheets() {
+	MongoClient.connect(url, function(err, db) {
+		if (err) throw err;
+		var dbo = db.db("gemsdashboard");
+		
+		// Get documents from job collection and write to excel
+		dbo.collection("job").find().toArray(function(err, docs) {
+			docs.forEach(function(doc) {
+				jobsExcel(doc.application_name,doc.service_offering_name,doc.process_state_name,doc.process_state_code,doc.process_name,doc.job_name,doc.type,doc.database,doc.process,doc.related_to,jobsws);
+			});
+			writeToExcel(jobs,"Jobs.xlsx");
+			db.close();
+		});
+		
+		// Get documents from jvm collection and write to excel
+		dbo.collection("jvm").find().toArray(function(err, docs) {
+			docs.forEach(function(doc) {
+				jvmsExcel(doc.application_name,doc.jvm_name,doc.host,doc.host_env,doc.process_state_code,doc.process,jvmsws);
+			});
+			writeToExcel(jvms,"JVMs.xlsx");
+			db.close();
+		});
+		
+		// Get documents from service URL collection and write to excel
+		dbo.collection("processflowmodel").find().toArray(function(err, docs) {
+			docs.forEach(function(doc) {
+				processFlowExcel(doc.process_state_name,doc.process_state_code,doc.track,doc.subtrack,doc.process,processflowws);
+			});
+			writeToExcel(processflow,"ProcessFlowStates.xlsx");
+			db.close();
+		});
+		
+		// Get documents from service URL collection and write to excel
+		dbo.collection("serviceurl").find().toArray(function(err, docs) {
+			docs.forEach(function(doc) {
+				serviceURLExcel(doc.application_name,doc.value,doc.consumed_exposed,doc.process_state_name,serviceurlws)
+			});
+			writeToExcel(serviceurl,"ServiceURL.xlsx");
+			db.close();
+		});
+	});
+}
 
 function jobsExcel(application_name,service_offering_name,process_state_name,process_state_code,process_name,job_name,type,database,process,related_to,worksheet) {
 	worksheet.columns = [
 		{ header: 'application_name', key: 'application_name', width: 20 },
 		{ header: 'service_offering_name', key: 'service_offering_name', width: 25 },
 		{ header: 'process_state_name', key: 'process_state_name', width: 20},
-		{ header: 'process_state_code', key: 'process_state_code', width: 30},
+		{ header: 'process_state_code', key: 'process_state_code', width: 60},
 		{ header: 'process_name', key: 'process_name', width: 15},
 		{ header: 'job_name', key: 'job_name', width: 30},
 		{ header: 'type', key: 'type', width: 20},
@@ -249,7 +432,6 @@ function jobsExcel(application_name,service_offering_name,process_state_name,pro
 		{ header: 'related_to', key: 'related_to', width: 30}
 	];
 	worksheet.addRow([application_name,service_offering_name,process_state_name,process_state_code,process_name,job_name,type,database,process,related_to]);
-
 }
 
 function jvmsExcel(application_name,jvm_name,host,host_env,process_state_code,process,worksheet) {
@@ -258,7 +440,7 @@ function jvmsExcel(application_name,jvm_name,host,host_env,process_state_code,pr
 		{ header: 'jvm_name', key: 'jvm_name', width: 25 },
 		{ header: 'host', key: 'host', width: 15},
 		{ header: 'host_env', key: 'host_env', width: 10},
-		{ header: 'process_state_code', key: 'process_state_code', width: 30},
+		{ header: 'process_state_code', key: 'process_state_code', width: 60},
 		{ header: 'process', key: 'process', width: 10}
 	];
 	worksheet.addRow([application_name,jvm_name,host,host_env,process_state_code,process]);
@@ -267,7 +449,7 @@ function jvmsExcel(application_name,jvm_name,host,host_env,process_state_code,pr
 function processFlowExcel(process_state_name,process_state_code,track,subtrack,process,worksheet){
 	worksheet.columns = [
 		{ header: 'process_state_name', key: 'process_state_name', width: 20 },
-		{ header: 'process_state_code', key: 'process_state_code', width: 30 },
+		{ header: 'process_state_code', key: 'process_state_code', width: 60 },
 		{ header: 'track', key: 'track', width: 30},
 		{ header: 'subtrack', key: 'subtrack', width: 30},
 		{ header: 'process', key: 'process', width: 10}
@@ -275,7 +457,7 @@ function processFlowExcel(process_state_name,process_state_code,track,subtrack,p
 	worksheet.addRow([process_state_name,process_state_code,track,subtrack,process]);
 }
 
-function serviceURLExcel(application_name,application_url,consumed_exposed,process_state_name,worksheet){
+function serviceURLExcel(application_name,value,consumed_exposed,process_state_name,worksheet){
 	worksheet.columns = [
 		{ header: 'application_name', key: 'process_state', width: 20 },
 		{ header: 'NAME', key: 'name', width: 20 },
@@ -284,7 +466,7 @@ function serviceURLExcel(application_name,application_url,consumed_exposed,proce
 		{ header: 'process_state_name', key: 'process_state_name', width: 10}
 	];
 	var name = application_name;
-	worksheet.addRow([application_name,name,application_url,consumed_exposed,process_state_name]);
+	worksheet.addRow([application_name,name,value,consumed_exposed,process_state_name]);
 }
 
 function writeToExcel(workbook, filename) {
