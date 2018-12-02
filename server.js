@@ -95,7 +95,7 @@ var gemsPostProcessFlow = new mongoose.Schema({//data schema  structure for proc
 
 var gemsGetModel = mongoose.model("gemsGetModel", gemsGetSchema, "dummydatabase"); //The third parameter is the collection of the database. Change as necessary
 
-var gemsPostJobsModel = mongoose.model("gemsPostJobsModel", gemsPostJobs, "job");
+var gemsPostJobsModel = mongoose.model("gemsPostJobsModel", gemsPostJobs, "job");//a model is a copy of our structure schema, in this case job
 var gemsPostServiceModel = mongoose.model("gemsPostServiceModel", gemsPostService, "serviceurl");
 var gemsPostJVMSModel = mongoose.model("gemsPostJVMSModel", gemsPostJvms, "jvm");
 var gemsPostProcessFlowModel = mongoose.model("gemsPostProcessFlowModel", gemsPostProcessFlow, "processflowmodel");
@@ -111,31 +111,31 @@ app.get("/", function(req, res){
 	});
 });
 
-app.get("/index.html", function(req, res){
+app.get("/index.html", function(req, res){ //get our homepage
 	gemsGetModel.find().then(function(doc){
 		res.render("home", {data: doc[0]});
 	});
 });
 
 
-app.get("/css/style.css", function(req, res){
+app.get("/css/style.css", function(req, res){//showcase our css for homepage
 	res.sendFile(__dirname +"/css/style.css");
 });
 
-app.get("/js/app.js", function(req, res){
+app.get("/js/app.js", function(req, res){//showcase js 
 	res.sendFile(__dirname +"/js/app.js");
 });
 
-app.get("/readme.md", function(req, res){
+app.get("/readme.md", function(req, res){//get our readme
 	res.sendFile(__dirname +"/readme.md");
 });
 
-app.get("/images/Cisco_logo_blue_2016.png", function(req, res){
+app.get("/images/Cisco_logo_blue_2016.png", function(req, res){//get our Cisco picture logo
 	res.sendFile(__dirname +"/images/Cisco_logo_blue_2016.png");
 });
 
 
-app.get("/populateUI", function(req, res){
+app.get("/populateUI", function(req, res){ //grab inputs to our form fields
 	gemsGetModel.find().then(function(doc){
 		res.send(doc[0]);
 	});
