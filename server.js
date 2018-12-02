@@ -141,16 +141,16 @@ app.get("/populateUI", function(req, res){ //grab inputs to our form fields
 	});
 });
 
-app.post("/send", urlencodedParser, function(req, res){
-	var formJson = req.body;
-	var tempJson = JSON.parse(JSON.stringify(formJson));
+app.post("/send", urlencodedParser, function(req, res){//Summary: this function will use json, retrieve all user data, and put in in our mongoose model schema*/
+	var formJson = req.body; //main object that handles HTTP requests
+	var tempJson = JSON.parse(JSON.stringify(formJson));//make json and convert to string to handle server requests
 
-	delete tempJson.track;
+	delete tempJson.track;//these 4 lines clean and clear assignments from previous post requests
 	delete tempJson.jvm_name;
 	delete tempJson.application_name;
 	delete tempJson.database;
 
-	for(var i=0; i < formJson.track.length; i++){
+	for(var i=0; i < formJson.track.length; i++){//the nested for loops assigns all combinations of user inputs ,of  multiselect forms ,in our row in excel sheets
 		tempJson.track = formJson.track[i]["name"];
 		var process_state_code = tempJson.process_state_name.replace(/ /g, "_").toLowerCase() +"_" +tempJson.track.replace(/ /g, "_").toLowerCase();
 		tempJson.process_state_code = process_state_code;
@@ -170,7 +170,7 @@ app.post("/send", urlencodedParser, function(req, res){
 						for(var jj=0; jj< formJson.jvm_name[j]["hosts"].length; jj++){
 							tempJson.host = formJson.jvm_name[j]["hosts"][jj];
 
-							gemsPostJobsModel(tempJson).save(function(err, data){
+							gemsPostJobsModel(tempJson).save(function(err, data){//saves the data in each mongoose schema model
 								if(err) throw err;
 							});
 
@@ -203,9 +203,9 @@ app.post("/send", urlencodedParser, function(req, res){
 
 /* Excel Sheets */
 
-var Excel = require('exceljs');
+var Excel = require('exceljs');//need to npm install exceljs
 
-var jobs = new Excel.Workbook();
+var jobs = new Excel.Workbook();//create worbook and worksheet for excel
 var jobsws = jobs.addWorksheet('Jobs');
 var jvms = new Excel.Workbook();
 var jvmsws = jvms.addWorksheet('JVMs');
@@ -214,11 +214,11 @@ var processflowws = processflow.addWorksheet('Process Flow States');
 var serviceurl = new Excel.Workbook();
 var serviceurlws = serviceurl.addWorksheet('Service URL');
 
-MongoClient.connect(url, function(err, db) {
+MongoClient.connect(url, function(err, db) {//connect mongo with url, which has mongo name, port, etc
     if (err) throw err;
-    var dbo = db.db("gemsdashboard");
+    var dbo = db.db("gemsdashboard");//gemsdashboard is our database
 		
-	var distinctProcessStateCode = [];
+	var distinctProcessStateCode = [];//initialize arrays for capturing distinct inputs from all multiselect category
 	var distinctApplicationName = [];
 	var distinctDatabase = [];
 	var distinctJVMName = [];
@@ -417,7 +417,7 @@ function makeExcelSheets() {
 		});
 	});
 }
-
+/* four functions with parameters to pass and write to our excel, with columns initialized*/
 function jobsExcel(application_name,service_offering_name,process_state_name,process_state_code,process_name,job_name,type,database,process,related_to,worksheet) {
 	worksheet.columns = [
 		{ header: 'application_name', key: 'application_name', width: 20 },
