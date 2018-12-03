@@ -5,20 +5,20 @@
  */
 
 var express = require("express"); //require for expressing css,jquery, bootstrap
-var bodyparser = require("body-parser");//returns middleware that parses json
+var bodyparser = require("body-parser"); //returns middleware that parses json
 var mongoose = require("mongoose"); //mongoose middleware
-var MongoClient = require('mongodb').MongoClient;//connect using a server instance
-var urlencodedParser = bodyparser.urlencoded({extended: false}); //need bodyparser if want form data to be available  in req.body 
+var MongoClient = require('mongodb').MongoClient; //connect using a server instance
+var urlencodedParser = bodyparser.urlencoded({extended: false}); //need bodyparser if want form data to be available  in req.body
 
-var app = express();//calling the express module to import applications to our app
-app.set("view engine", "ejs");//where to look for files in, such as our js files folder
-app.use(bodyparser.json());//telling our system that we want json to be used
+var app = express(); //calling the express module to import applications to our app
+app.set("view engine", "ejs"); //Tells express to render .ejs files in the views directory as html and not plain text.
+app.use(bodyparser.json()); //telling our system that we want to read json from the UI
 
-var url = "mongodb://gems:Cisco123@ds261917.mlab.com:61917/gemsdashboard"; //url to connect to mongo 
+var url = "mongodb://gems:Cisco123@ds261917.mlab.com:61917/gemsdashboard"; //url to connect to mongo
 
 mongoose.connect(url, {useNewUrlParser: true});
 
-var gemsGetSchema = new mongoose.Schema({ //layout of our data structuring model
+var gemsGetSchema = new mongoose.Schema({ //layout of our data structuring model for getting data to populate UI
 	application_name: [String],
 	consumed_exposed: [String],
 	track: [
@@ -122,7 +122,7 @@ app.get("/css/style.css", function(req, res){//showcase our css for homepage
 	res.sendFile(__dirname +"/css/style.css");
 });
 
-app.get("/js/app.js", function(req, res){//showcase js 
+app.get("/js/app.js", function(req, res){//showcase js
 	res.sendFile(__dirname +"/js/app.js");
 });
 
@@ -135,21 +135,28 @@ app.get("/images/Cisco_logo_blue_2016.png", function(req, res){//get our Cisco p
 });
 
 
-app.get("/populateUI", function(req, res){ //grab inputs to our form fields
+app.get("/populateUI", function(req, res){ //grab inputs to our form fields. NOTE: This is legacy code
 	gemsGetModel.find().then(function(doc){
 		res.send(doc[0]);
 	});
 });
 
+//The almighty send function that posts everything to MongoDB.
 app.post("/send", urlencodedParser, function(req, res){//Summary: this function will use json, retrieve all user data, and put in in our mongoose model schema*/
 	var formJson = req.body; //main object that handles HTTP requests
 	var tempJson = JSON.parse(JSON.stringify(formJson));//make json and convert to string to handle server requests
 
-	delete tempJson.track;//these 4 lines clean and clear assignments from previous post requests
+	//This block deletes the array elements in tempJson. Now there are only Strings
+	delete tempJson.track;
 	delete tempJson.jvm_name;
 	delete tempJson.application_name;
 	delete tempJson.database;
 
+	/* Nested loops
+	 *    - Each for loop gets each element from the four arrays listed above, as
+	 *      well as for track and jvm_name's nested arrays "subtracks" and "hosts"
+	 *    - In the innermost loop, we add tempJson's contents to MongoDB
+	 */
 	for(var i=0; i < formJson.track.length; i++){//the nested for loops assigns all combinations of user inputs ,of  multiselect forms ,in our row in excel sheets
 		tempJson.track = formJson.track[i]["name"];
 		var process_state_code = tempJson.process_state_name.replace(/ /g, "_").toLowerCase() +"_" +tempJson.track.replace(/ /g, "_").toLowerCase();
@@ -170,7 +177,9 @@ app.post("/send", urlencodedParser, function(req, res){//Summary: this function 
 						for(var jj=0; jj< formJson.jvm_name[j]["hosts"].length; jj++){
 							tempJson.host = formJson.jvm_name[j]["hosts"][jj];
 
-							gemsPostJobsModel(tempJson).save(function(err, data){//saves the data in each mongoose schema model
+							// Four save functions are for the four spreadsheets that will be generated. Each
+							// has its own schema, as listed on lines 56-93
+							gemsPostJobsModel(tempJson).save(function(err, data){
 								if(err) throw err;
 							});
 
@@ -217,7 +226,7 @@ var serviceurlws = serviceurl.addWorksheet('Service URL');
 MongoClient.connect(url, function(err, db) {//connect mongo with url, which has mongo name, port, etc
     if (err) throw err;
     var dbo = db.db("gemsdashboard");//gemsdashboard is our database
-		
+
 	var distinctProcessStateCode = [];//initialize arrays for capturing distinct inputs from all multiselect category
 	var distinctApplicationName = [];
 	var distinctDatabase = [];
@@ -225,15 +234,15 @@ MongoClient.connect(url, function(err, db) {//connect mongo with url, which has 
 	var distinctHost = [];
 	var distinctTrack = [];
 	var distinctSubtrack = [];
-	
+
 	// Removing duplicates from database for JOBS
 	// Else Excel populates with duplicate rows
-	
+
 	dbo.collection("job").distinct('process_state_code', function(err, docs) {
 		docs.forEach(function(doc) {
 			distinctProcessStateCode.push(doc);
 		});
-		
+
 		dbo.collection("job").distinct('application_name', function(err, docs) {
 		docs.forEach(function(doc) {
 			distinctApplicationName.push(doc);
@@ -271,7 +280,7 @@ MongoClient.connect(url, function(err, db) {//connect mongo with url, which has 
 		docs.forEach(function(doc) {
 			distinctProcessStateCode.push(doc);
 		});
-		
+
 		dbo.collection("jvm").distinct('application_name', function(err, docs) {
 		docs.forEach(function(doc) {
 			distinctApplicationName.push(doc);
@@ -281,14 +290,14 @@ MongoClient.connect(url, function(err, db) {//connect mongo with url, which has 
 				docs.forEach(function(doc) {
 					distinctJVMName.push(doc);
 				});
-				
+
 				dbo.collection("jvm").distinct('host', function(err, docs) {
 					docs.forEach(function(doc) {
 						distinctHost.push(doc);
 					});
-					
+
 					 // At this point, have gotten all distinct process state codes, application names, JVMS, and hosts.
-					 
+
 					for (var i = 0; i < distinctProcessStateCode.length; i++) {
 						for (var j = 0; j < distinctApplicationName.length; j++) {
 							for (var k = 0; k < distinctJVMName.length; k++) {
@@ -311,14 +320,14 @@ MongoClient.connect(url, function(err, db) {//connect mongo with url, which has 
       		});
       	});
 	});
-	
+
 	// Removing duplicates from database for Process Flow Model
 	// Else Excel populates with duplicate rows
 	dbo.collection("processflowmodel").distinct('process_state_code', function(err, docs) {
 		docs.forEach(function(doc) {
 			distinctProcessStateCode.push(doc);
 		});
-		
+
 		dbo.collection("processflowmodel").distinct('track', function(err, docs) {
 		docs.forEach(function(doc) {
 			distinctTrack.push(doc);
@@ -356,9 +365,9 @@ MongoClient.connect(url, function(err, db) {//connect mongo with url, which has 
 		docs.forEach(function(doc) {
 			distinctApplicationName.push(doc);
 		});
-		
+
 		// At this point, have gotten all distinct application names.
-		
+
 		for (var i = 0; i < distinctApplicationName.length; i++) {
 			dbo.collection("serviceurl").aggregate([
 				{ $match: { "application_name" : distinctApplicationName[i]}}
@@ -379,7 +388,7 @@ function makeExcelSheets() {
 	MongoClient.connect(url, function(err, db) {
 		if (err) throw err;
 		var dbo = db.db("gemsdashboard");
-		
+
 		// Get documents from job collection and write to excel
 		dbo.collection("job").find().toArray(function(err, docs) {
 			docs.forEach(function(doc) {
@@ -388,7 +397,7 @@ function makeExcelSheets() {
 			writeToExcel(jobs,"Jobs.xlsx");
 			db.close();
 		});
-		
+
 		// Get documents from jvm collection and write to excel
 		dbo.collection("jvm").find().toArray(function(err, docs) {
 			docs.forEach(function(doc) {
@@ -397,7 +406,7 @@ function makeExcelSheets() {
 			writeToExcel(jvms,"JVMs.xlsx");
 			db.close();
 		});
-		
+
 		// Get documents from service URL collection and write to excel
 		dbo.collection("processflowmodel").find().toArray(function(err, docs) {
 			docs.forEach(function(doc) {
@@ -406,7 +415,7 @@ function makeExcelSheets() {
 			writeToExcel(processflow,"ProcessFlowStates.xlsx");
 			db.close();
 		});
-		
+
 		// Get documents from service URL collection and write to excel
 		dbo.collection("serviceurl").find().toArray(function(err, docs) {
 			docs.forEach(function(doc) {

@@ -1,0 +1,33 @@
+{
+  "name": "cisco-dash",
+  "version": "1.0.0",
+  "description": "GEMS dashboard for Cisco Systems.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arshij/gems-dashboard.git"
+  },
+  "keywords": [
+    "GEMS",
+    "Real@Work",
+    "SCU",
+    "Cisco"
+  ],
+  "author": "Arshi Jujara, Alma Niu, Pranav Rao",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+	"ejs": "^2.6.1",
+	"exceljs": "^1.6.3",
+    "express": "^4.16.4",
+    "mongoose": "^5.3.13"
+  },
+  "bugs": {
+    "url": "https://github.com/arshij/gems-dashboard/issues"
+  },
+  "homepage": "https://github.com/arshij/gems-dashboard#readme"
+}
