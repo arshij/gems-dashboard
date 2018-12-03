@@ -223,7 +223,7 @@ var processflowws = processflow.addWorksheet('Process Flow States');
 var serviceurl = new Excel.Workbook();
 var serviceurlws = serviceurl.addWorksheet('Service URL');
 
-MongoClient.connect(url, function(err, db) {//connect mongo with url, which has mongo name, port, etc
+MongoClient.connect(url, {useNewUrlParser: true}, function(err, db) {//connect mongo with url, which has mongo name, port, etc
     if (err) throw err;
     var dbo = db.db("gemsdashboard");//gemsdashboard is our database
 
@@ -385,7 +385,7 @@ MongoClient.connect(url, function(err, db) {//connect mongo with url, which has 
 });
 
 function makeExcelSheets() {
-	MongoClient.connect(url, function(err, db) {
+	MongoClient.connect(url, {useNewUrlParser: true}, function(err, db) {
 		if (err) throw err;
 		var dbo = db.db("gemsdashboard");
 
