@@ -167,11 +167,11 @@ select:hover{
 
 .multi-select-element a.dropdown-toggle{
 	display: inline-block;
-	width: 20px;
+	width: 5%;
 	height: 100%;
 	line-height: 30px;
-	margin-left: -5px;
-	padding-left: 3px;
+	margin-left: 0px;
+	padding-left: 0.7%;
 	box-sizing: border-box;
 }
 
@@ -239,11 +239,10 @@ input:checked + .multi-label{
 		width: 85%;
 	}
 
-	.multi-label > a.dropdown-toggle{
-		width: 20px;
+	.multi-select-element > a.dropdown-toggle{
+		width: 8%;
+		padding-left: 1%;
 	}
-
-
 
 	.multi-label-full{
 		width: 90%;

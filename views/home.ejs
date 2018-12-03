@@ -90,8 +90,7 @@ function count(ele){
 								%>
 								<div class="multi-select-element">
 									<input id="<%= trimmed %>" name=" <%= trimmed %>" type="checkbox"/>
-									<label class="multi-label" for="<%= trimmed %>"><%= obj.name %></label>
-									<a class="dropdown-toggle"></a>
+									<label class="multi-label" for="<%= trimmed %>"><%= obj.name %></label><a class="dropdown-toggle"> </a>
 									<div name="subtracks" class="form-control multi-select">
 										<% obj.subtrack.forEach(function(subObj){
 											trimmed = subObj.replace(/ /g, "");
@@ -207,8 +206,7 @@ function count(ele){
 								%>
 								<div class="multi-select-element">
 									<input id="<%= trimmed %>" name=" <%= trimmed %>" type="checkbox"/>
-									<label class="multi-label" for="<%= trimmed %>"><%= obj.name %></label>
-									<a class="dropdown-toggle"></a>
+									<label class="multi-label" for="<%= trimmed %>"><%= obj.name %></label><a class="dropdown-toggle"></a>
 									<div name="hosts" class="form-control multi-select">
 										<% obj.host.forEach(function(subObj){
 											trimmed = subObj.replace(/ /g, "");
